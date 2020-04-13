@@ -1,20 +1,25 @@
 language: java
-node_js:
-  — "13.1.0"
 
 jdk:
   - openjdk8
 
 services:
   - postgresql
+  -
+env:
+  - NODE_VERSION=13.1.0
+
+install:
+  - nvm install $NODE_VERSION
+  - npm install
+  - npm install -g ionic
+
 
 branches:
   only:
     - master
 
 before_script:
-  - npm install
-  - npm install -g ionic
   - psql -c "CREATE DATABASE surveys;" -U postgres
   - psql -c "CREATE USER survey WITH PASSWORD 'admin';" -U postgres
 
