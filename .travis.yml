@@ -5,6 +5,10 @@ jdk:
 services:
   - postgresql
 
+branches:
+  only:
+    - master
+
 before_script:
   - psql -c "CREATE DATABASE surveys;" -U postgres
   - psql -c "CREATE USER survey WITH PASSWORD 'admin';" -U postgres
@@ -12,7 +16,5 @@ before_script:
 
 jobs:
   include:
-    - stage: build App
+    - stage: build app and test
       script: mvn clean install
-    - stage: Test
-      script: mvn clean test
