@@ -1,5 +1,6 @@
 # aggressive-surveys
 
-## How to run development evnivorement
-
-docker-compose up -d
+## How to run postgres
+```
+docker-compose up -d postgres
+```
