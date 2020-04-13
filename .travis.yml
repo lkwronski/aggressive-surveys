@@ -5,7 +5,7 @@ jdk:
 
 services:
   - postgresql
-  -
+
 env:
   - NODE_VERSION=13.1.0
 
