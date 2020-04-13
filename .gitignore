@@ -19,5 +19,36 @@
 *.tar.gz
 *.rar
 
+/.idea
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+ui/*~
+ui/*.sw[mnpcod]
+ui/.tmp
+ui/*.tmp
+ui/*.tmp.*
+ui/*.sublime-project
+ui/*.sublime-workspace
+ui/.DS_Store
+ui/Thumbs.db
+ui/UserInterfaceState.xcuserstate
+ui/$RECYCLE.BIN/
+
+ui/*.log
+ui/log.txt
+ui/npm-debug.log*
+
+ui/.idea
+ui/.ionic
+ui/.sass-cache
+ui/.sourcemaps
+ui/.versions
+ui/.vscode
+ui/coverage
+ui/dist
+ui/node_modules
+ui/platforms
+ui/plugins
+ui/www
