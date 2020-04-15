@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>show-poll</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>HELLO</h1>
+  <ion-list *ngFor="let item of this.questionList">
+    <ion-item>
+      <ion-label>{{ item.questionText }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
