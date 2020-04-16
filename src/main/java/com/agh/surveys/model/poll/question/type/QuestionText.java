@@ -12,5 +12,6 @@ public class QuestionText extends QuestionDetails {
         super(questionText, QuestionType.TEXT);
     }
 
-
+    public QuestionText() {
+    }
 }

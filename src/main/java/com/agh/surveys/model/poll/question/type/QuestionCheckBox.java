@@ -17,4 +17,7 @@ public class QuestionCheckBox extends QuestionDetails {
         super(questionText, QuestionType.CHECKBOX);
         this.options = options;
     }
+
+    public QuestionCheckBox() {
+    }
 }

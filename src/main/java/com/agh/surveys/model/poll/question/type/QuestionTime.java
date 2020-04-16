@@ -17,4 +17,7 @@ public class QuestionTime extends QuestionDetails {
         super(questionText, QuestionType.TIME);
         this.fillPrompts = fillPrompts;
     }
+
+    public QuestionTime() {
+    }
 }
