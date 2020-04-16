@@ -5,6 +5,7 @@ import java.util.List;
 import com.agh.surveys.model.poll.question.Question;
 import com.agh.surveys.model.poll.question.repository.QuestionNotFoundException;
 import com.agh.surveys.model.poll.question.repository.QuestionRepository;
+import com.agh.surveys.model.poll.question.type.QuestionDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,39 +25,23 @@ class QuestionController {
 
     // Aggregate root
 
-    @GetMapping("/employees")
+    @GetMapping("/questions") // TODO brakuje pollID
     List<Question> all() {
         return repository.findAll();
     }
 
-    @PostMapping("/employees")
-    Question newEmployee(@RequestBody Question newEmployee) {
-        return repository.save(newEmployee);
+    @PostMapping("/questions")
+    Question newEmployee(@RequestBody QuestionDetails questionDetails) {
+        return repository.save(new Question(1L, questionDetails)); // TODO brakuje pollID
     }
 
     // Single item
 
     @GetMapping("/employees/{id}")
     Question one(@PathVariable Long id) {
-
         return repository.findById(id)
                 .orElseThrow(() -> new QuestionNotFoundException(id));
     }
-
-//    @PutMapping("/employees/{id}")
-//    Question replaceEmployee(@RequestBody Question newQuestion, @PathVariable Long id) {
-//
-//        return repository.findById(id)
-//                .map(employee -> {
-//                    employee.setName(newQuestion.getName());
-//                    employee.setRole(newQuestion.getRole());
-//                    return repository.save(employee);
-//                })
-//                .orElseGet(() -> {
-//                    newQuestion.setId(id);
-//                    return repository.save(newQuestion);
-//                });
-//    }
 
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
