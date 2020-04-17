@@ -33,13 +33,13 @@ export class PollService {
       let questionList: Question[] = [];
 
       for (let item of mock){
-          var question: Question = {
+          var question: any = {
           };
-          question.pollId = item.pollId;
-          question.questionId = item.questionId;
-          question.questionType = item.questionType;
-          question.questionText = item.quesionDetails.questionText;
-
+          question.pollId = item.pollId,
+          question.questionId = item.questionId,
+          question.questionType = item.questionType,
+          question.questionText = item.quesionDetails.questionText,
+          
           questionList.push(question);
       }
 
