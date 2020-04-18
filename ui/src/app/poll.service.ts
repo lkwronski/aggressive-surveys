@@ -39,7 +39,8 @@ export class PollService {
       "questionDetails": { 
         "questionText": "Jak oceniasz pracę?",
         "questionType": "checkbox",
-        "options": ["1", "2", "3", "4", "5"]} 
+        "options": ["1", "2", "3", "4", "5"]
+      } 
     }
     ];
 
@@ -54,7 +55,7 @@ export class PollService {
           question.questionType = item.questionDetails.questionType;
           question.questionText = item.questionDetails.questionText;
           
-          if (question.questionType == "checkbox") {
+          if (question.questionType === "checkbox") {
             question.options = item.questionDetails.options;
           }
 
