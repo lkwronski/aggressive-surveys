@@ -11,22 +11,20 @@ import { Answer } from './answer';
 export class ShowPollPage implements OnInit {
 
   questionList: Question[];
-  answerList: Answer[];
 
   constructor(private pollService: PollService) { }
 
   ngOnInit() {
     this.questionList = this.pollService.getPoll();
-    this.answerList = this.initAnswers(this.questionList);
   }
 
-  initAnswers(questions: Question[]): Answer[]{
+  craeteAnswers(questions: Question[]): Answer[]{
     let answers = [];
     for (var i = 0; i < questions.length; i++) {
       let answer: Answer = {
         "pollId": questions[i].pollId,
         "questionId": questions[i].questionId,
-        "answerText": "",
+        "answerText": questions[i].answer,
         "answerAuthorId": 123456
       };
       answers.push(answer)
@@ -36,7 +34,7 @@ export class ShowPollPage implements OnInit {
   }
 
   helloWorld(){
-    console.log(this.questionList)
+    console.log(this.craeteAnswers(this.questionList))
   }
 
 }
