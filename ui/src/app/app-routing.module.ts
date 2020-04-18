@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./base-page/base-page.module').then( m => m.BasePagePageModule)
+  },
+  {
+    path: 'create-poll',
+    loadChildren: () => import('./create-poll/create-poll.module').then( m => m.CreatePollPageModule)
   }
 ];
 @NgModule({
