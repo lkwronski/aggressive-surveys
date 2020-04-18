@@ -32,6 +32,14 @@ export class PollService {
         "questionText": "Trzecie pytanie",
         "questionType": "checkbox",
         "options": ["opcja 1", "opcja 2", "opcja 3"]} 
+    },
+    { 
+      "questionId": 4,
+      "pollId": 1,
+      "questionDetails": { 
+        "questionText": "Jak oceniasz pracę?",
+        "questionType": "checkbox",
+        "options": ["1", "2", "3", "4", "5"]} 
     }
     ];
 

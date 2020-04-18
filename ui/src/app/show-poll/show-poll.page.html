@@ -13,16 +13,16 @@
 
     <div *ngIf= "item.questionType == 'text'">
       <ion-item>
-        <ion-textarea placeholder="Enter anwser here..."></ion-textarea>
+        <ion-textarea [(ngModel)]="item.answer" placeholder="Enter anwser here..."></ion-textarea>
       </ion-item>
     </div>
 
     <div *ngIf= "item.questionType == 'checkbox'">
       <ion-list>
-        <ion-radio-group value= "item.questionId">
+        <ion-radio-group [(ngModel)]="item.answer">
           <ion-item *ngFor= "let entry of item.options">
             <ion-label>{{entry}}</ion-label>
-            <ion-radio slot="start" value= {{entry}} ></ion-radio>
+            <ion-radio [value]="entry" ></ion-radio>
           </ion-item>
       </ion-radio-group>
       </ion-list>

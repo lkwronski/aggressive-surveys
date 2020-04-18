@@ -3,5 +3,6 @@ export interface Question {
     pollId: number,
     questionType: string,
     questionText: string,
-    options: any,
+    answer?: string,
+    options?: any,
 }
