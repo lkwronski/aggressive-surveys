@@ -17,4 +17,8 @@ export class ShowPollPage implements OnInit {
     this.questionList = this.pollService.getPoll();
   }
 
+  helloWorld(){
+    console.log("hello world")
+  }
+
 }

@@ -13,33 +13,43 @@ export class PollService {
       var mock = [{ 
         "questionId": 1,
         "pollId": 1,
-        "questionType": "text",
-        "quesionDetails": { "questionText": "Test Question"} 
+        "questionDetails": { 
+          "questionText": "Test Question",
+          "questionType": "text"} 
       },
       { 
       "questionId": 2,
       "pollId": 1,
       "questionType": "text", 
-      "quesionDetails": { "questionText": "Second Question"} 
+      "questionDetails": { 
+        "questionText": "Drugie pytanie",
+        "questionType": "text"} 
     },
     { 
       "questionId": 3,
       "pollId": 1,
-      "questionType": "text", 
-      "quesionDetails": { "questionText": "Trzecie pytanie"} 
+      "questionDetails": { 
+        "questionText": "Trzecie pytanie",
+        "questionType": "checkbox",
+        "options": ["opcja 1", "opcja 2", "opcja 3"]} 
     }
     ];
 
       let questionList: Question[] = [];
 
       for (let item of mock){
+
           var question: any = {
           };
-          question.pollId = item.pollId,
-          question.questionId = item.questionId,
-          question.questionType = item.questionType,
-          question.questionText = item.quesionDetails.questionText,
+          question.pollId = item.pollId;
+          question.questionId = item.questionId;
+          question.questionType = item.questionDetails.questionType;
+          question.questionText = item.questionDetails.questionText;
           
+          if (question.questionType == "checkbox") {
+            question.options = item.questionDetails.options;
+          }
+
           questionList.push(question);
       }
 
