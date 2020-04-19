@@ -1,15 +1,11 @@
 package com.agh.surveys.controller;
 
-import com.agh.surveys.model.User;
 import com.agh.surveys.model.poll.question.Poll;
-import com.agh.surveys.model.poll.question.Question;
-import com.agh.surveys.service.UserService;
 import com.agh.surveys.service.poll.PollService;
-import com.agh.surveys.service.poll.dto.PollPost;
+import com.agh.surveys.service.poll.dto.PollCreate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -26,13 +22,13 @@ public class PollController {
     }
 
     @PostMapping
-    Poll addPoll(@RequestBody PollPost pollPost) {
-        return pollService.addPoll(pollPost);
+    Poll addPoll(@RequestBody PollCreate pollCreate) {
+        return pollService.addPoll(pollCreate);
     }
 
     @GetMapping("/{id}")
     Poll findPoll(@PathVariable Long id) {
-        return pollService.findPoll(id);
+        return pollService.getPoll(id);
     }
 
     @DeleteMapping("/{id}")

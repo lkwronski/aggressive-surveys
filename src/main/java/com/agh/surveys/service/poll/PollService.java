@@ -4,10 +4,9 @@ import com.agh.surveys.exception.PollNotFoundException;
 import com.agh.surveys.model.User;
 import com.agh.surveys.model.poll.question.Poll;
 import com.agh.surveys.model.poll.question.Question;
-import com.agh.surveys.model.poll.question.type.QuestionDetails;
 import com.agh.surveys.repository.PollRepository;
 import com.agh.surveys.service.UserService;
-import com.agh.surveys.service.poll.dto.PollPost;
+import com.agh.surveys.service.poll.dto.PollCreate;
 import com.agh.surveys.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,22 +32,26 @@ public class PollService implements IPollService{
     }
 
     @Override
-    public Poll findPoll(Long id) {
+    public Poll getPoll(Long id) {
         return pollRepository.findById(id)
                 .orElseThrow(() -> new PollNotFoundException(id));
     }
 
 
     @Override
-    public Poll addPoll(PollPost pollPost) {
-        User author = userService.getUserByNick(pollPost.getAuthorId());
-        List<Question> questions = questionService.addAllQuestionDetails(pollPost.getQuestionDetails());
-        Poll poll = new Poll(pollPost.getPollName(), LocalDateTime.now(), pollPost.getPolDeadline(), author, questions);
+    public Poll addPoll(PollCreate pollCreate) {
+        User author = userService.getUserByNick(pollCreate.getAuthorId());
+        List<Question> questions = questionService.addAllQuestionDetails(pollCreate.getQuestionDetails());
+        Poll poll = new Poll(pollCreate.getPollName(), LocalDateTime.now(), pollCreate.getPolDeadline(), author, questions);
         return pollRepository.save(poll);
     }
 
     @Override
     public void deletePoll(Long id) {
         pollRepository.deleteById(id);
+    }
+
+    public void savePoll(Poll poll) {
+        pollRepository.save(poll);
     }
 }

@@ -1,11 +1,8 @@
 package com.agh.surveys.service.poll;
 
-import com.agh.surveys.model.User;
 import com.agh.surveys.model.poll.question.Poll;
-import com.agh.surveys.model.poll.question.Question;
-import com.agh.surveys.service.poll.dto.PollPost;
+import com.agh.surveys.service.poll.dto.PollCreate;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IPollService {
@@ -14,7 +11,9 @@ public interface IPollService {
 
     void deletePoll(Long id);
 
-    Poll findPoll(Long id);
+    Poll getPoll(Long id);
 
-    Poll addPoll(PollPost pollPost);
+    Poll addPoll(PollCreate pollCreate);
+
+    void savePoll(Poll poll);
 }

@@ -2,11 +2,14 @@ package com.agh.surveys.service.question;
 
 
 import com.agh.surveys.exception.QuestionNotFoundException;
+import com.agh.surveys.model.poll.question.Poll;
 import com.agh.surveys.model.poll.question.Question;
 import com.agh.surveys.model.poll.question.type.QuestionDetails;
 import com.agh.surveys.repository.QuestionRepository;
+import com.agh.surveys.service.poll.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,14 +20,21 @@ public class QuestionService implements  IQuestionService{
     @Autowired
     QuestionRepository questionRepository;
 
+    @Autowired
+    PollService pollService;
+
     @Override
-    public List<Question> findAll() {
-        return questionRepository.findAll();
+    public List<Question> findAll(Long poolId) {
+        return pollService.getPoll(poolId).getQuestions();
     }
 
     @Override
-    public Question addQuestion(QuestionDetails questionDetails) {
-        return questionRepository.save(new Question(questionDetails));
+    public Question addQuestion(Long poolId, QuestionDetails questionDetails) {
+        Question question = questionRepository.save(new Question(questionDetails));
+        Poll poll = pollService.getPoll(poolId);
+        poll.getQuestions().add(question);
+        pollService.savePoll(poll);
+        return question;
     }
 
     @Override
@@ -33,13 +43,13 @@ public class QuestionService implements  IQuestionService{
     }
 
     @Override
-    public Question findQuestion(Long id) {
-       return questionRepository.findById(id)
-                .orElseThrow(() -> new QuestionNotFoundException(id));
+    public Question getQuestion(Long poolId, Long questionId) {
+        // TODO dopisać dodawania pytań dla ankiety
+        return null;
     }
 
     @Override
-    public void deleteQuestion(Long id) {
-        questionRepository.deleteById(id);
+    public void deleteQuestion(Long poolId, Long questionId) {
+        // TODO dopisać usuwanie pytań dla ankiety
     }
 }

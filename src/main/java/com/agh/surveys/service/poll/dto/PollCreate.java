@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class PollPost {
+public class PollCreate {
 
 
     private String pollName;
@@ -15,14 +15,14 @@ public class PollPost {
     private String authorId;
     private List<QuestionDetails> questionDetails;
 
-    public PollPost(String pollName, LocalDateTime polDeadline, String authorId, List<QuestionDetails> questionDetails) {
+    public PollCreate(String pollName, LocalDateTime polDeadline, String authorId, List<QuestionDetails> questionDetails) {
         this.pollName = pollName;
         this.polDeadline = polDeadline;
         this.authorId = authorId;
         this.questionDetails = questionDetails;
     }
 
-    public PollPost() {
+    public PollCreate() {
     }
 
 }

@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface IQuestionService {
 
-    List<Question> findAll();
+    List<Question> findAll(Long poolId);
 
-    Question addQuestion(QuestionDetails questionDetails);
+    Question addQuestion(Long poolId, QuestionDetails questionDetails);
 
-    Question findQuestion(Long id);
+    Question getQuestion(Long poolId, Long questionId);
 
-    void deleteQuestion(Long id);
+    void deleteQuestion(Long poolId, Long questionId);
 
     List<Question> addAllQuestionDetails(List<QuestionDetails> questionDetails);
 }

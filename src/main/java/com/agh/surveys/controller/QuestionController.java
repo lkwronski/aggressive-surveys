@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("questions")
+@RequestMapping("polls")
 class QuestionController {
 
     @Autowired
@@ -17,23 +17,23 @@ class QuestionController {
 
     // Aggregate root
 
-    @GetMapping
-    List<Question> all() {
-        return questionService.findAll();
+    @GetMapping("/{poolId}/questions")
+    List<Question> all(@PathVariable Long poolId) {
+        return questionService.findAll(poolId);
     }
 
-    @PostMapping
-    Question addQuestion(@RequestBody QuestionDetails questionDetails) {
-        return questionService.addQuestion(questionDetails);
+    @PostMapping("/{poolId}/questions")
+    Question addQuestion(@PathVariable Long poolId, @RequestBody QuestionDetails questionDetails) {
+        return questionService.addQuestion(poolId, questionDetails);
     }
 
-    @GetMapping("/{id}")
-    Question findQuestion(@PathVariable Long id) {
-        return questionService.findQuestion(id);
+    @GetMapping("/{poolId}/questions/{questionId}")
+    Question findQuestion(@PathVariable Long poolId, @PathVariable Long questionId) {
+        return questionService.getQuestion(poolId, questionId);
     }
 
-    @DeleteMapping("/{id}")
-    void deleteQuestion(@PathVariable Long id) {
-        questionService.deleteQuestion(id);
+    @DeleteMapping("/{poolId}/questions/{questionId}")
+    void deleteQuestion(@PathVariable Long poolId, @PathVariable Long questionId) {
+        questionService.deleteQuestion(poolId, questionId);
     }
 }
