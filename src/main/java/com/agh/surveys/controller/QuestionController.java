@@ -17,14 +17,14 @@ class QuestionController {
 
     // Aggregate root
 
-    @GetMapping // TODO brakuje pollID
+    @GetMapping
     List<Question> all() {
         return questionService.findAll();
     }
 
     @PostMapping
     Question addQuestion(@RequestBody QuestionDetails questionDetails) {
-        return questionService.addQuestion(questionDetails); // TODO brakuje pollID
+        return questionService.addQuestion(questionDetails);
     }
 
     @GetMapping("/{id}")

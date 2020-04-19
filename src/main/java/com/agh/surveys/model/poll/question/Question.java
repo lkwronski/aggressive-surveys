@@ -2,7 +2,6 @@ package com.agh.surveys.model.poll.question;
 
 
 import com.agh.surveys.model.poll.question.type.QuestionDetails;
-import com.agh.surveys.model.poll.question.type.QuestionType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ public class Question {
     @Id
     @GeneratedValue
     private Long id;
-    private Long pollId;
 
     @OneToOne(cascade = CascadeType.ALL)
     private QuestionDetails questionDetails;
@@ -23,8 +21,7 @@ public class Question {
 
     }
 
-    public Question(Long pollId, QuestionDetails questionDetails) {
-        this.pollId = pollId;
+    public Question(QuestionDetails questionDetails) {
         this.questionDetails = questionDetails;
     }
 }
