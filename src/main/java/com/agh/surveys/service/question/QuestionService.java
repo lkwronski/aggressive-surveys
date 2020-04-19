@@ -44,12 +44,11 @@ public class QuestionService implements  IQuestionService{
 
     @Override
     public Question getQuestion(Long poolId, Long questionId) {
-        // TODO dopisać dodawania pytań dla ankiety
-        return null;
+        return questionRepository.getOne(questionId);
     }
 
     @Override
     public void deleteQuestion(Long poolId, Long questionId) {
-        // TODO dopisać usuwanie pytań dla ankiety
+       questionRepository.deleteById(questionId);
     }
 }
