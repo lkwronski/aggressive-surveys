@@ -16,4 +16,6 @@ public interface IQuestionService {
     Question findQuestion(Long id);
 
     void deleteQuestion(Long id);
+
+    List<Question> addAllQuestionDetails(List<QuestionDetails> questionDetails);
 }

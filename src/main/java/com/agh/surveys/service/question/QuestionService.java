@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService implements  IQuestionService{
@@ -24,6 +25,11 @@ public class QuestionService implements  IQuestionService{
     @Override
     public Question addQuestion(QuestionDetails questionDetails) {
         return questionRepository.save(new Question(questionDetails));
+    }
+
+    @Override
+    public List<Question> addAllQuestionDetails(List<QuestionDetails> questionDetails) {
+        return questionDetails.stream().map( questionDetail -> questionRepository.save(new Question(questionDetail))).collect(Collectors.toList());
     }
 
     @Override

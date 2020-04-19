@@ -5,6 +5,7 @@ import com.agh.surveys.model.poll.question.Poll;
 import com.agh.surveys.model.poll.question.Question;
 import com.agh.surveys.service.UserService;
 import com.agh.surveys.service.poll.PollService;
+import com.agh.surveys.service.poll.dto.PollPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +20,14 @@ public class PollController {
     @Autowired
     PollService pollService;
 
-    @Autowired
-    UserService userService;
-
     @GetMapping
     List<Poll> all() {
         return pollService.findAll();
     }
 
     @PostMapping
-    Poll addPoll(@RequestParam String pollName, @RequestParam LocalDateTime pollDeadline, @RequestParam String authorId, @RequestParam List<Question> questions) {
-        User author = userService.getUserByNick(authorId).get();
-        return pollService.addPoll(pollName, pollDeadline, author, questions);
+    Poll addPoll(@RequestBody PollPost pollPost) {
+        return pollService.addPoll(pollPost);
     }
 
     @GetMapping("/{id}")

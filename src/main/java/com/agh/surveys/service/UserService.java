@@ -1,5 +1,6 @@
 package com.agh.surveys.service;
 
+import com.agh.surveys.exception.UserNotFoundException;
 import com.agh.surveys.model.User;
 import com.agh.surveys.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserService implements IUserService {
 
 
     @Override
-    public Optional<User> getUserByNick(String nick) {
-        return userRepository.findByNick(nick);
+    public User getUserByNick(String nick) {
+        return userRepository.findByNick(nick).orElseThrow(UserNotFoundException::new);
     }
 }

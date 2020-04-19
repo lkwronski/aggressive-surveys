@@ -23,7 +23,7 @@ public class UsersController {
 
     @GetMapping("/{nick}")
     public User getUser(@PathVariable(value="nick") String nick){
-      return userService.getUserByNick(nick).orElseThrow(UserNotFoundException::new);
+      return userService.getUserByNick(nick);
 
     }
 

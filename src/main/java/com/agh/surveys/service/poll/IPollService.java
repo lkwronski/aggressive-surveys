@@ -3,6 +3,7 @@ package com.agh.surveys.service.poll;
 import com.agh.surveys.model.User;
 import com.agh.surveys.model.poll.question.Poll;
 import com.agh.surveys.model.poll.question.Question;
+import com.agh.surveys.service.poll.dto.PollPost;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,5 +16,5 @@ public interface IPollService {
 
     Poll findPoll(Long id);
 
-    Poll addPoll(String pollName, LocalDateTime pollDeadline, User author, List<Question> questions);
+    Poll addPoll(PollPost pollPost);
 }
