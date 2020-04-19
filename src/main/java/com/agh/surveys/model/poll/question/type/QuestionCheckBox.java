@@ -14,7 +14,7 @@ public class QuestionCheckBox extends QuestionDetails {
     private List<String> options;
 
     public QuestionCheckBox(String questionText, List<String> options) {
-        super(questionText, QuestionType.CHECKBOX);
+        super(questionText);
         this.options = options;
     }
 

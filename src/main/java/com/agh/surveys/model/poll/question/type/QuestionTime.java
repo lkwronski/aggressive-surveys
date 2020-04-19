@@ -14,7 +14,7 @@ public class QuestionTime extends QuestionDetails {
     private List<String> fillPrompts;
 
     public QuestionTime(String questionText, List<String> fillPrompts) {
-        super(questionText, QuestionType.TIME);
+        super(questionText);
         this.fillPrompts = fillPrompts;
     }
 

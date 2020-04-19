@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 public class QuestionText extends QuestionDetails {
 
     public QuestionText(String questionText) {
-        super(questionText, QuestionType.TEXT);
+        super(questionText);
     }
 
     public QuestionText() {

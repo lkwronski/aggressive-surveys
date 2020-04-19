@@ -1,50 +1,39 @@
 package com.agh.surveys.controller;
 
+import com.agh.surveys.model.poll.question.Question;
+import com.agh.surveys.model.poll.question.type.QuestionDetails;
+import com.agh.surveys.service.question.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-import com.agh.surveys.model.poll.question.Question;
-import com.agh.surveys.model.poll.question.repository.QuestionNotFoundException;
-import com.agh.surveys.model.poll.question.repository.QuestionRepository;
-import com.agh.surveys.model.poll.question.type.QuestionDetails;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 @RestController
+@RequestMapping("questions")
 class QuestionController {
 
-    private final QuestionRepository repository;
-
-    QuestionController(QuestionRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    QuestionService questionService;
 
     // Aggregate root
 
-    @GetMapping("/questions") // TODO brakuje pollID
+    @GetMapping // TODO brakuje pollID
     List<Question> all() {
-        return repository.findAll();
+        return questionService.findAll();
     }
 
-    @PostMapping("/questions")
-    Question newEmployee(@RequestBody QuestionDetails questionDetails) {
-        return repository.save(new Question(1L, questionDetails)); // TODO brakuje pollID
+    @PostMapping
+    Question addQuestion(@RequestBody QuestionDetails questionDetails) {
+        return questionService.addQuestion(questionDetails); // TODO brakuje pollID
     }
 
-    // Single item
-
-    @GetMapping("/employees/{id}")
-    Question one(@PathVariable Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new QuestionNotFoundException(id));
+    @GetMapping("/{id}")
+    Question findQuestion(@PathVariable Long id) {
+        return questionService.findQuestion(id);
     }
 
-    @DeleteMapping("/employees/{id}")
-    void deleteEmployee(@PathVariable Long id) {
-        repository.deleteById(id);
+    @DeleteMapping("/{id}")
+    void deleteQuestion(@PathVariable Long id) {
+        questionService.deleteQuestion(id);
     }
 }

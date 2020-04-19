@@ -1,4 +1,4 @@
-package com.agh.surveys.model.poll.question.repository;
+package com.agh.surveys.exception;
 
 public class QuestionNotFoundException extends RuntimeException {
 
