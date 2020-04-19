@@ -6,18 +6,36 @@
 
 <ion-content>
   <ion-item>
-    <ion-input [(ngModel)]="title" placeholder="Enter the title"></ion-input>
+    <ion-input [(ngModel)]="title" placeholder="Enter title" required=true></ion-input>
   </ion-item>
 
   <ion-list *ngFor="let item of this.questionList">
     <ion-item>
-      <h1>Text Question</h1>
+      <ion-label>Question type</ion-label>
+      <ion-select [(ngModel)]="item.questionType" value="text">
+        <ion-select-option value="text">Text question</ion-select-option>
+        <ion-select-option value="checkbox">Checkbox</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-textarea [(ngModel)]="item.questionText" placeholder="Enter question here..."></ion-textarea>
+      <ion-textarea [(ngModel)]="item.questionText" placeholder="Enter question here..." required=true></ion-textarea>
+      <ion-button (click)="removeQuestion(item)">Remove question</ion-button>
     </ion-item>
+    
+    <div *ngIf= "item.questionType == 'checkbox'">
+      <ion-list>
+          <ion-item *ngFor="let entry of item.options">
+            <ion-input [(ngModel)]="entry.answerText" placeholder="Enter the answer option" required=true></ion-input>
+            <ion-button (click)="removeAnswer(item.options, entry)">Remove anwser</ion-button>
+          </ion-item>
+      </ion-list>
+      <ion-button (click)="addAnswer(item, '')">Add an answer</ion-button>
+    </div>
+  
   </ion-list>
 
-  <ion-button (click)="addQuestion()">Add a question</ion-button>
-
+  <ion-button (click)="addTextQuestion()">Add text question</ion-button>
+  <ion-button (click)="addCheckboxQuestion()">Add checkbox question</ion-button>
+  <br>
+  <ion-button (click)="validateAndSend()">Send a poll</ion-button>
 </ion-content>
