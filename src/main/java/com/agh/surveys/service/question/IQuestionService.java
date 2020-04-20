@@ -13,9 +13,9 @@ public interface IQuestionService {
 
     Question addQuestion(Long poolId, QuestionDetails questionDetails);
 
-    Question getQuestion(Long poolId, Long questionId);
+    Question getQuestion(Long questionId);
 
-    void deleteQuestion(Long poolId, Long questionId);
+    void deleteQuestion(Long questionId);
 
     List<Question> addAllQuestionDetails(List<QuestionDetails> questionDetails);
 }

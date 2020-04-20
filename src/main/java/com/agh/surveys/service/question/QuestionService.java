@@ -43,12 +43,12 @@ public class QuestionService implements  IQuestionService{
     }
 
     @Override
-    public Question getQuestion(Long poolId, Long questionId) {
+    public Question getQuestion(Long questionId) {
         return questionRepository.getOne(questionId);
     }
 
     @Override
-    public void deleteQuestion(Long poolId, Long questionId) {
+    public void deleteQuestion(Long questionId) {
        questionRepository.deleteById(questionId);
     }
 }
