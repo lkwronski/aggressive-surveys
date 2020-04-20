@@ -9,5 +9,5 @@ public interface IUserService {
     void addUser(User user);
     void removeUser(User user);
     void removeUserByNick(String nick);
-    Optional<User> getUserByNick(String nick);
+    User getUserByNick(String nick);
 }
