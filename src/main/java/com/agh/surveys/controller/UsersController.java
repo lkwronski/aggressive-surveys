@@ -1,7 +1,6 @@
 package com.agh.surveys.controller;
 
-import com.agh.surveys.exception.UserNotFoundException;
-import com.agh.surveys.model.User;
+import com.agh.surveys.model.user.User;
 import com.agh.surveys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

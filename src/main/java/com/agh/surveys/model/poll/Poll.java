@@ -1,6 +1,7 @@
-package com.agh.surveys.model.poll.question;
+package com.agh.surveys.model.poll;
 
-import com.agh.surveys.model.User;
+import com.agh.surveys.model.user.User;
+import com.agh.surveys.model.question.Question;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,6 +1,6 @@
 package com.agh.surveys.service.poll;
 
-import com.agh.surveys.model.poll.question.Poll;
+import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.service.poll.dto.PollCreate;
 
 import java.util.List;

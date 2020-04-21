@@ -1,4 +1,4 @@
-package com.agh.surveys.model;
+package com.agh.surveys.model.user;
 
 import lombok.Data;
 

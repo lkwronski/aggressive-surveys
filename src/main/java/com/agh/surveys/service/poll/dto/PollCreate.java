@@ -1,6 +1,6 @@
 package com.agh.surveys.service.poll.dto;
 
-import com.agh.surveys.model.poll.question.type.QuestionDetails;
+import com.agh.surveys.model.question.type.QuestionDetails;
 import lombok.Data;
 
 import java.time.LocalDateTime;

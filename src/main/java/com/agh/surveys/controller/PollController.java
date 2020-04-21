@@ -1,6 +1,6 @@
 package com.agh.surveys.controller;
 
-import com.agh.surveys.model.poll.question.Poll;
+import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.service.poll.PollService;
 import com.agh.surveys.service.poll.dto.PollCreate;
 import org.springframework.beans.factory.annotation.Autowired;

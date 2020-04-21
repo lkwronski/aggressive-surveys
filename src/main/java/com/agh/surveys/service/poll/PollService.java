@@ -1,9 +1,9 @@
 package com.agh.surveys.service.poll;
 
 import com.agh.surveys.exception.PollNotFoundException;
-import com.agh.surveys.model.User;
-import com.agh.surveys.model.poll.question.Poll;
-import com.agh.surveys.model.poll.question.Question;
+import com.agh.surveys.model.user.User;
+import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.question.Question;
 import com.agh.surveys.repository.PollRepository;
 import com.agh.surveys.service.UserService;
 import com.agh.surveys.service.poll.dto.PollCreate;
