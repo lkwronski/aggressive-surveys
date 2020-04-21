@@ -51,6 +51,7 @@ public class PollService implements IPollService{
         pollRepository.deleteById(id);
     }
 
+    @Override
     public void savePoll(Poll poll) {
         pollRepository.save(poll);
     }

@@ -1,9 +1,5 @@
 package com.agh.surveys.model.answer.type;
 
-import com.agh.surveys.model.question.type.QuestionCheckBox;
-import com.agh.surveys.model.question.type.QuestionText;
-import com.agh.surveys.model.question.type.QuestionTime;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
@@ -12,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) //???
+@Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = AnswerText.class, name = "TEXT"),

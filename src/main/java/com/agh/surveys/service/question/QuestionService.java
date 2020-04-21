@@ -1,6 +1,8 @@
 package com.agh.surveys.service.question;
 
 
+import com.agh.surveys.exception.QuestionNotFoundException;
+import com.agh.surveys.exception.UserNotFoundException;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.question.type.QuestionDetails;
@@ -42,7 +44,7 @@ public class QuestionService implements  IQuestionService{
 
     @Override
     public Question getQuestion(Long questionId) {
-        return questionRepository.getOne(questionId);
+        return questionRepository.findById(questionId).orElseThrow(QuestionNotFoundException::new);
     }
 
     @Override

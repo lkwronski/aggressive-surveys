@@ -9,7 +9,7 @@ public interface IAnswerService {
 
     List<Answer> findAll(Long questionId); //returns all answers for a question
 
-    Answer addAnswer(Long questionID, Long userID, AnswerDetails answerDetails); //adds answer for a question
+    Answer addAnswer(Long questionID, String userID, AnswerDetails answerDetails); //adds answer for a question
 
     Answer getAnswer(Long AnswerId); //get answer for a question
 
