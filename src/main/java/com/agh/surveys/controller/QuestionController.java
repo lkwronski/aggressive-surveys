@@ -27,13 +27,13 @@ class QuestionController {
         return questionService.addQuestion(poolId, questionDetails);
     }
 
-    @GetMapping("/{poolId}/questions/{questionId}")
-    Question findQuestion(@PathVariable Long poolId, @PathVariable Long questionId) {
-        return questionService.getQuestion(poolId, questionId);
+    @GetMapping("/questions/{questionId}")
+    Question findQuestion(@PathVariable Long questionId) {
+        return questionService.getQuestion(questionId);
     }
 
-    @DeleteMapping("/{poolId}/questions/{questionId}")
-    void deleteQuestion(@PathVariable Long poolId, @PathVariable Long questionId) {
-        questionService.deleteQuestion(poolId, questionId);
+    @DeleteMapping("/questions/{questionId}")
+    void deleteQuestion(@PathVariable Long questionId) {
+        questionService.deleteQuestion(questionId);
     }
 }
