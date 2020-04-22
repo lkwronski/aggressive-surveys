@@ -1,7 +1,7 @@
 package com.agh.surveys.service.poll;
 
 import com.agh.surveys.model.poll.Poll;
-import com.agh.surveys.service.poll.dto.PollCreate;
+import com.agh.surveys.model.poll.dto.PollCreateDto;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface IPollService {
 
     Poll getPoll(Long id);
 
-    Poll addPoll(PollCreate pollCreate);
+    Poll addPoll(PollCreateDto pollCreateDto);
 
     void savePoll(Poll poll);
 }

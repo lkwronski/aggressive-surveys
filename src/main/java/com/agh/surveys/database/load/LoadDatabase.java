@@ -21,6 +21,7 @@ import java.util.List;
 @Slf4j
 class LoadDatabase {
 
+    /*
     @Bean
     CommandLineRunner initQuestion(QuestionRepository repository) {
         return args -> {
@@ -41,4 +42,6 @@ class LoadDatabase {
             log.info("Preloading " + pollRepository.save(new Poll("poll_init", LocalDateTime.now(), LocalDateTime.now(),user, pollQuestions)));
         };
     }
+
+     */
 }

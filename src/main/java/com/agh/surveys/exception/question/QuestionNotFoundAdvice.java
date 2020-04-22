@@ -1,5 +1,6 @@
-package com.agh.surveys.exception;
+package com.agh.surveys.exception.question;
 
+import com.agh.surveys.exception.question.QuestionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

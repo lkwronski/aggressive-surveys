@@ -1,10 +1,12 @@
 package com.agh.surveys.model.question.type;
 
 
+import com.agh.surveys.model.question.Question;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 

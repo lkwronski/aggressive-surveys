@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IQuestionService {
 
-    List<Question> findAll(Long poolId);
+    List<Question> getByPollId(Long poolId);
 
     Question addQuestion(Long poolId, QuestionDetails questionDetails);
 

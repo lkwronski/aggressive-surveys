@@ -1,4 +1,4 @@
-package com.agh.surveys.exception;
+package com.agh.surveys.exception.answer;
 
 public class AnswerNotFoundException extends RuntimeException {
 

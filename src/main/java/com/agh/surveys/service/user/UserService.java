@@ -1,7 +1,8 @@
-package com.agh.surveys.service;
+package com.agh.surveys.service.user;
 
-import com.agh.surveys.exception.UserNotFoundException;
+import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.user.User;
+import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,9 @@ public class UserService implements IUserService {
     UserRepository userRepository;
 
     @Override
-    public void addUser(User user) {
-        userRepository.save(user);
+    public String addUserFromDto(UserDto userDto) {
+        User user = new User(userDto);
+        return userRepository.save(user).getUserNick();
     }
 
     @Override
@@ -24,12 +26,12 @@ public class UserService implements IUserService {
 
     @Override
     public void removeUserByNick(String nick) {
-        userRepository.removeByNick(nick);
+        userRepository.removeByUserNick(nick);
     }
-
 
     @Override
     public User getUserByNick(String nick) {
-        return userRepository.findByNick(nick).orElseThrow(UserNotFoundException::new);
+        return userRepository.findByUserNick(nick)
+                .orElseThrow(UserNotFoundException::new);
     }
 }

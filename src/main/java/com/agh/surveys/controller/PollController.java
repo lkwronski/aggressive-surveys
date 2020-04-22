@@ -1,8 +1,10 @@
 package com.agh.surveys.controller;
 
 import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.service.poll.PollService;
-import com.agh.surveys.service.poll.dto.PollCreate;
+import com.agh.surveys.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,18 +14,15 @@ import java.util.List;
 @RequestMapping("polls")
 public class PollController {
 
-
     @Autowired
     PollService pollService;
 
-    @GetMapping
-    List<Poll> all() {
-        return pollService.findAll();
-    }
+    @Autowired
+    QuestionService questionService;
 
-    @PostMapping
-    Poll addPoll(@RequestBody PollCreate pollCreate) {
-        return pollService.addPoll(pollCreate);
+    @GetMapping
+    List<Poll> getAllPolls() {
+        return pollService.findAll();
     }
 
     @GetMapping("/{id}")
@@ -36,4 +35,13 @@ public class PollController {
         pollService.deletePoll(id);
     }
 
+    @GetMapping("/{pollId}/questions")
+    List<Question> getPollQuestions(@PathVariable Long pollId) {
+        return questionService.getByPollId(pollId);
+    }
+
+    @PostMapping("/{pollId}/questions")
+    Question addQuestion(@PathVariable Long pollId, @RequestBody QuestionDetails questionDetails) {
+        return questionService.addQuestion(pollId, questionDetails);
+    }
 }
