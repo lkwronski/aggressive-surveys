@@ -1,4 +1,4 @@
-package com.agh.surveys.model.poll.question.type;
+package com.agh.surveys.model.question.type;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

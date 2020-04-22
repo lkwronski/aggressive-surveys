@@ -1,7 +1,7 @@
 package com.agh.surveys.controller;
 
-import com.agh.surveys.model.poll.question.Question;
-import com.agh.surveys.model.poll.question.type.QuestionDetails;
+import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

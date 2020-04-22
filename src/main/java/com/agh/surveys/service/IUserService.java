@@ -1,8 +1,6 @@
 package com.agh.surveys.service;
 
-import com.agh.surveys.model.User;
-
-import java.util.Optional;
+import com.agh.surveys.model.user.User;
 
 public interface IUserService {
 

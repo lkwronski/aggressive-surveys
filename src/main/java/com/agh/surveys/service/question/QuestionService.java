@@ -2,14 +2,14 @@ package com.agh.surveys.service.question;
 
 
 import com.agh.surveys.exception.QuestionNotFoundException;
-import com.agh.surveys.model.poll.question.Poll;
-import com.agh.surveys.model.poll.question.Question;
-import com.agh.surveys.model.poll.question.type.QuestionDetails;
+import com.agh.surveys.exception.UserNotFoundException;
+import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.repository.QuestionRepository;
 import com.agh.surveys.service.poll.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +44,7 @@ public class QuestionService implements  IQuestionService{
 
     @Override
     public Question getQuestion(Long questionId) {
-        return questionRepository.getOne(questionId);
+        return questionRepository.findById(questionId).orElseThrow(QuestionNotFoundException::new);
     }
 
     @Override

@@ -1,8 +1,9 @@
 package com.agh.surveys.exception;
 
-public class QuestionNotFoundException extends RuntimeException {
 
-    public QuestionNotFoundException(Long id){
-        super("Could not find question " + id);
-    }
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Could not find question")
+public class QuestionNotFoundException extends RuntimeException {
 }

@@ -1,11 +1,11 @@
 package com.agh.surveys.database.load;
 
-import com.agh.surveys.model.User;
-import com.agh.surveys.model.poll.question.Poll;
-import com.agh.surveys.model.poll.question.Question;
+import com.agh.surveys.model.user.User;
+import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.question.Question;
 import com.agh.surveys.repository.PollRepository;
 import com.agh.surveys.repository.QuestionRepository;
-import com.agh.surveys.model.poll.question.type.QuestionText;
+import com.agh.surveys.model.question.type.QuestionText;
 import com.agh.surveys.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 

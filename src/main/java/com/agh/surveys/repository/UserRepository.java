@@ -1,6 +1,6 @@
 package com.agh.surveys.repository;
 
-import com.agh.surveys.model.User;
+import com.agh.surveys.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
