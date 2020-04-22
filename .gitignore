@@ -52,3 +52,7 @@ ui/node_modules
 ui/platforms
 ui/plugins
 ui/www
+
+##manually added
+surveys.iml
+target/
