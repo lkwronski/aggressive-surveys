@@ -7,12 +7,16 @@ import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
+import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
 import com.agh.surveys.repository.UserRepository;
+import com.agh.surveys.service.question.QuestionService;
+import com.agh.surveys.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 // I changed searching by name to searching by Id as we didn't assume that group's name is unique (LK)
@@ -25,11 +29,19 @@ public class GroupService implements IGroupService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    QuestionService questionService;
 
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
-        //@TODO complete it
-        return null;
+        Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
+        User author = userService.getUserByNick(pollCreateDto.getAuthorId());
+        List<Question> questions = questionService.addAllQuestionDetails(pollCreateDto.getQuestionDetails());
+        Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
+        return poll;
     }
 
     @Override

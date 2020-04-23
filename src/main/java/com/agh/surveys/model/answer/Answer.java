@@ -21,18 +21,15 @@ public class Answer {
     private Long id;
 
     @ManyToOne
-    @Column(name = "question")
     private Question question;
 
     @ManyToOne
-    @Column(name = "author")
     private User answerAuthor;
 
     @Column(name = "create_date")
     private LocalDateTime answerDate;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @Column(name = "details")
     private AnswerDetails answerDetails;
 
     public Answer(Question question, User answerAuthor, LocalDateTime answerDate, AnswerDetails answerDetails) {

@@ -37,15 +37,6 @@ public class PollService implements IPollService{
                 .orElseThrow(() -> new PollNotFoundException());
     }
 
-
-    @Override
-    public Poll addPoll(PollCreateDto pollCreateDto) {
-        User author = userService.getUserByNick(pollCreateDto.getAuthorId());
-        List<Question> questions = questionService.addAllQuestionDetails(pollCreateDto.getQuestionDetails());
-        Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
-        return pollRepository.save(poll);
-    }
-
     @Override
     public void deletePoll(Long id) {
         pollRepository.deleteById(id);

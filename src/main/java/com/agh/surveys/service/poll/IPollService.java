@@ -13,7 +13,5 @@ public interface IPollService {
 
     Poll getPoll(Long id);
 
-    Poll addPoll(PollCreateDto pollCreateDto);
-
     void savePoll(Poll poll);
 }

@@ -17,7 +17,6 @@ import java.util.List;
 public class Poll {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue
     private Long pollId;
 
