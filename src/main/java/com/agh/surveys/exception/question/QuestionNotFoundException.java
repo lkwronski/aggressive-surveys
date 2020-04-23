@@ -1,4 +1,4 @@
-package com.agh.surveys.exception;
+package com.agh.surveys.exception.question;
 
 
 import org.springframework.http.HttpStatus;

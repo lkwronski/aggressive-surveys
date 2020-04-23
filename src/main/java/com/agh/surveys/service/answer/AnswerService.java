@@ -5,10 +5,7 @@ import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.AnswerRepository;
-import com.agh.surveys.repository.QuestionRepository;
-import com.agh.surveys.service.UserService;
-import com.agh.surveys.service.poll.PollService;
-import com.agh.surveys.service.question.IQuestionService;
+import com.agh.surveys.service.user.UserService;
 import com.agh.surveys.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +28,7 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public List<Answer> findAll(Long questionId) {
-        return answerRepository.findAll().stream().filter(x -> x.getQuestion().getId().equals(questionId)).collect(Collectors.toList());
+        return answerRepository.findAll().stream().filter(x -> x.getQuestion().getQuestionId().equals(questionId)).collect(Collectors.toList());
     }
 
     @Override

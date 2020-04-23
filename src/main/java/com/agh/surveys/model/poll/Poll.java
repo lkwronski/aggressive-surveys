@@ -1,8 +1,10 @@
 package com.agh.surveys.model.poll;
 
+import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.question.Question;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,15 +16,22 @@ public class Poll {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long pollId;
 
     private String pollName;
     private LocalDateTime pollCreationTime;
     private LocalDateTime polDeadline;
-//    private Long groupId; // TODO dodanie grupy
+
+    @ToString.Exclude
     @ManyToOne
+    @JoinColumn(name = "id" )
+    private Group pollGroup;
+
+    @ManyToOne
+    @JoinColumn(name = "userNick")
     private User author;
-    @ManyToMany
+
+    @OneToMany(mappedBy = "questionPoll", cascade = CascadeType.PERSIST)
     private List<Question> questions;
 
     public Poll(String pollName, LocalDateTime pollCreationTime, LocalDateTime polDeadline, User author, List<Question> questions) {

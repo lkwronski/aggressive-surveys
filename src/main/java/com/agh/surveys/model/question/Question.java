@@ -1,8 +1,10 @@
 package com.agh.surveys.model.question;
 
 
+import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -12,7 +14,12 @@ public class Question {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long questionId;
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Poll questionPoll;
 
     @OneToOne(cascade = CascadeType.ALL)
     private QuestionDetails questionDetails;

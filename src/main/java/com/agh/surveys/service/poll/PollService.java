@@ -1,12 +1,12 @@
 package com.agh.surveys.service.poll;
 
-import com.agh.surveys.exception.PollNotFoundException;
+import com.agh.surveys.exception.poll.PollNotFoundException;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.repository.PollRepository;
-import com.agh.surveys.service.UserService;
-import com.agh.surveys.service.poll.dto.PollCreate;
+import com.agh.surveys.service.user.UserService;
+import com.agh.surveys.model.poll.dto.PollCreateDto;
 import com.agh.surveys.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +39,10 @@ public class PollService implements IPollService{
 
 
     @Override
-    public Poll addPoll(PollCreate pollCreate) {
-        User author = userService.getUserByNick(pollCreate.getAuthorId());
-        List<Question> questions = questionService.addAllQuestionDetails(pollCreate.getQuestionDetails());
-        Poll poll = new Poll(pollCreate.getPollName(), LocalDateTime.now(), pollCreate.getPolDeadline(), author, questions);
+    public Poll addPoll(PollCreateDto pollCreateDto) {
+        User author = userService.getUserByNick(pollCreateDto.getAuthorId());
+        List<Question> questions = questionService.addAllQuestionDetails(pollCreateDto.getQuestionDetails());
+        Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
         return pollRepository.save(poll);
     }
 

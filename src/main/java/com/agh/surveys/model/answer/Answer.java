@@ -15,11 +15,15 @@ public class Answer {
     @Id
     @GeneratedValue
     private Long id;
+
     @ManyToOne
     private Question question;
+
     @ManyToOne
     private User answerAuthor;
+
     private LocalDateTime answerDate;
+    
     @OneToOne(cascade = CascadeType.ALL)
     private AnswerDetails answerDetails;
 

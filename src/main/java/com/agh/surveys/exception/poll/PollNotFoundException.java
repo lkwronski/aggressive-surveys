@@ -1,4 +1,4 @@
-package com.agh.surveys.exception;
+package com.agh.surveys.exception.poll;
 
 public class PollNotFoundException extends RuntimeException {
 

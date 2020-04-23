@@ -9,30 +9,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("polls")
+@RequestMapping("questions")
 class QuestionController {
 
     @Autowired
     QuestionService questionService;
 
-    // Aggregate root
-
-    @GetMapping("/{poolId}/questions")
-    List<Question> all(@PathVariable Long poolId) {
-        return questionService.findAll(poolId);
-    }
-
-    @PostMapping("/{poolId}/questions")
-    Question addQuestion(@PathVariable Long poolId, @RequestBody QuestionDetails questionDetails) {
-        return questionService.addQuestion(poolId, questionDetails);
-    }
-
-    @GetMapping("/questions/{questionId}")
+    @GetMapping("/{questionId}")
     Question findQuestion(@PathVariable Long questionId) {
         return questionService.getQuestion(questionId);
     }
 
-    @DeleteMapping("/questions/{questionId}")
+    @DeleteMapping("/{questionId}")
     void deleteQuestion(@PathVariable Long questionId) {
         questionService.deleteQuestion(questionId);
     }
