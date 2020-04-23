@@ -27,12 +27,12 @@ public class AnswerService implements IAnswerService {
     QuestionService questionService;
 
     @Override
-    public List<Answer> findAll(Long questionId) {
+    public List<Answer> findAll(Integer questionId) {
         return answerRepository.findAll().stream().filter(x -> x.getQuestion().getQuestionId().equals(questionId)).collect(Collectors.toList());
     }
 
     @Override
-    public Answer addAnswer(Long questionID, String userID, AnswerDetails answerDetails) {
+    public Answer addAnswer(Integer questionID, String userID, AnswerDetails answerDetails) {
         User user = userService.getUserByNick(userID);
         Question question = questionService.getQuestion(questionID);
         Answer answer = new Answer(question, user, LocalDateTime.now(), answerDetails);
@@ -41,11 +41,11 @@ public class AnswerService implements IAnswerService {
     }
 
     @Override
-    public Answer getAnswer(Long AnswerId) {
+    public Answer getAnswer(Integer AnswerId) {
         return answerRepository.getOne(AnswerId);
     }
 
     @Override
-    public void deleteAnswer(Long answerId){ answerRepository.deleteById(answerId); }
+    public void deleteAnswer(Integer answerId){ answerRepository.deleteById(answerId); }
 
 }

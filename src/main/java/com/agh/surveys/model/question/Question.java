@@ -14,7 +14,7 @@ public class Question {
 
     @Id
     @GeneratedValue
-    private Long questionId;
+    private Integer questionId;
 
     @ToString.Exclude
     @ManyToOne

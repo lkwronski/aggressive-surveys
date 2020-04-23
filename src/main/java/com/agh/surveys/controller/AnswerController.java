@@ -15,22 +15,22 @@ public class AnswerController {
     AnswerService answerService;
 
     @GetMapping("questions/{questionId}/answers")
-    List<Answer> all(@PathVariable Long questionId) {
+    List<Answer> all(@PathVariable Integer questionId) {
         return answerService.findAll(questionId);
     }
 
     @PostMapping("user/{userId}/questions/{questionId}/answers")
-    Answer addAnswer(@PathVariable Long questionId, @PathVariable String userId, @RequestBody AnswerDetails answerDetails) {
+    Answer addAnswer(@PathVariable Integer questionId, @PathVariable String userId, @RequestBody AnswerDetails answerDetails) {
         return answerService.addAnswer(questionId, userId, answerDetails);
     }
 
     @GetMapping("/answer/{answerId}")
-    Answer findAnswer(@PathVariable Long answerId) {
+    Answer findAnswer(@PathVariable Integer answerId) {
         return answerService.getAnswer(answerId);
     }
 
     @DeleteMapping("/answer/{answerId}")
-    void deleteAnswer(@PathVariable Long answerId) {
+    void deleteAnswer(@PathVariable Integer answerId) {
         answerService.deleteAnswer(answerId);
     }
 

@@ -23,12 +23,12 @@ public class QuestionService implements  IQuestionService{
     PollService pollService;
 
     @Override
-    public List<Question> getByPollId(Long poolId) {
+    public List<Question> getByPollId(Integer poolId) {
         return pollService.getPoll(poolId).getQuestions();
     }
 
     @Override
-    public Question addQuestion(Long poolId, QuestionDetails questionDetails) {
+    public Question addQuestion(Integer poolId, QuestionDetails questionDetails) {
         Question question = questionRepository.save(new Question(questionDetails));
         Poll poll = pollService.getPoll(poolId);
         poll.getQuestions().add(question);
@@ -42,12 +42,12 @@ public class QuestionService implements  IQuestionService{
     }
 
     @Override
-    public Question getQuestion(Long questionId) {
+    public Question getQuestion(Integer questionId) {
         return questionRepository.findById(questionId).orElseThrow(QuestionNotFoundException::new);
     }
 
     @Override
-    public void deleteQuestion(Long questionId) {
+    public void deleteQuestion(Integer questionId) {
        questionRepository.deleteById(questionId);
     }
 }

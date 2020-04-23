@@ -18,7 +18,7 @@ public class Poll {
 
     @Id
     @GeneratedValue
-    private Long pollId;
+    private Integer pollId;
 
     @Column(name = "name")
     private String pollName;

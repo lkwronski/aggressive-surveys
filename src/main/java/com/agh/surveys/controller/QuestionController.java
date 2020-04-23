@@ -16,12 +16,12 @@ class QuestionController {
     QuestionService questionService;
 
     @GetMapping("/{questionId}")
-    Question findQuestion(@PathVariable Long questionId) {
+    Question findQuestion(@PathVariable Integer questionId) {
         return questionService.getQuestion(questionId);
     }
 
     @DeleteMapping("/{questionId}")
-    void deleteQuestion(@PathVariable Long questionId) {
+    void deleteQuestion(@PathVariable Integer questionId) {
         questionService.deleteQuestion(questionId);
     }
 }

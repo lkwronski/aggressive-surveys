@@ -26,22 +26,22 @@ public class PollController {
     }
 
     @GetMapping("/{id}")
-    Poll findPoll(@PathVariable Long id) {
+    Poll findPoll(@PathVariable Integer id) {
         return pollService.getPoll(id);
     }
 
     @DeleteMapping("/{id}")
-    void deletePoll(@PathVariable Long id) {
+    void deletePoll(@PathVariable Integer id) {
         pollService.deletePoll(id);
     }
 
     @GetMapping("/{pollId}/questions")
-    List<Question> getPollQuestions(@PathVariable Long pollId) {
+    List<Question> getPollQuestions(@PathVariable Integer pollId) {
         return questionService.getByPollId(pollId);
     }
 
     @PostMapping("/{pollId}/questions")
-    Question addQuestion(@PathVariable Long pollId, @RequestBody QuestionDetails questionDetails) {
+    Question addQuestion(@PathVariable Integer pollId, @RequestBody QuestionDetails questionDetails) {
         return questionService.addQuestion(pollId, questionDetails);
     }
 }

@@ -18,7 +18,7 @@ public class Answer {
     @Id
     @Column(name = "id")
     @GeneratedValue
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     private Question question;
