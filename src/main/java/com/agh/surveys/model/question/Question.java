@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Question {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue
     private Long questionId;
 
@@ -22,6 +23,7 @@ public class Question {
     private Poll questionPoll;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @Column(name = "details")
     private QuestionDetails questionDetails;
 
     public Question() {

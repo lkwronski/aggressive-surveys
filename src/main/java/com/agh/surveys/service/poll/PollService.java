@@ -34,7 +34,7 @@ public class PollService implements IPollService{
     @Override
     public Poll getPoll(Long id) {
         return pollRepository.findById(id)
-                .orElseThrow(() -> new PollNotFoundException(id));
+                .orElseThrow(() -> new PollNotFoundException());
     }
 
 
