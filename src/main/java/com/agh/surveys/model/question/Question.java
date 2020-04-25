@@ -16,10 +16,10 @@ public class Question {
     @GeneratedValue
     private Integer questionId;
 
-    @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Poll questionPoll;
+//    @ToString.Exclude
+//    @ManyToOne
+//    @JoinColumn(name = "id")
+//    private Poll questionPoll;
 
     @OneToOne(cascade = CascadeType.ALL)
     private QuestionDetails questionDetails;

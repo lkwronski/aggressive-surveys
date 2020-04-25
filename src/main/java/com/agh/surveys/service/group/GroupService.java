@@ -10,7 +10,9 @@ import com.agh.surveys.model.poll.dto.PollCreateDto;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
+import com.agh.surveys.repository.QuestionRepository;
 import com.agh.surveys.repository.UserRepository;
+import com.agh.surveys.service.poll.PollService;
 import com.agh.surveys.service.question.QuestionService;
 import com.agh.surveys.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,13 @@ public class GroupService implements IGroupService {
     UserRepository userRepository;
 
     @Autowired
+    QuestionRepository questionRepository;
+
+    @Autowired
     UserService userService;
+
+    @Autowired
+    PollService pollService;
 
     @Autowired
     QuestionService questionService;
@@ -41,6 +49,9 @@ public class GroupService implements IGroupService {
         User author = userService.getUserByNick(pollCreateDto.getAuthorId());
         List<Question> questions = questionService.addAllQuestionDetails(pollCreateDto.getQuestionDetails());
         Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
+        pollService.savePoll(poll);
+        group.getGroupPolls().add(poll);
+        groupRepository.save(group);
         return poll;
     }
 
@@ -85,7 +96,6 @@ public class GroupService implements IGroupService {
         User user = userRepository.getOne(userNick);
 
         group.getGroupMembers().add(user);
-        user.getUserGroups().add(group);
 
         saveGroupAndUser(group, user);
     }
@@ -101,7 +111,6 @@ public class GroupService implements IGroupService {
         User user = userRepository.getOne(userNick);
 
         group.getGroupMembers().remove(user);
-        user.getUserGroups().remove(group);
 
         saveGroupAndUser(group, user);
 

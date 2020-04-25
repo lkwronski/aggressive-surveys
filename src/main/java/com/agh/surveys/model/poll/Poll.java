@@ -38,7 +38,7 @@ public class Poll {
     @JoinColumn(name = "userNick")
     private User author;
 
-    @OneToMany(mappedBy = "questionPoll", cascade = CascadeType.PERSIST)
+    @OneToMany
     private List<Question> questions;
 
     public Poll(String pollName, LocalDateTime pollCreationTime, LocalDateTime polDeadline, User author, List<Question> questions) {

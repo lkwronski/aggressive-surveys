@@ -52,7 +52,7 @@ public class UserSpec {
     {
         final String baseUrl = "http://localhost:"+randomServerPort+"/users/";
         URI uri = new URI(baseUrl);
-        UserDto userCreate = new UserDto("test", "test", "test", "test@email.com" );
+        UserDto userCreate = new UserDto("test2", "test", "test", "test2@email.com" );
         User user = new User(userCreate);
 
         HttpHeaders headers = new HttpHeaders();
