@@ -1,7 +1,7 @@
 package com.agh.surveys.controller;
 
 import com.agh.surveys.model.user.User;
-import com.agh.surveys.model.user.dto.UserCreateDto;
+import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +14,14 @@ public class UsersController {
     UserService userService;
 
     @PostMapping
-    public String addUser(@RequestBody UserCreateDto userCreateDto) {
-        return userService.addUserFromDto(userCreateDto);
+    public String addUser(@RequestBody UserDto userDto) {
+        return userService.addUserFromDto(userDto);
     }
 
     @GetMapping("/{nick}")
-    public UserCreateDto getUser(@PathVariable(value = "nick") String nick) {
+    public UserDto getUser(@PathVariable(value = "nick") String nick) {
         User user = userService.getUserByNick(nick);
-        return new UserCreateDto(user.getUserNick(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
+        return new UserDto(user.getUserNick(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
     }
 
     @DeleteMapping("/{nick}")
