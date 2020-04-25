@@ -2,7 +2,7 @@ package com.agh.surveys.model.user;
 
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.poll.Poll;
-import com.agh.surveys.model.user.dto.UserDto;
+import com.agh.surveys.model.user.dto.UserCreateDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -41,7 +41,7 @@ public class User {
     @OneToMany(mappedBy ="author", cascade = CascadeType.PERSIST)
     private List<Poll> createdPolls;
 
-    public User(UserDto dto){
+    public User(UserCreateDto dto){
         this.userNick = dto.getUserNick();
         this.userFirstName = dto.getUserFirstName();
         this.userLastName = dto.getUserLastName();

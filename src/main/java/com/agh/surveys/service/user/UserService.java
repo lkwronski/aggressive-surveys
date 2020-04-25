@@ -2,7 +2,7 @@ package com.agh.surveys.service.user;
 
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.user.User;
-import com.agh.surveys.model.user.dto.UserDto;
+import com.agh.surveys.model.user.dto.UserCreateDto;
 import com.agh.surveys.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ public class UserService implements IUserService {
     UserRepository userRepository;
 
     @Override
-    public String addUserFromDto(UserDto userDto) {
-        User user = new User(userDto);
+    public String addUserFromDto(UserCreateDto userCreateDto) {
+        User user = new User(userCreateDto);
         return userRepository.save(user).getUserNick();
     }
 
