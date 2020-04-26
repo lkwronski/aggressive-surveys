@@ -48,6 +48,12 @@ public class QuestionService implements  IQuestionService{
 
     @Override
     public void deleteQuestion(Integer questionId) {
+        Question deleteQuestion = getQuestion(questionId); // TODO naprawić usuwanie pytania
+        List<Poll> polls = pollService.findAll().stream().filter( poll -> poll.getQuestions().stream().anyMatch( question -> question.getQuestionId().equals(questionId))).collect(Collectors.toList());
+        polls.forEach(poll -> {
+                poll.getQuestions().remove(deleteQuestion);
+                pollService.savePoll(poll);
+        });
        questionRepository.deleteById(questionId);
     }
 }
