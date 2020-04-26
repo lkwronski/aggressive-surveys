@@ -1,16 +1,17 @@
 package com.agh.surveys.service.group;
 
 import com.agh.surveys.model.group.Group;
-import com.agh.surveys.model.group.dto.GroupDto;
+import com.agh.surveys.model.group.dto.GroupCreateDto;
+import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
 
 public interface IGroupService {
 
 
-    Integer addGroup(GroupDto groupDto);
+    Integer addGroup(GroupCreateDto groupCreateDto);
     void removeGroup(Group group);
-    GroupDto getGroupDto(Integer id);
+    GroupRespDto getGroupDto(Integer id);
     void removeGroup(Integer id);
 
     Group getGroup(Integer id);

@@ -1,7 +1,9 @@
 package com.agh.surveys.controller;
 
 
-import com.agh.surveys.model.group.dto.GroupDto;
+import com.agh.surveys.model.group.Group;
+import com.agh.surveys.model.group.dto.GroupCreateDto;
+import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
 import com.agh.surveys.service.group.GroupService;
@@ -18,12 +20,12 @@ public class GroupController {
     GroupService groupService;
 
     @PostMapping
-    public Integer addGroup(@RequestBody GroupDto groupDto) {
-        return groupService.addGroup(groupDto);
+    public Integer addGroup(@RequestBody GroupCreateDto groupRespDto) {
+        return groupService.addGroup(groupRespDto);
     }
 
     @GetMapping("/{id}")
-    public GroupDto getGroup(@PathVariable(value = "id") Integer id) {
+    public GroupRespDto getGroup(@PathVariable(value = "id") Integer id) {
         return groupService.getGroupDto(id);
     }
 

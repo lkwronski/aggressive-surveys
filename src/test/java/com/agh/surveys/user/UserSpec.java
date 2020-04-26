@@ -32,16 +32,9 @@ public class UserSpec {
     @Test
     public void testAddUserSuccess() throws URISyntaxException
     {
-        final String baseUrl = "http://localhost:"+randomServerPort+"/users/";
-        URI uri = new URI(baseUrl);
         UserDto userCreate = new UserDto("test", "test", "test", "test@email.com" );
-        User user = new User(userCreate);
 
-        HttpHeaders headers = new HttpHeaders();
-
-        HttpEntity<User> request = new HttpEntity<>(user, headers);
-
-        ResponseEntity<String> result = this.restTemplate.postForEntity(uri, request, String.class);
+        ResponseEntity<String> result = UserUtils.createUser(randomServerPort,userCreate,this.restTemplate);
 
         //Verify request succeed
         Assert.assertEquals(200, result.getStatusCodeValue());

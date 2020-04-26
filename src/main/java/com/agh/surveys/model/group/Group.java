@@ -36,7 +36,7 @@ public class Group {
     )
     private List<User> groupMembers;
 
-    @OneToMany(mappedBy = "pollGroup", cascade = CascadeType.PERSIST)
+    @OneToMany
     private List<Poll> groupPolls;
 
     public Group(String groupName, User groupLeader, List<User> groupMembers) {
