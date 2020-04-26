@@ -1,5 +1,6 @@
 package com.agh.surveys.service.answer;
 
+import com.agh.surveys.exception.answer.AnswerNotFoundException;
 import com.agh.surveys.model.answer.Answer;
 import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.model.question.Question;
@@ -42,7 +43,7 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public Answer getAnswer(Integer AnswerId) {
-        return answerRepository.getOne(AnswerId);
+        return answerRepository.findById(AnswerId).orElseThrow(AnswerNotFoundException::new);
     }
 
     @Override

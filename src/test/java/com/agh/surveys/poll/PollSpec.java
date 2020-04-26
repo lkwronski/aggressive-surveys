@@ -30,7 +30,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -52,6 +53,7 @@ public class PollSpec {
 
         List<QuestionDetails> questions = new ArrayList<>();
         questions.add(new QuestionText("test"));
+        questions.add(new QuestionText("test2"));
         PollCreateDto pollCreate = new PollCreateDto("test", LocalDateTime.now(), "test", questions);
         ResponseEntity<String> resultPoll = PollUtils.creatPoll(randomServerPort, pollCreate, 1, this.restTemplate); // trzeba wyciagnac id z grupy
 
@@ -62,11 +64,23 @@ public class PollSpec {
         Assert.assertEquals(200, resultPoll.getStatusCodeValue());
 
         // listPollFromGroupSuccess
-        final String baseUrl = "http://localhost:" + randomServerPort + "/groups/" + 1 + "/polls";
+        String listPoll = "http://localhost:" + randomServerPort + "/groups/" + 1 + "/polls";
 
-        ResponseEntity<Poll[]> result = restTemplate.getForEntity(baseUrl, Poll[].class);
+        ResponseEntity<Poll[]> result = restTemplate.getForEntity(listPoll, Poll[].class);
 
         Assert.assertTrue(result.getBody().length  == 1);
+
+        // remove question
+
+        String deleteQuestion = "http://localhost:" + randomServerPort + "/questions/" + 2;
+
+        ResponseEntity<Integer> resultDeleteQuestions = restTemplate.exchange(deleteQuestion,
+                HttpMethod.DELETE,
+                HttpEntity.EMPTY,
+                Integer.class
+        );
+
+        Assert.assertEquals(200, resultDeleteQuestions.getStatusCodeValue());
 
     }
 
