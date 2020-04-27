@@ -1,5 +1,6 @@
 package com.agh.surveys.service.question;
 
+import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.question.type.QuestionDetails;
 
@@ -15,5 +16,5 @@ public interface IQuestionService {
 
     void deleteQuestion(Integer questionId);
 
-    List<Question> addAllQuestionDetails(List<QuestionDetails> questionDetails);
+    List<Question> addAllQuestionDetails(Poll poll, List<QuestionDetails> questionDetails);
 }

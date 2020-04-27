@@ -4,11 +4,13 @@ package com.agh.surveys.model.question;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class Question {
 
@@ -16,19 +18,16 @@ public class Question {
     @GeneratedValue
     private Integer questionId;
 
-//    @ToString.Exclude
-//    @ManyToOne
-//    @JoinColumn(name = "id")
-//    private Poll questionPoll;
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Poll questionPoll;
 
     @OneToOne(cascade = CascadeType.ALL)
     private QuestionDetails questionDetails;
 
-    public Question() {
-
-    }
-
-    public Question(QuestionDetails questionDetails) {
+    public Question(Poll questionPoll, QuestionDetails questionDetails) {
+        this.questionPoll = questionPoll;
         this.questionDetails = questionDetails;
     }
 }

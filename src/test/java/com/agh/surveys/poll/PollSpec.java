@@ -72,7 +72,7 @@ public class PollSpec {
 
         // remove question
 
-        String deleteQuestion = "http://localhost:" + randomServerPort + "/questions/" + 2;
+        String deleteQuestion = "http://localhost:" + randomServerPort + "/questions/" + 3;
 
         ResponseEntity<Integer> resultDeleteQuestions = restTemplate.exchange(deleteQuestion,
                 HttpMethod.DELETE,

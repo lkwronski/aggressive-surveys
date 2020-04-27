@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 // I changed searching by name to searching by Id as we didn't assume that group's name is unique (LK)
@@ -49,8 +50,10 @@ public class GroupService implements IGroupService {
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
         Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
         User author = userService.getUserByNick(pollCreateDto.getAuthorId());
-        List<Question> questions = questionService.addAllQuestionDetails(pollCreateDto.getQuestionDetails());
+        List<Question> questions = new LinkedList<>();
         Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
+        pollService.savePoll(poll);
+        questions.addAll(questionService.addAllQuestionDetails(poll, pollCreateDto.getQuestionDetails()));
         pollService.savePoll(poll);
         group.getGroupPolls().add(poll);
         groupRepository.save(group);

@@ -29,16 +29,16 @@ public class QuestionService implements  IQuestionService{
 
     @Override
     public Question addQuestion(Integer poolId, QuestionDetails questionDetails) {
-        Question question = questionRepository.save(new Question(questionDetails));
         Poll poll = pollService.getPoll(poolId);
+        Question question = questionRepository.save(new Question(poll, questionDetails));
         poll.getQuestions().add(question);
         pollService.savePoll(poll);
         return question;
     }
 
     @Override
-    public List<Question> addAllQuestionDetails(List<QuestionDetails> questionDetails) {
-        return questionDetails.stream().map( questionDetail -> questionRepository.save(new Question(questionDetail))).collect(Collectors.toList());
+    public List<Question> addAllQuestionDetails(Poll poll, List<QuestionDetails> questionDetails) {
+        return questionDetails.stream().map( questionDetail -> questionRepository.save(new Question(poll, questionDetail))).collect(Collectors.toList());
     }
 
     @Override
@@ -48,12 +48,6 @@ public class QuestionService implements  IQuestionService{
 
     @Override
     public void deleteQuestion(Integer questionId) {
-        Question deleteQuestion = getQuestion(questionId); // TODO naprawić usuwanie pytania
-        List<Poll> polls = pollService.findAll().stream().filter( poll -> poll.getQuestions().stream().anyMatch( question -> question.getQuestionId().equals(questionId))).collect(Collectors.toList());
-        polls.forEach(poll -> {
-                poll.getQuestions().remove(deleteQuestion);
-                pollService.savePoll(poll);
-        });
        questionRepository.deleteById(questionId);
     }
 }
