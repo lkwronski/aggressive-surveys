@@ -33,7 +33,7 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public List<Answer> findAll(Integer questionId) {
-        return answerRepository.findAll().stream().filter(x -> x.getQuestion().getQuestionId().equals(questionId)).collect(Collectors.toList());
+        return questionService.getQuestion(questionId).getAnswers();
     }
 
     @Override
