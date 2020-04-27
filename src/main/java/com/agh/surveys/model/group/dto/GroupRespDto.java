@@ -10,17 +10,18 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class GroupDto {
+public class GroupRespDto {
     private String leaderNick;
     private String groupName;
     private List<String> groupMembersNicks;
 
-    public GroupDto(Group group){
+    public GroupRespDto(Group group){
         this.leaderNick= group.getGroupLeader().getUserNick();
         this.groupName=group.getGroupName();
         this.groupMembersNicks=group.getGroupMembers()
                 .stream()
                 .map(User::getUserNick)
                 .collect(Collectors.toList());
+        this.groupMembersNicks.add(this.leaderNick);
     }
 }

@@ -1,14 +1,17 @@
 package com.agh.surveys.controller;
 
 
-import com.agh.surveys.model.group.dto.GroupDto;
+import com.agh.surveys.model.group.dto.GroupCreateDto;
+import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
+import com.agh.surveys.model.poll.dto.PollResponseDto;
 import com.agh.surveys.service.group.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("groups")
@@ -18,12 +21,12 @@ public class GroupController {
     GroupService groupService;
 
     @PostMapping
-    public Integer addGroup(@RequestBody GroupDto groupDto) {
-        return groupService.addGroup(groupDto);
+    public Integer addGroup(@RequestBody GroupCreateDto groupRespDto) {
+        return groupService.addGroup(groupRespDto);
     }
 
     @GetMapping("/{id}")
-    public GroupDto getGroup(@PathVariable(value = "id") Integer id) {
+    public GroupRespDto getGroup(@PathVariable(value = "id") Integer id) {
         return groupService.getGroupDto(id);
     }
 
@@ -51,14 +54,14 @@ public class GroupController {
     }
 
     @GetMapping("/{groupId}/polls")
-    public List<Poll> getGroupPolls(@PathVariable(value="groupId") Integer groupId){
-        return groupService.getGroup(groupId).getGroupPolls();
+    public List<PollResponseDto> getGroupPolls(@PathVariable(value="groupId") Integer groupId){
+        return groupService.getGroup(groupId).getGroupPolls().stream().map(PollResponseDto::new).collect(Collectors.toList());
     }
 
     @PostMapping("/{groupId}/polls")
-    public Poll addPoll(@PathVariable(value = "groupId") Integer groupId,
-                                @RequestBody PollCreateDto pollCreateDto){
-        return groupService.addPolltoGroup(pollCreateDto,groupId);
+    public PollResponseDto addPoll(@PathVariable(value = "groupId") Integer groupId,
+                                   @RequestBody PollCreateDto pollCreateDto){
+        return new PollResponseDto(groupService.addPolltoGroup(pollCreateDto,groupId));
     }
 
 

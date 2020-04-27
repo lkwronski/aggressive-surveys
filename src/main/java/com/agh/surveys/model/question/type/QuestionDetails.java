@@ -23,8 +23,11 @@ import javax.persistence.*;
 )abstract public class QuestionDetails {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue
-    private long id;
+    private Integer id;
+
+    @Column(name = "text")
     private String questionText;
 
     public QuestionDetails(){

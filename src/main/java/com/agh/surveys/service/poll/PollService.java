@@ -20,34 +20,19 @@ public class PollService implements IPollService{
     @Autowired
     PollRepository pollRepository;
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    QuestionService questionService;
-
     @Override
     public List<Poll> findAll() {
         return pollRepository.findAll();
     }
 
     @Override
-    public Poll getPoll(Long id) {
+    public Poll getPoll(Integer id) {
         return pollRepository.findById(id)
-                .orElseThrow(() -> new PollNotFoundException(id));
-    }
-
-
-    @Override
-    public Poll addPoll(PollCreateDto pollCreateDto) {
-        User author = userService.getUserByNick(pollCreateDto.getAuthorId());
-        List<Question> questions = questionService.addAllQuestionDetails(pollCreateDto.getQuestionDetails());
-        Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
-        return pollRepository.save(poll);
+                .orElseThrow(() -> new PollNotFoundException());
     }
 
     @Override
-    public void deletePoll(Long id) {
+    public void deletePoll(Integer id) {
         pollRepository.deleteById(id);
     }
 

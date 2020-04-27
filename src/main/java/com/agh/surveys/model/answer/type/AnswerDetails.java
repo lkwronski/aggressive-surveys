@@ -20,7 +20,7 @@ import javax.persistence.*;
     @Id
     @GeneratedValue
     private long id;
-    private String answerText; //in order to comment out answer
+    private String answerText;
 
     public AnswerDetails(){
     }

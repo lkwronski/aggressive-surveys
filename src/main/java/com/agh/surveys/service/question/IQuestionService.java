@@ -1,5 +1,6 @@
 package com.agh.surveys.service.question;
 
+import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.question.type.QuestionDetails;
 
@@ -7,13 +8,13 @@ import java.util.List;
 
 public interface IQuestionService {
 
-    List<Question> getByPollId(Long poolId);
+    List<Question> getByPollId(Integer poolId);
 
-    Question addQuestion(Long poolId, QuestionDetails questionDetails);
+    Question addQuestion(Integer poolId, QuestionDetails questionDetails);
 
-    Question getQuestion(Long questionId);
+    Question getQuestion(Integer questionId);
 
-    void deleteQuestion(Long questionId);
+    void deleteQuestion(Integer questionId);
 
-    List<Question> addAllQuestionDetails(List<QuestionDetails> questionDetails);
+    List<Question> addAllQuestionDetails(Poll poll, List<QuestionDetails> questionDetails);
 }

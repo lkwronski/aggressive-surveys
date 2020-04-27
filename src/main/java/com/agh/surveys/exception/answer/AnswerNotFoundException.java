@@ -1,8 +1,8 @@
 package com.agh.surveys.exception.answer;
 
-public class AnswerNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public AnswerNotFoundException(Long answerId){
-        super("Could not find answer " + answerId);
-    }
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "No answer found with such ID")
+public class AnswerNotFoundException extends RuntimeException {
 }

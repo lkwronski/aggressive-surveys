@@ -9,11 +9,9 @@ public interface IPollService {
 
     List<Poll> findAll();
 
-    void deletePoll(Long id);
+    void deletePoll(Integer id);
 
-    Poll getPoll(Long id);
-
-    Poll addPoll(PollCreateDto pollCreateDto);
+    Poll getPoll(Integer id);
 
     void savePoll(Poll poll);
 }

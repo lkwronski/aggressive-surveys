@@ -4,15 +4,24 @@ package com.agh.surveys.service.group;
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
-import com.agh.surveys.model.group.dto.GroupDto;
+import com.agh.surveys.model.group.dto.GroupCreateDto;
+import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
+import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
+import com.agh.surveys.repository.QuestionRepository;
 import com.agh.surveys.repository.UserRepository;
+import com.agh.surveys.service.poll.PollService;
+import com.agh.surveys.service.question.QuestionService;
+import com.agh.surveys.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 // I changed searching by name to searching by Id as we didn't assume that group's name is unique (LK)
@@ -25,20 +34,44 @@ public class GroupService implements IGroupService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    QuestionRepository questionRepository;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    PollService pollService;
+
+    @Autowired
+    QuestionService questionService;
 
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
-        //@TODO complete it
-        return null;
+        Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
+        User author = userService.getUserByNick(pollCreateDto.getAuthorId());
+        List<Question> questions = new LinkedList<>();
+        Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
+        pollService.savePoll(poll);
+        questions.addAll(questionService.addAllQuestionDetails(poll, pollCreateDto.getQuestionDetails()));
+        pollService.savePoll(poll);
+        group.getGroupPolls().add(poll);
+        groupRepository.save(group);
+        return poll;
     }
 
     @Override
-    public Integer addGroup(GroupDto groupDto) {
-        User groupLeader = userRepository.getOne(groupDto.getLeaderNick());
-        List<User> members = userRepository.findByUserNickIn(groupDto.getGroupMembersNicks())
-                .orElseThrow(UserNotFoundException::new);
-
-        Group group = new Group(groupDto.getGroupName(), groupLeader, members);
+    public Integer addGroup(GroupCreateDto groupCreateDto) {
+        User groupLeader = userRepository.getOne(groupCreateDto.getLeaderNick());
+        List<User> members; // TODO dla pustej listy membersNick jest wyrzucany wyjątek
+        if ( groupCreateDto.getGroupMembersNicks().isEmpty()) {
+            members = Collections.emptyList();
+        }
+        else {
+           members = userRepository.findByUserNickIn(groupCreateDto.getGroupMembersNicks())
+                    .orElseThrow(UserNotFoundException::new);
+        }
+        Group group = new Group(groupCreateDto.getGroupName(), groupLeader, members);
 
         return groupRepository.save(group).getId();
 
@@ -55,15 +88,15 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public GroupDto getGroupDto(Integer id) {
+    public GroupRespDto getGroupDto(Integer id) {
         Group group=  groupRepository.findById(id)
                 .orElseThrow(GroupNotFoundException::new);
-        return new GroupDto(group);
+        return new GroupRespDto(group);
     }
 
     @Override
     public Group getGroup(Integer id){
-        return groupRepository.getOne(id);
+        return groupRepository.findById(id).orElseThrow(GroupNotFoundException::new);
     }
 
     //@TODO Maybe there is some way to update only group and the user will be updated as well? (LK)
@@ -73,7 +106,6 @@ public class GroupService implements IGroupService {
         User user = userRepository.getOne(userNick);
 
         group.getGroupMembers().add(user);
-        user.getUserGroups().add(group);
 
         saveGroupAndUser(group, user);
     }
@@ -89,7 +121,6 @@ public class GroupService implements IGroupService {
         User user = userRepository.getOne(userNick);
 
         group.getGroupMembers().remove(user);
-        user.getUserGroups().remove(group);
 
         saveGroupAndUser(group, user);
 

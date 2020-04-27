@@ -1,7 +1,9 @@
 package com.agh.surveys.controller;
 
 import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.poll.dto.PollResponseDto;
 import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.dto.QuestionResponse;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.service.poll.PollService;
 import com.agh.surveys.service.question.QuestionService;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("polls")
@@ -21,27 +24,27 @@ public class PollController {
     QuestionService questionService;
 
     @GetMapping
-    List<Poll> getAllPolls() {
-        return pollService.findAll();
+    List<PollResponseDto> getAllPolls() {
+        return pollService.findAll().stream().map(PollResponseDto::new).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    Poll findPoll(@PathVariable Long id) {
-        return pollService.getPoll(id);
+    PollResponseDto findPoll(@PathVariable Integer id) {
+        return new PollResponseDto(pollService.getPoll(id));
     }
 
     @DeleteMapping("/{id}")
-    void deletePoll(@PathVariable Long id) {
+    void deletePoll(@PathVariable Integer id) {
         pollService.deletePoll(id);
     }
 
     @GetMapping("/{pollId}/questions")
-    List<Question> getPollQuestions(@PathVariable Long pollId) {
-        return questionService.getByPollId(pollId);
+    List<QuestionResponse> getPollQuestions(@PathVariable Integer pollId) {
+        return questionService.getByPollId(pollId).stream().map(QuestionResponse::new).collect(Collectors.toList());
     }
 
     @PostMapping("/{pollId}/questions")
-    Question addQuestion(@PathVariable Long pollId, @RequestBody QuestionDetails questionDetails) {
-        return questionService.addQuestion(pollId, questionDetails);
+    QuestionResponse addQuestion(@PathVariable Integer pollId, @RequestBody QuestionDetails questionDetails) {
+        return new QuestionResponse(questionService.addQuestion(pollId, questionDetails));
     }
 }

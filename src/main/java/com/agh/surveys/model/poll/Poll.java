@@ -4,6 +4,7 @@ import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.question.Question;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -11,15 +12,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Entity
+@NoArgsConstructor
+@Entity(name = "poll_entity")
 public class Poll {
 
     @Id
     @GeneratedValue
-    private Long pollId;
+    private Integer pollId;
 
+    @Column(name = "name")
     private String pollName;
+
+    @Column(name = "creation_time")
     private LocalDateTime pollCreationTime;
+
+    @Column(name = "deadline")
     private LocalDateTime polDeadline;
 
     @ToString.Exclude
@@ -31,7 +38,7 @@ public class Poll {
     @JoinColumn(name = "userNick")
     private User author;
 
-    @OneToMany(mappedBy = "questionPoll", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "questionPoll", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
     public Poll(String pollName, LocalDateTime pollCreationTime, LocalDateTime polDeadline, User author, List<Question> questions) {
@@ -42,6 +49,4 @@ public class Poll {
         this.questions = questions;
     }
 
-    public Poll() {
-    }
 }

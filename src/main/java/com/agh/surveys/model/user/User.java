@@ -29,17 +29,17 @@ public class User {
     @Column(name = "email", unique = true)
     private String userEmail;
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "groupMembers", cascade =CascadeType.PERSIST)
-    private List<Group> userGroups;
+//    @ToString.Exclude
+//    @ManyToMany(mappedBy = "groupMembers", cascade =CascadeType.PERSIST)
+//    private List<Group> userGroups;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "groupLeader", cascade = CascadeType.PERSIST)
-    private List<Group> managedGroups;
+//    @ToString.Exclude
+//    @OneToMany(mappedBy = "groupLeader", cascade = CascadeType.PERSIST)
+//    private List<Group> managedGroups;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy ="author", cascade = CascadeType.PERSIST)
-    private List<Poll> createdPolls;
+//    @ToString.Exclude
+//    @OneToMany(mappedBy ="author", cascade = CascadeType.PERSIST)
+//    private List<Poll> createdPolls;
 
     public User(UserDto dto){
         this.userNick = dto.getUserNick();

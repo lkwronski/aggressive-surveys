@@ -21,7 +21,7 @@ public class UsersController {
     @GetMapping("/{nick}")
     public UserDto getUser(@PathVariable(value = "nick") String nick) {
         User user = userService.getUserByNick(nick);
-        return new UserDto(user);
+        return new UserDto(user.getUserNick(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
     }
 
     @DeleteMapping("/{nick}")

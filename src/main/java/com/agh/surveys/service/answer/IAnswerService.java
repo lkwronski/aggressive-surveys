@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface IAnswerService {
 
-    List<Answer> findAll(Long questionId);
+    List<Answer> findAll(Integer questionId);
 
-    Answer addAnswer(Long questionID, String userID, AnswerDetails answerDetails);
+    Answer addAnswer(Integer questionID, String userID, AnswerDetails answerDetails);
 
-    Answer getAnswer(Long AnswerId);
+    Answer getAnswer(Integer AnswerId);
 
-    void deleteAnswer(Long answerId);
+    void deleteAnswer(Integer answerId);
 
 }

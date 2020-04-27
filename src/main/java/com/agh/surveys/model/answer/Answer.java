@@ -5,23 +5,29 @@ import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class Answer {
+
     @Id
+    @Column(name = "id")
     @GeneratedValue
-    private Long id;
+    private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "questionId")
     private Question question;
 
     @ManyToOne
     private User answerAuthor;
 
+    @Column(name = "create_date")
     private LocalDateTime answerDate;
     
     @OneToOne(cascade = CascadeType.ALL)
@@ -34,5 +40,4 @@ public class Answer {
         this.answerDetails = answerDetails;
     }
 
-    public Answer() {}
 }

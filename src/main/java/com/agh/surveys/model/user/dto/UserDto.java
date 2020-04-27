@@ -13,10 +13,10 @@ public class UserDto {
     private String userLastName;
     private String userEmail;
 
-    public UserDto(User user){
-        this.userEmail= user.getUserEmail();
-        this.userFirstName= user.getUserFirstName();
-        this.userLastName= user.getUserLastName();
-        this.userNick= user.getUserNick();
+    public UserDto(String userNick, String userFirstName, String userLastName, String userEmail){
+        this.userEmail= userEmail;
+        this.userFirstName= userFirstName;
+        this.userLastName= userLastName;
+        this.userNick= userNick;
     }
 }

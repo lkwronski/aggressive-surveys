@@ -2,6 +2,7 @@ package com.agh.surveys.model.question.type;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class QuestionCheckBox extends QuestionDetails {
 
     @ElementCollection
+    @Column(name = "options")
     private List<String> options;
 
     public QuestionCheckBox(String questionText, List<String> options) {

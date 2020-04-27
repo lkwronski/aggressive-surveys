@@ -1,5 +1,6 @@
 package com.agh.surveys.service.user;
 
+import com.agh.surveys.exception.user.UserExistsInDatabaseException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
@@ -16,7 +17,11 @@ public class UserService implements IUserService {
     @Override
     public String addUserFromDto(UserDto userDto) {
         User user = new User(userDto);
-        return userRepository.save(user).getUserNick();
+        if (userRepository.findByUserNick(userDto.getUserNick()).isPresent()) {
+            throw new UserExistsInDatabaseException();
+        }else {
+            return userRepository.save(user).getUserNick();
+        }
     }
 
     @Override

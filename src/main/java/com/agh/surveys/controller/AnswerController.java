@@ -1,12 +1,14 @@
 package com.agh.surveys.controller;
 
 import com.agh.surveys.model.answer.Answer;
+import com.agh.surveys.model.answer.dto.AnswerResponse;
 import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.service.answer.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class AnswerController {
@@ -15,22 +17,22 @@ public class AnswerController {
     AnswerService answerService;
 
     @GetMapping("questions/{questionId}/answers")
-    List<Answer> all(@PathVariable Long questionId) {
-        return answerService.findAll(questionId);
+    List<AnswerResponse> all(@PathVariable Integer questionId) {
+        return answerService.findAll(questionId).stream().map(AnswerResponse::new).collect(Collectors.toList());
     }
 
     @PostMapping("user/{userId}/questions/{questionId}/answers")
-    Answer addAnswer(@PathVariable Long questionId, @PathVariable String userId, @RequestBody AnswerDetails answerDetails) {
-        return answerService.addAnswer(questionId, userId, answerDetails);
+    AnswerResponse addAnswer(@PathVariable Integer questionId, @PathVariable String userId, @RequestBody AnswerDetails answerDetails) {
+        return new AnswerResponse(answerService.addAnswer(questionId, userId, answerDetails));
     }
 
     @GetMapping("/answer/{answerId}")
-    Answer findAnswer(@PathVariable Long answerId) {
-        return answerService.getAnswer(answerId);
+    AnswerResponse findAnswer(@PathVariable Integer answerId) {
+        return new AnswerResponse(answerService.getAnswer(answerId));
     }
 
     @DeleteMapping("/answer/{answerId}")
-    void deleteAnswer(@PathVariable Long answerId) {
+    void deleteAnswer(@PathVariable Integer answerId) {
         answerService.deleteAnswer(answerId);
     }
 
