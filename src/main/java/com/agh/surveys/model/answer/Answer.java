@@ -21,6 +21,7 @@ public class Answer {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "questionId")
     private Question question;
 
     @ManyToOne

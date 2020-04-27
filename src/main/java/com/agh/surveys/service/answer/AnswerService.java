@@ -6,6 +6,7 @@ import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.AnswerRepository;
+import com.agh.surveys.repository.QuestionRepository;
 import com.agh.surveys.service.user.UserService;
 import com.agh.surveys.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class AnswerService implements IAnswerService {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    QuestionRepository questionRepository;
+
     @Override
     public List<Answer> findAll(Integer questionId) {
         return answerRepository.findAll().stream().filter(x -> x.getQuestion().getQuestionId().equals(questionId)).collect(Collectors.toList());
@@ -38,6 +42,8 @@ public class AnswerService implements IAnswerService {
         Question question = questionService.getQuestion(questionID);
         Answer answer = new Answer(question, user, LocalDateTime.now(), answerDetails);
         answerRepository.save(answer);
+        question.getAnswers().add(answer);
+        questionRepository.save(question);
         return answer;
     }
 

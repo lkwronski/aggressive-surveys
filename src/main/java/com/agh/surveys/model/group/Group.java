@@ -36,7 +36,7 @@ public class Group {
     )
     private List<User> groupMembers;
 
-    @OneToMany
+    @OneToMany(mappedBy = "pollGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Poll> groupPolls;
 
     public Group(String groupName, User groupLeader, List<User> groupMembers) {
