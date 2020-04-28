@@ -3,6 +3,7 @@ package com.agh.surveys.service.group;
 
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.exception.group.UserAlreadyInTheGroupException;
+import com.agh.surveys.exception.group.UserNotInTheGroupException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
@@ -67,7 +68,7 @@ public class GroupService implements IGroupService {
         List<User> members = Collections.emptyList(); // TODO dla pustej listy membersNick jest wyrzucany wyjątek
         if ( !groupCreateDto.getGroupMembersNicks().isEmpty()) {
             for (String userName : groupCreateDto.getGroupMembersNicks()) {
-                User user = userRepository.findByUserNick(userName).orElseThrow(UserNotFoundException::new);
+                User user = userService.getUserByNick(userName);
                 members.add(user);
             }
         }
@@ -125,7 +126,7 @@ public class GroupService implements IGroupService {
         User user = userRepository.getOne(userNick);
 
         if(!group.getGroupMembers.contains(user)){
-            throw new UserNotFoundException();
+            throw new UserNotInTheGroupException();
         }
 
         group.getGroupMembers().remove(user);
