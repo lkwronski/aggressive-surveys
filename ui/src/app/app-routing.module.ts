@@ -1,25 +1,16 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  
-  {
-    path: 'show-poll',
-    loadChildren: () => import('./show-poll/show-poll.module').then( m => m.ShowPollPageModule)
-  },
-  {
-    path: '',
-    loadChildren: () => import('./base-page/base-page.module').then( m => m.BasePagePageModule)
-  },
-  {
-    path: 'create-poll',
-    loadChildren: () => import('./create-poll/create-poll.module').then( m => m.CreatePollPageModule)
-  }
+  { path: '', loadChildren: './main/main.module#MainPageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'edit-profile', loadChildren: './edit-profile/edit-profile.module#EditProfilePageModule' },
+  { path: 'main', loadChildren: './main/main.module#MainPageModule' },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
