@@ -19,8 +19,8 @@ public class PollResponseDto {
     private String pollName;
     private LocalDateTime pollCreationTime;
     private LocalDateTime polDeadline;
-    private Group pollGroup;
-    private User author;
+    private Integer pollGroupId;
+    private String authorNick;
     private List<QuestionResponse> questions;
 
     public PollResponseDto(Poll poll) {
@@ -28,8 +28,8 @@ public class PollResponseDto {
         this.pollName = poll.getPollName();
         this.pollCreationTime = poll.getPollCreationTime();
         this.polDeadline = poll.getPolDeadline();
-        this.pollGroup = poll.getPollGroup();
-        this.author = poll.getAuthor();
+        this.pollGroupId = poll.getPollGroup().getId();
+        this.authorNick = poll.getAuthor().getUserNick();
         this.questions = poll.getQuestions().stream().map(QuestionResponse::new).collect(Collectors.toList());
     }
 }
