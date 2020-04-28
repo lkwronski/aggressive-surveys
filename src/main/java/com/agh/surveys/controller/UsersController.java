@@ -1,10 +1,14 @@
 package com.agh.surveys.controller;
 
+import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users")
@@ -27,5 +31,23 @@ public class UsersController {
     @DeleteMapping("/{nick}")
     public void removeUser(@PathVariable(value = "nick") String nick) {
         userService.removeUserByNick(nick);
+    }
+
+    @GetMapping("/{nick}/groups")
+    public List<GroupRespDto> getUserGroups(@PathVariable(value = "nick") String nick) {
+        return userService.getUserByNick(nick)
+                .getUserGroups()
+                .stream()
+                .map(GroupRespDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{nick}/managedGroups")
+    public List<GroupRespDto> getUserManagedGroups(@PathVariable(value = "nick") String nick) {
+        return userService.getUserByNick(nick)
+                .getManagedGroups()
+                .stream()
+                .map(GroupRespDto::new)
+                .collect(Collectors.toList());
     }
 }
