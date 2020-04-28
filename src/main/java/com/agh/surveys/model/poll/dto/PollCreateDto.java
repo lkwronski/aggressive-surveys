@@ -12,13 +12,13 @@ public class PollCreateDto {
 
     private String pollName;
     private LocalDateTime polDeadline;
-    private String authorId;
+    private String authorNick;
     private List<QuestionDetails> questionDetails;
 
-    public PollCreateDto(String pollName, LocalDateTime polDeadline, String authorId, List<QuestionDetails> questionDetails) {
+    public PollCreateDto(String pollName, LocalDateTime polDeadline, String authorNick, List<QuestionDetails> questionDetails) {
         this.pollName = pollName;
         this.polDeadline = polDeadline;
-        this.authorId = authorId;
+        this.authorNick = authorNick;
         this.questionDetails = questionDetails;
     }
 

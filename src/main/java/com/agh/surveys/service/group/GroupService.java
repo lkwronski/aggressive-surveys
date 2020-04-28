@@ -8,9 +8,11 @@ import com.agh.surveys.model.group.dto.GroupCreateDto;
 import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
+import com.agh.surveys.model.poll.dto.PollResponseDto;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
+import com.agh.surveys.repository.PollRepository;
 import com.agh.surveys.repository.QuestionRepository;
 import com.agh.surveys.repository.UserRepository;
 import com.agh.surveys.service.poll.PollService;
@@ -46,18 +48,18 @@ public class GroupService implements IGroupService {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    PollRepository pollRepository;
+
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
         Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
-        User author = userService.getUserByNick(pollCreateDto.getAuthorId());
+        User author = userService.getUserByNick(pollCreateDto.getAuthorNick());
         List<Question> questions = new LinkedList<>();
         Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
-        pollService.savePoll(poll);
         questions.addAll(questionService.addAllQuestionDetails(poll, pollCreateDto.getQuestionDetails()));
-        pollService.savePoll(poll);
-        group.getGroupPolls().add(poll);
-        groupRepository.save(group);
-        return poll;
+        poll.setPollGroup(group);
+        return pollRepository.save(poll);
     }
 
     @Override
