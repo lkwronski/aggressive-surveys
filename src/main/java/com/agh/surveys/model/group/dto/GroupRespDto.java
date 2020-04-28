@@ -24,6 +24,5 @@ public class GroupRespDto {
                 .stream()
                 .map(User::getUserNick)
                 .collect(Collectors.toList());
-        this.groupMembersNicks.add(this.leaderNick);
     }
 }

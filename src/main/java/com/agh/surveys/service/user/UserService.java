@@ -1,16 +1,14 @@
 package com.agh.surveys.service.user;
 
-import com.agh.surveys.exception.BusinnessException;
+import com.agh.surveys.exception.BusinessException;
 import com.agh.surveys.exception.user.UserExistsInDatabaseException;
 import com.agh.surveys.exception.user.UserNotFoundException;
+import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.stream.Stream;
 
 @Service
 public class UserService implements IUserService {
@@ -28,7 +26,7 @@ public class UserService implements IUserService {
 
     private void validateUser(UserDto userDto) {
         if (isUserEmailInvalid(userDto.getUserEmail())) {
-            throw new BusinnessException("Email is already taken!");
+            throw new BusinessException("Email is already taken!");
         }
         if (isUserNickInvalid(userDto.getUserNick())) {
             throw new UserExistsInDatabaseException();
@@ -48,13 +46,18 @@ public class UserService implements IUserService {
         userRepository.delete(user);
     }
 
+    public boolean isUserInGroup(User user, Group group) {
+        return user.getManagedGroups().contains(group) ||
+                user.getUserGroups().contains(group);
+    }
+
     @Override
     public void removeUserByNick(String nick) {
         User user = userRepository.findByUserNick(nick)
                 .orElseThrow(UserNotFoundException::new);
 
         if (!user.getManagedGroups().isEmpty()) {
-            throw new BusinnessException("This User is a leader of a group and cannot be deleted!");
+            throw new BusinessException("This User is a leader of a group and cannot be deleted!");
         }
         user.getUserGroups()
                 .forEach(group -> group.getGroupMembers().remove(user));

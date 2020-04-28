@@ -22,7 +22,7 @@ public class GroupController {
     GroupService groupService;
 
     @PostMapping
-    public Integer addGroup(@RequestBody GroupCreateDto groupRespDto) {
+    public GroupRespDto addGroup(@RequestBody GroupCreateDto groupRespDto) {
         return groupService.addGroup(groupRespDto);
     }
 

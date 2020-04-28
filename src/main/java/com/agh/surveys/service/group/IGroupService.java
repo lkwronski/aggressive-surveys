@@ -9,7 +9,7 @@ import com.agh.surveys.model.poll.dto.PollCreateDto;
 public interface IGroupService {
 
 
-    Integer addGroup(GroupCreateDto groupCreateDto);
+    GroupRespDto addGroup(GroupCreateDto groupCreateDto);
     void removeGroup(Group group);
     GroupRespDto getGroupDto(Integer id);
     void removeGroup(Integer id);

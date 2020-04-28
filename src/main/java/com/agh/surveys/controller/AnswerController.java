@@ -1,6 +1,5 @@
 package com.agh.surveys.controller;
 
-import com.agh.surveys.model.answer.Answer;
 import com.agh.surveys.model.answer.dto.AnswerResponse;
 import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.service.answer.AnswerService;
@@ -18,8 +17,8 @@ public class AnswerController {
     AnswerService answerService;
 
     @GetMapping("questions/{questionId}/answers")
-    List<AnswerResponse> all(@PathVariable Integer questionId) {
-        return answerService.findAll(questionId).stream().map(AnswerResponse::new).collect(Collectors.toList());
+    List<AnswerResponse> getQuestionAnswers(@PathVariable Integer questionId) {
+        return answerService.getQuestionAnswers(questionId).stream().map(AnswerResponse::new).collect(Collectors.toList());
     }
 
     @PostMapping("user/{userId}/questions/{questionId}/answers")
