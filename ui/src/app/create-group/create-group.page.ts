@@ -1,28 +1,30 @@
-
-import { Component , OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service';
+import { GroupService } from '../services/group.service'
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.page.html',
-  styleUrls: ['./main.page.scss'],
+  selector: 'app-create-group',
+  templateUrl: './create-group.page.html',
+  styleUrls: ['./create-group.page.scss'],
 })
-export class MainPage implements OnInit {
+export class CreateGroupPage implements OnInit {
 
   item: any;
   id: string;
 
+  groupName: string = "";
+
   constructor(private aut: AngularFireAuth,
-    private router: Router , public services: ServicesService ) {
+    private router: Router , public services: ServicesService,
+    private groupService: GroupService ) {
     }
 
   ngOnInit() {
     this.logued();
   }
-
 
 
   logued() {
@@ -44,16 +46,6 @@ export class MainPage implements OnInit {
       );
   }
 
-  async signOut() {
-    const res = await this.aut.auth.signOut();
-    console.log(res);
-    this.router.navigateByUrl('/login');
-  }
-
-  createGroup() {
-    this.router.navigateByUrl('/create-group')
-  }
-
   async getProfile(id) {
     await this.services.getProfile(id).subscribe((data: any) => {
       if (data.length === 0) {
@@ -67,8 +59,8 @@ export class MainPage implements OnInit {
     });
   }
 
-
-  profile() {
-    this.router.navigateByUrl(`profile`);
+  createGroup(){
+    //this.groupService.addGroup("todo", "todo")
   }
+
 }
