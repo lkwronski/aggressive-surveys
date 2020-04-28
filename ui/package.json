@@ -1,8 +1,7 @@
 {
-  "name": "IonicFirebaseStarted",
+  "name": "Survey Time!",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Aggressive Sureys Team",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
