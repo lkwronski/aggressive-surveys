@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        property = "questionType", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = QuestionText.class, name = "TEXT"),
         @JsonSubTypes.Type(value = QuestionTime.class, name = "TIME"),

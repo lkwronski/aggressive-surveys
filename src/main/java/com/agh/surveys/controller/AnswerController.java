@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
 public class AnswerController {
 
     @Autowired
