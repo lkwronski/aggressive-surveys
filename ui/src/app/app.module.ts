@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -16,6 +17,11 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { GroupService } from './services/group.service';
+import { AnswerService } from './services/answer.service';
+import { PollService } from './services/poll.service';
+import { UserService } from './services/user.service';
+import { QuestionService } from './services/question.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,12 +33,18 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AngularFireAuthModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    GroupService,
+    AnswerService,
+    PollService,
+    UserService,
+    QuestionService
   ],
   bootstrap: [AppComponent]
 })
