@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     Optional<User> findByUserNick(String nick);
 
+    Optional<User> findByUserEmail(String email);
+
     @Transactional
     void removeByUserNick(String nick);
 

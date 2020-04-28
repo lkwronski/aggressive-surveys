@@ -20,12 +20,27 @@ public class UserService implements IUserService {
 
     @Override
     public String addUserFromDto(UserDto userDto) {
+        validateUser(userDto);
+
         User user = new User(userDto);
-        if (userRepository.findByUserNick(userDto.getUserNick()).isPresent()) {
-            throw new UserExistsInDatabaseException();
-        }else {
-            return userRepository.save(user).getUserNick();
+        return userRepository.save(user).getUserNick();
+    }
+
+    private void validateUser(UserDto userDto) {
+        if (isUserEmailInvalid(userDto.getUserEmail())) {
+            throw new BusinnessException("Email is already taken!");
         }
+        if (isUserNickInvalid(userDto.getUserNick())) {
+            throw new UserExistsInDatabaseException();
+        }
+    }
+
+    private boolean isUserEmailInvalid(String email) {
+        return userRepository.findByUserEmail(email).isPresent();
+    }
+
+    private boolean isUserNickInvalid(String nick) {
+        return userRepository.findByUserNick(nick).isPresent();
     }
 
     @Override
@@ -35,8 +50,10 @@ public class UserService implements IUserService {
 
     @Override
     public void removeUserByNick(String nick) {
-        User user = userRepository.getOne(nick);
-        if (!user.getManagedGroups().isEmpty()){
+        User user = userRepository.findByUserNick(nick)
+                .orElseThrow(UserNotFoundException::new);
+
+        if (!user.getManagedGroups().isEmpty()) {
             throw new BusinnessException("This User is a leader of a group and cannot be deleted!");
         }
         user.getUserGroups()

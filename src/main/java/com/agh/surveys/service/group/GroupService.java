@@ -1,6 +1,7 @@
 package com.agh.surveys.service.group;
 
 
+import com.agh.surveys.exception.BusinnessException;
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
@@ -64,13 +65,13 @@ public class GroupService implements IGroupService {
 
     @Override
     public Integer addGroup(GroupCreateDto groupCreateDto) {
-        User groupLeader = userRepository.getOne(groupCreateDto.getLeaderNick());
+        User groupLeader = userRepository.findByUserNick(groupCreateDto.getLeaderNick())
+                .orElseThrow(() -> new BusinnessException("Person mentioned as leader does not exist"));
         List<User> members; // TODO dla pustej listy membersNick jest wyrzucany wyjątek
-        if ( groupCreateDto.getGroupMembersNicks().isEmpty()) {
+        if (groupCreateDto.getGroupMembersNicks().isEmpty()) {
             members = Collections.emptyList();
-        }
-        else {
-           members = userRepository.findByUserNickIn(groupCreateDto.getGroupMembersNicks())
+        } else {
+            members = userRepository.findByUserNickIn(groupCreateDto.getGroupMembersNicks())
                     .orElseThrow(UserNotFoundException::new);
         }
         Group group = new Group(groupCreateDto.getGroupName(), groupLeader, members);
@@ -91,40 +92,40 @@ public class GroupService implements IGroupService {
 
     @Override
     public GroupRespDto getGroupDto(Integer id) {
-        Group group=  groupRepository.findById(id)
+        Group group = groupRepository.findById(id)
                 .orElseThrow(GroupNotFoundException::new);
         return new GroupRespDto(group);
     }
 
     @Override
-    public Group getGroup(Integer id){
+    public Group getGroup(Integer id) {
         return groupRepository.findById(id).orElseThrow(GroupNotFoundException::new);
     }
 
     //@TODO Maybe there is some way to update only group and the user will be updated as well? (LK)
     @Override
     public void addGroupMember(Integer groupId, String userNick) {
-        Group group = groupRepository.getOne(groupId);
-        User user = userRepository.getOne(userNick);
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(GroupNotFoundException::new);
+        User user = userRepository.findByUserNick(userNick)
+                .orElseThrow(UserNotFoundException::new);
 
         group.getGroupMembers().add(user);
 
-        saveGroupAndUser(group, user);
+        groupRepository.save(group);
     }
 
-    private void saveGroupAndUser(Group group, User user) {
-        groupRepository.save(group);
-        userRepository.save(user);
-    }
 
     @Override
     public void removeGroupMember(Integer groupId, String userNick) {
-        Group group = groupRepository.getOne(groupId);
-        User user = userRepository.getOne(userNick);
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(GroupNotFoundException::new);
+        User user = userRepository.findByUserNick(userNick)
+                .orElseThrow(UserNotFoundException::new);
 
-        group.getGroupMembers().remove(user);
-
-        saveGroupAndUser(group, user);
-
+        if (!group.getGroupMembers().remove(user)) {
+            throw new BusinnessException("This User didn't belong to this group");
+        }
+        groupRepository.save(group);
     }
 }
