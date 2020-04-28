@@ -5,7 +5,7 @@ h4 {
 }
 
 .titulo {
-    color: #FCD000;
+    color: #f1e76c;
     font-size: 24px;
     font-weight: bold;
 }
@@ -15,7 +15,7 @@ h1 {
     font-size: 50px;
     font-weight: bold;
     text-align: center;
-    color:#FCD000;
+    color:#f1e76c;
     margin-bottom: 100px;
 }
 
@@ -30,17 +30,6 @@ h1 {
     margin-top: 10px;
 }
 
-// :host {
-//     ion-content {
-//         --background: url('/assets/background.png') no-repeat;
-//     }
-// }
-// ion-content ::ng-deep ion-scroll {
-//     background-image: url('/assets/background.png')!important;
-//     background-repeat: no-repeat!important;
-//     background-position: center;
-//     background-size: contain;
-// }
 h2 {
     font-size: 1.5rem;
     color: #232B38;
@@ -120,6 +109,7 @@ input.success {
     font-family: "Poppins", sans-serif;
     transition: .2s all;
     transition-timing-function: ease;
+    color: #f1e76c;
 }
 
 .buttone:hover {
