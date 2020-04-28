@@ -8,11 +8,13 @@ import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
+
 export class GroupService {
 
-  constructor(private http: HttpClient ) { }
+  constructor(public http: HttpClient ) { }
 
-  API = 'localhost:8080/groups/'
+  API: string = 'http://localhost:8080';
+  GROUP_API: string = this.API + '/groups' 
 
   addGroup(nickname: string, groupName: string){
      var body: any = {
@@ -20,8 +22,8 @@ export class GroupService {
       "groupName": groupName,
       "groupMembersNicks": []
     };
-
-    return this.http.post(this.API, body);
+    console.log(body);
+    return this.http.post<any>(this.GROUP_API, body);
   }
 
 

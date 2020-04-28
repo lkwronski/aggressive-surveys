@@ -14,16 +14,22 @@ export class CreateGroupPage implements OnInit {
 
   item: any;
   id: string;
-
   groupName: string = "";
 
   constructor(private aut: AngularFireAuth,
     private router: Router , public services: ServicesService,
-    private groupService: GroupService ) {
+    public groupService: GroupService ) {
+
     }
 
   ngOnInit() {
     this.logued();
+  }
+
+  addGroup(){
+    //console.log(this.groupService)
+    this.groupService.addGroup("Jan14", this.groupName).subscribe();
+    //console.log("Hello")
   }
 
 
@@ -58,9 +64,4 @@ export class CreateGroupPage implements OnInit {
       }
     });
   }
-
-  createGroup(){
-    //this.groupService.addGroup("todo", "todo")
-  }
-
 }
