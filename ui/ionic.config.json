@@ -1,7 +1,7 @@
 {
-  "name": "ui",
+  "name": "IonicFirebaseStarted",
   "integrations": {
-    "capacitor": {}
+    "cordova": {}
   },
   "type": "angular"
 }
