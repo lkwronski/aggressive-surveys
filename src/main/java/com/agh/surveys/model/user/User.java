@@ -38,7 +38,7 @@ public class User {
     private List<Group> managedGroups;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Poll> createdPolls;
 
     public User(UserDto dto) {

@@ -25,7 +25,7 @@ public class Group {
     private String groupName;
 
     @ManyToOne
-    @JoinColumn(name = "userNick", nullable = false)
+    @JoinColumn(name = "userNick")
     private User groupLeader;
 
     @ManyToMany
