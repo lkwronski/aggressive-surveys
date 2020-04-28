@@ -18,6 +18,11 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { GroupService } from './services/group.service';
+import { AnswerService } from './services/answer.service';
+import { PollService } from './services/poll.service';
+import { UserService } from './services/user.service';
+import { QuestionService } from './services/question.service';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -35,7 +40,11 @@ import { GroupService } from './services/group.service';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    GroupService
+    GroupService,
+    AnswerService,
+    PollService,
+    UserService,
+    QuestionService
   ],
   bootstrap: [AppComponent]
 })

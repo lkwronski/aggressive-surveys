@@ -26,6 +26,17 @@ export class GroupService {
     return this.http.post<any>(this.GROUP_API, body);
   }
 
+  addGroupMember(id: any, nick: string){
+    var request = this.GROUP_API + "/" + id + "/members";
+      return this.http.post(request, {
+        params: {
+          userNick: nick
+        }
+      })
+  }
+
+
+
 
 
   
