@@ -2,6 +2,7 @@ package com.agh.surveys.service.group;
 
 
 import com.agh.surveys.exception.group.GroupNotFoundException;
+import com.agh.surveys.exception.group.UserAlreadyInTheGroupException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
@@ -63,13 +64,12 @@ public class GroupService implements IGroupService {
     @Override
     public Integer addGroup(GroupCreateDto groupCreateDto) {
         User groupLeader = userRepository.getOne(groupCreateDto.getLeaderNick());
-        List<User> members; // TODO dla pustej listy membersNick jest wyrzucany wyjątek
-        if ( groupCreateDto.getGroupMembersNicks().isEmpty()) {
-            members = Collections.emptyList();
-        }
-        else {
-           members = userRepository.findByUserNickIn(groupCreateDto.getGroupMembersNicks())
-                    .orElseThrow(UserNotFoundException::new);
+        List<User> members = Collections.emptyList(); // TODO dla pustej listy membersNick jest wyrzucany wyjątek
+        if ( !groupCreateDto.getGroupMembersNicks().isEmpty()) {
+            for (String userName : groupCreateDto.getGroupMembersNicks()) {
+                User user = userRepository.findByUserNick(userName).orElseThrow(UserNotFoundException::new);
+                members.add(user);
+            }
         }
         Group group = new Group(groupCreateDto.getGroupName(), groupLeader, members);
 
@@ -105,6 +105,10 @@ public class GroupService implements IGroupService {
         Group group = groupRepository.getOne(groupId);
         User user = userRepository.getOne(userNick);
 
+        if(group.getGroupMembers().contains(user)){
+            throw new UserAlreadyInTheGroupException();
+        }
+
         group.getGroupMembers().add(user);
 
         saveGroupAndUser(group, user);
@@ -119,6 +123,10 @@ public class GroupService implements IGroupService {
     public void removeGroupMember(Integer groupId, String userNick) {
         Group group = groupRepository.getOne(groupId);
         User user = userRepository.getOne(userNick);
+
+        if(!group.getGroupMembers.contains(user)){
+            throw new UserNotFoundException();
+        }
 
         group.getGroupMembers().remove(user);
 
