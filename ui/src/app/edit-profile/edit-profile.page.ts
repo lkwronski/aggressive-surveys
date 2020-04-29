@@ -104,7 +104,7 @@ export class EditProfilePage implements OnInit {
     };
     console.log(data);
     if (this.cp === false) {
-      this.userConfig.addUser(name, surname,username);
+      this.userConfig.addUser(name, surname,username, this.mail).subscribe( res => console.log(res) );
       this.services.createUser(data).then(
         res => {
           console.log('Upload' + res);
