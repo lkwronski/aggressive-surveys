@@ -1,9 +1,10 @@
 
 import { Component , OnInit} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
+import { auth, User } from 'firebase/app';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-main',
@@ -21,11 +22,12 @@ export class MainPage implements OnInit {
 
 
   constructor(private aut: AngularFireAuth,
-    private router: Router , public services: ServicesService ) {
+    private router: Router , public services: ServicesService, public user: UserService ) {
     }
 
   ngOnInit() {
     this.logued();
+    console.log(this.managedGroups)
   }
 
 
@@ -70,12 +72,27 @@ export class MainPage implements OnInit {
         this.item = data;
         this.username = this.item[0].payload.doc.data().username;
         console.log(this.username)
+        this.getManagedGroups();
+        this.getMemberGroups();
       }
     });
   }
 
-
   profile() {
     this.router.navigateByUrl(`profile`);
+  }
+
+  getManagedGroups(){
+    console.log("getting managed groups")
+    this.user.getManagedGroups(this.username).subscribe(data =>
+       this.managedGroups = data)
+    console.log(this.managedGroups)
+  }
+
+  getMemberGroups() {
+
+    this.user.getGroups(this.username).subscribe(data =>
+      this.memberGroups = data)
+
   }
 }

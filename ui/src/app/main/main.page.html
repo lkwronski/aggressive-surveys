@@ -25,13 +25,16 @@
     <br>
     <br>
     
-   
   </div>
 
-  <ion-list>
-    <ion-item>aaa</ion-item>
-    <ion-item>bbb</ion-item>
-    <ion-item>{{this.id}}</ion-item>
+  <h1 class="goodfont">Managed Groups</h1>
+  <ion-list *ngFor="let group of this.managedGroups">
+    <ion-item>{{ group.groupName }}</ion-item>
+  </ion-list>
+
+  <h1 class="goodfont">Your member of</h1>
+  <ion-list *ngFor="let group of this.memberGroups">
+    <ion-item>{{ group.groupName }}</ion-item>
   </ion-list>
 
   <ion-button (click)="this.createGroup()">Create group</ion-button>

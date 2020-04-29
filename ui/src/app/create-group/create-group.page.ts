@@ -16,6 +16,8 @@ export class CreateGroupPage implements OnInit {
   id: string;
   groupName: string = "";
 
+  username: string;
+
   constructor(private aut: AngularFireAuth,
     private router: Router , public services: ServicesService,
     public groupService: GroupService ) {
@@ -28,8 +30,9 @@ export class CreateGroupPage implements OnInit {
 
   addGroup(){
     //console.log(this.groupService)
-    this.groupService.addGroup("Jan14", this.groupName).subscribe();
+    this.groupService.addGroup(this.username, this.groupName).subscribe();
     //console.log("Hello")
+    this.router.navigateByUrl('/')
   }
 
 
@@ -61,6 +64,8 @@ export class CreateGroupPage implements OnInit {
         console.log('Profile not empty');
         console.log(data);
         this.item = data;
+        this.username = this.item[0].payload.doc.data().username;
+        console.log(this.username);
       }
     });
   }
