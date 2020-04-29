@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'main', loadChildren: './main/main.module#MainPageModule' },
   { path: 'create-group', loadChildren: './create-group/create-group.module#CreateGroupPageModule' },
+  { path: 'edit-profile', loadChildren: './edit-profile/edit-profile.module#EditProfilePageModule' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

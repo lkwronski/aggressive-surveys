@@ -26,4 +26,16 @@ export class UserService {
     return this.http.get(request)
   }
 
+  addUser(name: string, surname: string, username: string, email: string){
+    var body: any = {
+      "userEmail": email,
+      "userFirstName": name,
+      "userLastName": surname,
+      "userNick": username,
+    };
+    console.log(body);
+    return this.http.post<any>(this.USER_API, body);
+
+  }
+  
 }
