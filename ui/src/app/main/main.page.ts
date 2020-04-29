@@ -15,6 +15,11 @@ export class MainPage implements OnInit {
   item: any;
   id: string;
 
+  username: string;
+  managedGroups: any;
+  memberGroups: any;
+
+
   constructor(private aut: AngularFireAuth,
     private router: Router , public services: ServicesService ) {
     }
@@ -63,6 +68,8 @@ export class MainPage implements OnInit {
         console.log('Profile not empty');
         console.log(data);
         this.item = data;
+        this.username = this.item[0].payload.doc.data().username;
+        console.log(this.username)
       }
     });
   }
