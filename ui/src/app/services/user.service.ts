@@ -12,12 +12,12 @@ export class UserService {
   USER_API: string = this.API + '/users' 
 
   getGroups(nick: string){
-      var request = this.USER_API + '/' + nick + 'groups'
+      var request = this.USER_API + '/' + nick + '/groups'
       return this.http.get(request)
   }
 
   getManagedGroups(nick: string){
-    var request = this.USER_API + '/' + nick + 'managedGroups'
+    var request = this.USER_API + '/' + nick + '/managedGroups'
     return this.http.get(request)
   }
 
