@@ -35,6 +35,14 @@ export class GroupService {
       })
   }
 
+  getGroup(id: any){
+    return this.http.get(this.GROUP_API + "/" + id);
+  }
+
+  getPolls(id: any){
+    return this.http.get(this.GROUP_API + "/" + id + "/polls")
+  }
+
 
 
 

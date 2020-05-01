@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>group</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-label> Group name: </ion-label>
+  <br>
+  <ion-label>  {{ group.groupName }}  </ion-label>
+  <br>
+  <ion-label> Group leader: </ion-label><br>
+  <ion-label>  {{ group.leaderNick }}  </ion-label>
+  <br>
+  <ion-label> Members </ion-label>
+  <ion-list *ngFor="let member of group.groupMembersNicks">
+    <ion-item> {{member}}</ion-item>
+  </ion-list>
+
+  <ion-label> Polls </ion-label><br>
+  <ion-list *ngFor="let poll of polls">
+    <ion-item>{{poll.pollName}} {{poll.polDeadline}}</ion-item>
+  </ion-list>
+
+  <ion-button (click)="manageGroup()">Manage Group</ion-button>
+  <ion-button (click)="createPoll()">Create Poll</ion-button>
+</ion-content>
