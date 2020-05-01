@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../services/group.service'
 import { ActivatedRoute }  from '@angular/router'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group',
@@ -16,7 +17,7 @@ export class GroupPage implements OnInit {
 
 
   constructor(private route: ActivatedRoute, 
-    private groupSerivce: GroupService) { }
+    private groupSerivce: GroupService, private router: Router) { }
 
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -28,6 +29,7 @@ export class GroupPage implements OnInit {
 
   manageGroup(){
     console.log("Redirect to manage group")
+    this.router.navigate(['/manage-group', this.id])
   }
 
   createPoll(){

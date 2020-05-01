@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Route, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
-import { HttpClient } from '@angular/common/http' 
+import { HttpParams, HttpClient } from '@angular/common/http' 
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +27,13 @@ export class GroupService {
   }
 
   addGroupMember(id: any, nick: string){
-    var request = this.GROUP_API + "/" + id + "/members";
-      return this.http.post(request, {
-        params: {
-          userNick: nick
-        }
-      })
+    //temperary solution
+    var request = this.GROUP_API + "/" + id + "/members" + "?userNick=" + nick;
+    return this.http.post(request, {});
+  }
+
+  removeGroupMember(id: any, nick: string){
+    return this.http.delete(this.GROUP_API + "/" + id + "/members/" + nick)
   }
 
   getGroup(id: any){
