@@ -90,9 +90,12 @@ export class MainPage implements OnInit {
   }
 
   getMemberGroups() {
-
     this.user.getGroups(this.username).subscribe(data =>
       this.memberGroups = data)
+  }
 
+  onSelect(group){
+    console.log(group)
+    this.router.navigate(['/group', group.groupId])
   }
 }

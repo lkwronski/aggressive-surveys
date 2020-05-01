@@ -28,7 +28,7 @@
   </div>
 
   <h1 class="goodfont">Managed Groups</h1>
-  <ion-list *ngFor="let group of this.managedGroups">
+  <ion-list (click)="onSelect(group)" *ngFor="let group of this.managedGroups">
     <ion-item>{{ group.groupName }}</ion-item>
   </ion-list>
 
