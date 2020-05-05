@@ -34,6 +34,7 @@ export class GroupPage implements OnInit {
 
   createPoll(){
     console.log("Redirect to create poll")
+    this.router.navigate(['/group', this.id, 'create-poll'])
   }
 
 }
