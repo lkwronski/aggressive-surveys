@@ -53,13 +53,17 @@ public class GroupService implements IGroupService {
 
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
-        Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
+
+        Group group = getGroup(groupId);
         User author = userService.getUserByNick(pollCreateDto.getAuthorNick());
+
         List<Question> questions = new LinkedList<>();
         Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
+        pollService.savePoll(poll);
         questions.addAll(questionService.addAllQuestionDetails(poll, pollCreateDto.getQuestionDetails()));
         poll.setPollGroup(group);
-        return pollRepository.save(poll);
+        groupRepository.save(group);
+        return poll;
     }
 
     @Override
