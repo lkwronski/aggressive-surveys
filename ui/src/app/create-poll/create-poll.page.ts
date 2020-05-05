@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service'
 import { PollService } from '../services/poll.service'
 import { AngularFireAuth } from '@angular/fire/auth';
+import { GroupService } from '../services/group.service';
+import { ActivatedRoute }  from '@angular/router'
 
 @Component({
   selector: 'app-create-poll',
@@ -11,15 +13,25 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class CreatePollPage implements OnInit {
 
+  groupId: number;
   item: any;
   username: string;
   id: any;
+  questionList: any[];
+  title: string;
 
-  constructor(private router: Router, private services: ServicesService,
-    private pollService: PollService, private aut: AngularFireAuth) { }
+  TEXT = "TEXT"
+  CHECKBOX = "CHECKBOX"
+
+  constructor(private route: ActivatedRoute,
+    private router: Router, private services: ServicesService,
+    private pollService: PollService, private aut: AngularFireAuth, public groupService: GroupService) { }
 
   ngOnInit() {
+    this.groupId = parseInt(this.route.snapshot.paramMap.get('id'));
     this.logued();
+    this.title = "";
+    this.questionList = []
     
   }
 
@@ -55,6 +67,75 @@ export class CreatePollPage implements OnInit {
         console.log(this.username)
       }
     });
+  }
+
+  addTextQuestion(){
+    let q: any = {
+      "questionText": "",
+      "options": [],
+      "questionType": this.TEXT
+    }
+    this.questionList.push(q)
+  }
+
+  addCheckboxQuestion(){
+    let q: any = {
+      "questionText": "",
+      "options": [],
+      "questionType": this.CHECKBOX
+    }
+    this.questionList.push(q)
+  }
+
+  addAnswer(q: any, o: string){
+    let option: any = {
+      "answerText": o
+    }
+    q.options.push(option);
+  }
+
+  convertOption(q: any){
+    let result = [];
+    for(let ans of q.options){
+      result.push(ans.answerText)
+    }
+    q.options = result;
+  }
+
+  removeAnswer(options: any[], removedOption: any){
+    var index = options.indexOf(removedOption, 0);
+    if (index > -1){
+      options.splice(index, 1);
+    }
+  }
+
+  removeQuestion(removedQuestion: any){
+    var index = this.questionList.indexOf(removedQuestion, 0);
+    if (index > -1){
+      this.questionList.splice(index, 1);
+    }
+  }
+
+  validateAndSend(){
+    let canSend: boolean = this.validate()
+    if (canSend){
+      this.send()
+    }
+    
+  }
+
+  validate(): boolean{
+    return true;
+  }
+
+  send(){
+    //console.log(this.groupService)
+    for(let question of this.questionList){
+      this.convertOption(question)
+    }
+    console.log(this.questionList)
+    this.groupService.addPoll(this.groupId, this.username, this.title, this.questionList).subscribe(data =>
+      console.log(data))
   }
 
 }

@@ -16,6 +16,17 @@ export class GroupService {
   API: string = 'http://localhost:8080';
   GROUP_API: string = this.API + '/groups' 
 
+  addPoll(groupId: any, nickname: string, pollTitle: string, questionDetails: any){
+    var body: any = {
+      "authorNick": nickname,
+      "polDeadline": null,
+      "pollName": pollTitle,
+      "questionDetails": questionDetails
+    };
+    console.log(body)
+    return this.http.post<any>(this.GROUP_API + "/" + groupId + "/polls", body);
+  }
+
   addGroup(nickname: string, groupName: string){
      var body: any = {
       "leaderNick": nickname,
@@ -42,11 +53,5 @@ export class GroupService {
 
   getPolls(id: any){
     return this.http.get(this.GROUP_API + "/" + id + "/polls")
-  }
-
-
-
-
-
-  
+  }  
 }
