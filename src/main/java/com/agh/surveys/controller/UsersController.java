@@ -4,6 +4,7 @@ import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.service.user.UserService;
+import com.agh.surveys.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -6,7 +6,6 @@ import com.agh.surveys.model.user.dto.UserDto;
 public interface IUserService {
 
     String addUserFromDto(UserDto userDto);
-    void removeUser(User user);
     void removeUserByNick(String nick);
     User getUserByNick(String nick);
 }

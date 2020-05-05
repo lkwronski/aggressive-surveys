@@ -35,6 +35,8 @@ import javax.persistence.*;
 
     }
 
+    public abstract QuestionType getQuestionType();
+
     public QuestionDetails(String questionText) {
         this.questionText = questionText;
     }

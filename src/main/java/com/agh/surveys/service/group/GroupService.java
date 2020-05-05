@@ -1,7 +1,8 @@
 package com.agh.surveys.service.group;
 
 
-import com.agh.surveys.exception.BusinessException;
+import com.agh.surveys.exception.BadRequestException;
+import com.agh.surveys.exception.NotFoundException;
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
@@ -11,11 +12,10 @@ import com.agh.surveys.model.poll.dto.PollCreateDto;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
-import com.agh.surveys.repository.QuestionRepository;
-import com.agh.surveys.repository.UserRepository;
 import com.agh.surveys.service.poll.PollService;
 import com.agh.surveys.service.question.QuestionService;
 import com.agh.surveys.service.user.UserService;
+import com.agh.surveys.validation.GroupValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +24,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-// I changed searching by name to searching by Id as we didn't assume that group's name is unique (LK)
 @Service
 public class GroupService implements IGroupService {
 
     @Autowired
     GroupRepository groupRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    QuestionRepository questionRepository;
 
     @Autowired
     UserService userService;
@@ -46,19 +39,15 @@ public class GroupService implements IGroupService {
     @Autowired
     QuestionService questionService;
 
-    private static final int pollDeadlineMarginMinutes = 2;
+    @Autowired
+    GroupValidator groupValidator;
 
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
 
         Group group = getGroup(groupId);
         User author = userService.getUserByNick(pollCreateDto.getAuthorNick());
-
-        validatePollDto(pollCreateDto);
-
-        if (!userService.isUserInGroup(author, group)) {
-            throw new BusinessException("Poll author must be member of a group.");
-        }
+        groupValidator.validateCreatePollDto(pollCreateDto, author, group);
 
         List<Question> questions = new LinkedList<>();
         Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
@@ -69,27 +58,24 @@ public class GroupService implements IGroupService {
         return poll;
     }
 
-    private LocalDateTime createdPollDeadlineMargin(){
-        return LocalDateTime.now().plusMinutes(pollDeadlineMarginMinutes);
-    }
-
-    private void validatePollDto(PollCreateDto pollCreateDto){
-        if(pollCreateDto.getPolDeadline().isBefore(createdPollDeadlineMargin()) ){
-            throw new BusinessException("Created poll can't have deadline in the past.");
-        }
-    }
-
     @Override
     public GroupRespDto addGroup(GroupCreateDto groupCreateDto) {
-        User groupLeader = userRepository.getOne(groupCreateDto.getLeaderNick());
-        List<User> members = new ArrayList<>(); // TODO dla pustej listy membersNick jest wyrzucany wyjątek
+        groupValidator.validateCreateGroupDto(groupCreateDto);
 
-        for (String userName : groupCreateDto.getGroupMembersNicks()) {
-            User user = userService.getUserByNick(userName);
-            members.add(user);
+        User groupLeader;
+        try {
+            groupLeader = userService.getUserByNick(groupCreateDto.getLeaderNick());
+        } catch (NotFoundException ex) {
+            throw new NotFoundException("Cannot find person added as group leader");
         }
-        //lider nie moze sie duplikować wsrod czlonkow
-        members.remove(groupLeader);
+
+        List<User> members = new ArrayList<>();
+
+        groupCreateDto.getGroupMembersNicks()
+                .stream()
+                .distinct() //usuniecie duplikatów
+                .filter(nick -> !nick.equals(groupLeader.getUserNick())) //lider nie może się pojawic wsrod czlonkow
+                .forEach(nick -> members.add(userService.getUserByNick(nick)));
 
         Group group = new Group(groupCreateDto.getGroupName(), groupLeader, members);
         groupRepository.save(group);
@@ -98,16 +84,11 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public void removeGroup(Group group) {
-        groupRepository.delete(group);
-    }
-
-    @Override
     public void removeGroup(Integer id) {
-        if (groupRepository.existsById(id)){
+        if (groupRepository.existsById(id)) {
             groupRepository.deleteById(id);
-        }else{
-            throw new GroupNotFoundException();
+        } else {
+            throw new NotFoundException("Cannot find such group");
         }
     }
 
@@ -126,14 +107,10 @@ public class GroupService implements IGroupService {
     @Override
     public void addGroupMember(Integer groupId, String userNick) {
         Group group = groupRepository.getOne(groupId);
-        User user = userRepository.getOne(userNick);
-
-        if (group.getGroupMembers().contains(user)) {
-            throw new BusinessException("This user is already in the group.");
-        }
+        User user = userService.getUserByNick(userNick);
+        groupValidator.validateBeforeAddingUser(group,user);
 
         group.getGroupMembers().add(user);
-
         groupRepository.save(group);
     }
 
@@ -142,13 +119,10 @@ public class GroupService implements IGroupService {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
 
-        if (!group.getGroupMembers().contains(user)) {
-            throw new BusinessException("Provided user is not in this group.");
-        }
+        groupValidator.validateBeforeRemovingUser(group,user);
 
         group.getGroupMembers().remove(user);
 
         groupRepository.save(group);
-
     }
 }

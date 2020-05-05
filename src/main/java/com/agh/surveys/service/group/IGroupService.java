@@ -10,7 +10,6 @@ public interface IGroupService {
 
 
     GroupRespDto addGroup(GroupCreateDto groupCreateDto);
-    void removeGroup(Group group);
     GroupRespDto getGroupDto(Integer id);
     void removeGroup(Integer id);
 

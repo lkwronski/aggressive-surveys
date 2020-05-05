@@ -16,6 +16,11 @@ public class QuestionText extends QuestionDetails {
     }
 
     @Override
+    public QuestionType getQuestionType() {
+        return QuestionType.TEXT;
+    }
+
+    @Override
     public String toString(){
         return "id: " +
                 super.getId() +

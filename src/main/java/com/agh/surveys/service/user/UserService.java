@@ -1,12 +1,14 @@
 package com.agh.surveys.service.user;
 
-import com.agh.surveys.exception.BusinessException;
+import com.agh.surveys.exception.BadRequestException;
+import com.agh.surveys.exception.NotFoundException;
 import com.agh.surveys.exception.user.UserExistsInDatabaseException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.repository.UserRepository;
+import com.agh.surveys.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,49 +18,23 @@ public class UserService implements IUserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserValidator userValidator;
+
     @Override
     public String addUserFromDto(UserDto userDto) {
-        validateUser(userDto);
+        userValidator.validateNewUserDto(userDto);
 
         User user = new User(userDto);
         return userRepository.save(user).getUserNick();
     }
 
-    private void validateUser(UserDto userDto) {
-        if (isUserEmailInvalid(userDto.getUserEmail())) {
-            throw new BusinessException("Email is already taken!");
-        }
-        if (isUserNickInvalid(userDto.getUserNick())) {
-            throw new UserExistsInDatabaseException();
-        }
-    }
-
-    private boolean isUserEmailInvalid(String email) {
-        return userRepository.findByUserEmail(email).isPresent();
-    }
-
-    private boolean isUserNickInvalid(String nick) {
-        return userRepository.findByUserNick(nick).isPresent();
-    }
-
-    @Override
-    public void removeUser(User user) {
-        userRepository.delete(user);
-    }
-
-    public boolean isUserInGroup(User user, Group group) {
-        return user.getManagedGroups().contains(group) ||
-                user.getUserGroups().contains(group);
-    }
-
     @Override
     public void removeUserByNick(String nick) {
         User user = userRepository.findByUserNick(nick)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("Cannot find user with given nick"));
 
-        if (!user.getManagedGroups().isEmpty()) {
-            throw new BusinessException("This User is a leader of a group and cannot be deleted!");
-        }
+        userValidator.validateBeforeDeletion(user);
         user.getUserGroups()
                 .forEach(group -> group.getGroupMembers().remove(user));
 

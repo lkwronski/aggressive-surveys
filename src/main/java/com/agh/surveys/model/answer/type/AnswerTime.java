@@ -1,5 +1,6 @@
 package com.agh.surveys.model.answer.type;
 
+import com.agh.surveys.model.question.type.QuestionType;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -22,6 +23,11 @@ public class AnswerTime extends AnswerDetails{
 
     public AnswerTime(){
 
+    }
+
+    @Override
+    public QuestionType getQuestionType() {
+        return QuestionType.TIME;
     }
 
 }
