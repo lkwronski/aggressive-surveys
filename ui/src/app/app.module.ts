@@ -22,6 +22,7 @@ import { AnswerService } from './services/answer.service';
 import { PollService } from './services/poll.service';
 import { UserService } from './services/user.service';
 import { QuestionService } from './services/question.service';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,7 @@ import { QuestionService } from './services/question.service';
   providers: [
     StatusBar,
     SplashScreen,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     GroupService,
     AnswerService,

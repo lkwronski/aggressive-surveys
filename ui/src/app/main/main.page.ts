@@ -1,10 +1,11 @@
 
 import { Component , OnInit} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth, User } from 'firebase/app';
+import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service';
-import { UserService } from '../services/user.service';
+import { FCM } from '@ionic-native/fcm/ngx';
+
 
 @Component({
   selector: 'app-main',
@@ -15,22 +16,19 @@ export class MainPage implements OnInit {
 
   item: any;
   id: string;
-
   username: string;
-  managedGroups: any;
-  memberGroups: any;
-
 
   constructor(private aut: AngularFireAuth,
-    private router: Router , public services: ServicesService, public user: UserService ) {
+    private router: Router , public services: ServicesService, private fcm: FCM ) {
     }
+
 
   ngOnInit() {
     this.logued();
-    console.log(this.managedGroups)
   }
 
 
+  
 
   logued() {
     this.aut.authState
@@ -70,32 +68,17 @@ export class MainPage implements OnInit {
         console.log('Profile not empty');
         console.log(data);
         this.item = data;
-        this.username = this.item[0].payload.doc.data().username;
-        console.log(this.username)
-        this.getManagedGroups();
-        this.getMemberGroups();
+        this.username=this.item.payload.doc.data().username;
       }
+      
     });
   }
+
 
   profile() {
     this.router.navigateByUrl(`profile`);
   }
 
-  getManagedGroups(){
-    console.log("getting managed groups")
-    this.user.getManagedGroups(this.username).subscribe(data =>
-       this.managedGroups = data)
-    console.log(this.managedGroups)
-  }
 
-  getMemberGroups() {
-    this.user.getGroups(this.username).subscribe(data =>
-      this.memberGroups = data)
-  }
 
-  onSelect(group){
-    console.log(group)
-    this.router.navigate(['/group', group.groupId])
-  }
 }
