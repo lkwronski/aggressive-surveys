@@ -1,6 +1,7 @@
 package com.agh.surveys.service.group;
 
 
+import com.agh.surveys.component.group.GroupComponent;
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // I changed searching by name to searching by Id as we didn't assume that group's name is unique (LK)
 @Service
@@ -37,7 +39,7 @@ public class GroupService implements IGroupService {
     UserRepository userRepository;
 
     @Autowired
-    QuestionRepository questionRepository;
+    GroupComponent groupComponent;
 
     @Autowired
     UserService userService;
@@ -48,8 +50,21 @@ public class GroupService implements IGroupService {
     @Autowired
     QuestionService questionService;
 
-    @Autowired
-    PollRepository pollRepository;
+    @Override
+    public List<Poll> getFilledPolls(Integer groupId, String userNick) {
+        Group group = getGroup(groupId);
+        User user = userService.getUserByNick(userNick);
+        List<Poll> groupPolls = group.getGroupPolls();
+        return groupPolls.stream().filter(poll -> groupComponent.userResponseToPoll(user,poll)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Poll> getUnfilledPolls(Integer groupId, String userNick) {
+        Group group = getGroup(groupId);
+        User user = userService.getUserByNick(userNick);
+        List<Poll> groupPolls = group.getGroupPolls();
+        return groupPolls.stream().filter(poll -> groupComponent.userNotResponseToPoll(user,poll)).collect(Collectors.toList());
+    }
 
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
