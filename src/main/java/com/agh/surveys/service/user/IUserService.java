@@ -13,4 +13,6 @@ public interface IUserService {
     void removeUser(User user);
     void removeUserByNick(String nick);
     User getUserByNick(String nick);
+
+    List<Poll> getUnfilledPolls(String nick);
 }
