@@ -65,5 +65,4 @@ public class GroupController {
         return new PollResponseDto(groupService.addPolltoGroup(pollCreateDto,groupId));
     }
 
-
 }

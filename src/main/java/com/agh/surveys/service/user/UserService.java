@@ -3,6 +3,7 @@ package com.agh.surveys.service.user;
 import com.agh.surveys.exception.BusinnessException;
 import com.agh.surveys.exception.user.UserExistsInDatabaseException;
 import com.agh.surveys.exception.user.UserNotFoundException;
+import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service

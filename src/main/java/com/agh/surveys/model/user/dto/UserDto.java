@@ -19,4 +19,11 @@ public class UserDto {
         this.userLastName= userLastName;
         this.userNick= userNick;
     }
+
+    public UserDto(User user){
+        this.userEmail= user.getUserEmail();
+        this.userFirstName= user.getUserFirstName();
+        this.userLastName= user.getUserLastName();
+        this.userNick= user.getUserNick();
+    }
 }
