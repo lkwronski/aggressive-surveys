@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'edit-profile', loadChildren: './edit-profile/edit-profile.module#EditProfilePageModule' },
   { path: 'group/:id', loadChildren: './group/group.module#GroupPageModule' },
   { path: 'manage-group/:id', loadChildren: './manage-group/manage-group.module#ManageGroupPageModule' },
+  { path: 'group/:id/create-poll', loadChildren: './create-poll/create-poll.module#CreatePollPageModule' },
+  { path: 'group/:groupId/answer-poll/:pollId', loadChildren: './answer-poll/answer-poll.module#AnswerPollPageModule' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

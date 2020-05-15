@@ -14,8 +14,6 @@ export class GroupPage implements OnInit {
   id: number;
   polls: any;
 
-
-
   constructor(private route: ActivatedRoute, 
     private groupSerivce: GroupService, private router: Router) { }
 
@@ -34,6 +32,12 @@ export class GroupPage implements OnInit {
 
   createPoll(){
     console.log("Redirect to create poll")
+    this.router.navigate(['/group', this.id, 'create-poll'])
+  }
+
+  onSelect(poll){
+    console.log(poll)
+    this.router.navigate(['/group', this.id, 'answer-poll', poll.pollId])
   }
 
 }
