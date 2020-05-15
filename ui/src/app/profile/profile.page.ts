@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ServicesService } from '../services/services.service';
 import { ThemeService } from '../services/theme.service';
-
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-profile',

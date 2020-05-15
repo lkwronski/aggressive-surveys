@@ -7,6 +7,10 @@ const routes: Routes = [
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'main', loadChildren: './main/main.module#MainPageModule' },
+  { path: 'create-group', loadChildren: './create-group/create-group.module#CreateGroupPageModule' },
+  { path: 'edit-profile', loadChildren: './edit-profile/edit-profile.module#EditProfilePageModule' },
+  { path: 'group/:id', loadChildren: './group/group.module#GroupPageModule' },
+  { path: 'manage-group/:id', loadChildren: './manage-group/manage-group.module#ManageGroupPageModule' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

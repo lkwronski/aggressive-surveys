@@ -46,11 +46,10 @@ export class ServicesService {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection(`users/${value.uid}/profile`).add({
         name: value.name,
-        phone: value.phone,
+        surname: value.surname,
         mail: value.mail,
         img: value.img,
         uid: value.uid,
-        adress: value.adress,
         date: Date.now(),
         username: value.username,
       });

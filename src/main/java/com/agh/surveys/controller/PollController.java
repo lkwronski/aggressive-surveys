@@ -8,6 +8,7 @@ import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.question.dto.QuestionResponse;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.service.answer.AnswerService;
+import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.service.poll.PollService;
 import com.agh.surveys.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,16 @@ public class PollController {
     @GetMapping("/{pollId}/questions")
     List<QuestionResponse> getPollQuestions(@PathVariable Integer pollId) {
         return questionService.getByPollId(pollId).stream().map(QuestionResponse::new).collect(Collectors.toList());
+    }
+
+    @GetMapping("/{pollId}/responded_user")
+    List<UserDto> getRespondedUser(@PathVariable Integer pollId) {
+        return pollService.getRespondedUser(pollId).stream().map(UserDto::new).collect(Collectors.toList());
+    }
+
+    @GetMapping("/{pollId}/not_responded_user")
+    List<UserDto> getNotRespondedUser(@PathVariable Integer pollId) {
+        return pollService.getNotRespondedUser(pollId).stream().map(UserDto::new).collect(Collectors.toList());
     }
 
     @PostMapping("/{pollId}/questions")

@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>create-group</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-label>Enter group name:</ion-label>
+  <ion-input [(ngModel)]="this.groupName"></ion-input>
+</ion-content>
+
+<ion-button (click)="this.addGroup()">Create Group</ion-button>

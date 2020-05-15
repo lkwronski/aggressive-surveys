@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { ThemeService } from './services/theme.service';
+import { GroupService } from './services/group.service';
 
 @Component({
   selector: 'app-root',

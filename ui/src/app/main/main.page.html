@@ -1,7 +1,8 @@
 <ion-header no-border>
   <ion-toolbar no-border>
+    
       <ion-title>
-          Ionic 4 Firestart
+          Survey Time!
       </ion-title>
   <ion-buttons slot="start" >
       <ion-button [routerLink]="['/profile']" >
@@ -15,27 +16,31 @@
 
   <div class="form">
   
-    <ion-card color="" mode="ios">
 
       <ion-card-content *ngFor="let item of item">
-        <h1 class="goodfont">Welcome back {{item.payload.doc.data().name }} !</h1>
+
+        <h1 class="goodfont">Welcome back {{item.payload.doc.data().name}} {{item.payload.doc.data().surname}}!</h1>
       </ion-card-content>
-    </ion-card>
+  
     <br>
     <br>
-    <!-- Not working right now!!!  -->
-   
+    
   </div>
 
-  <ion-list>
-    <ion-item>aaa</ion-item>
-    <ion-item>bbb</ion-item>
-    <ion-item>{{this.id}}</ion-item>
+  <h1 class="goodfont">Managed Groups</h1>
+  <ion-list (click)="onSelect(group)" *ngFor="let group of this.managedGroups">
+    <ion-item>{{ group.groupName }}</ion-item>
   </ion-list>
 
+  <h1 class="goodfont">Your member of</h1>
+  <ion-list *ngFor="let group of this.memberGroups">
+    <ion-item>{{ group.groupName }}</ion-item>
+  </ion-list>
+
+  <ion-button (click)="this.createGroup()">Create group</ion-button>
   <ion-button (click)="this.signOut()">Logout</ion-button>
 
-  <!-- Animation -->
+
 
   
   

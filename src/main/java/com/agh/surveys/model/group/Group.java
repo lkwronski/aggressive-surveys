@@ -60,6 +60,4 @@ public class Group {
         this.groupMessages = Collections.emptyList();
     }
 
-
-
 }
