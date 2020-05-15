@@ -1,12 +1,9 @@
 package com.agh.surveys.service.group;
 
 
-<<<<<<< HEAD
-import com.agh.surveys.exception.BadRequestException;
+
 import com.agh.surveys.exception.NotFoundException;
-=======
 import com.agh.surveys.component.group.GroupComponent;
->>>>>>> master
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
@@ -16,6 +13,7 @@ import com.agh.surveys.model.poll.dto.PollCreateDto;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
+import com.agh.surveys.repository.UserRepository;
 import com.agh.surveys.service.poll.PollService;
 import com.agh.surveys.service.question.QuestionService;
 import com.agh.surveys.service.user.UserService;
@@ -36,15 +34,12 @@ public class GroupService implements IGroupService {
     GroupRepository groupRepository;
 
     @Autowired
-<<<<<<< HEAD
-=======
     UserRepository userRepository;
 
     @Autowired
     GroupComponent groupComponent;
 
     @Autowired
->>>>>>> master
     UserService userService;
 
     @Autowired
@@ -53,10 +48,10 @@ public class GroupService implements IGroupService {
     @Autowired
     QuestionService questionService;
 
-<<<<<<< HEAD
+
     @Autowired
     GroupValidator groupValidator;
-=======
+
     @Override
     public List<Poll> getFilledPolls(Integer groupId, String userNick) {
         Group group = getGroup(groupId);
@@ -72,17 +67,15 @@ public class GroupService implements IGroupService {
         List<Poll> groupPolls = group.getGroupPolls();
         return groupPolls.stream().filter(poll -> groupComponent.userNotResponseToPoll(user,poll)).collect(Collectors.toList());
     }
->>>>>>> master
+
 
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
 
         Group group = getGroup(groupId);
         User author = userService.getUserByNick(pollCreateDto.getAuthorNick());
-<<<<<<< HEAD
+
         groupValidator.validateCreatePollDto(pollCreateDto, author, group);
-=======
->>>>>>> master
 
         List<Question> questions = new LinkedList<>();
         Poll poll = new Poll(pollCreateDto.getPollName(), LocalDateTime.now(), pollCreateDto.getPolDeadline(), author, questions);
@@ -90,10 +83,7 @@ public class GroupService implements IGroupService {
         questions.addAll(questionService.addAllQuestionDetails(poll, pollCreateDto.getQuestionDetails()));
         poll.setPollGroup(group);
         groupRepository.save(group);
-<<<<<<< HEAD
 
-=======
->>>>>>> master
         return poll;
     }
 
