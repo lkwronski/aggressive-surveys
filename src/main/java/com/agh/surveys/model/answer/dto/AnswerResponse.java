@@ -14,14 +14,14 @@ public class AnswerResponse {
 
     private Integer id;
     private Integer questionId;
-    private User answerAuthor;
+    private String answerAuthorNick;
     private LocalDateTime answerDate;
     private AnswerDetails answerDetails;
 
     public AnswerResponse(Answer answer) {
         this.id = answer.getId();
         this.questionId = answer.getQuestion().getQuestionId();
-        this.answerAuthor = answer.getAnswerAuthor();
+        this.answerAuthorNick = answer.getAnswerAuthor().getUserNick();
         this.answerDate = answer.getAnswerDate();
         this.answerDetails = answer.getAnswerDetails();
     }

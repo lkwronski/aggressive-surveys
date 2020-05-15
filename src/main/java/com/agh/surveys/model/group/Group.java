@@ -1,12 +1,16 @@
 package com.agh.surveys.model.group;
 
 
+import com.agh.surveys.model.message.Message;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.user.User;
+import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,11 +43,21 @@ public class Group {
     @OneToMany(mappedBy = "pollGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Poll> groupPolls;
 
+    @OneToMany(mappedBy = "messageGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Message> groupMessages;
+
+
+    public List<User> getMembersWithAuthor(){
+        List<User> outp = new ArrayList<>(groupMembers);
+        outp.add(groupLeader);
+        return outp;
+    }
     public Group(String groupName, User groupLeader, List<User> groupMembers) {
         this.groupName = groupName;
         this.groupLeader = groupLeader;
         this.groupMembers = groupMembers;
         this.groupPolls = Collections.emptyList();
+        this.groupMessages = Collections.emptyList();
     }
 
 

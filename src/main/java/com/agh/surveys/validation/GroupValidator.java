@@ -13,19 +13,15 @@ import java.time.LocalDateTime;
 @Component
 public class GroupValidator {
 
-    private static final int pollDeadlineMarginMinutes = 2;
 
     @Autowired
     CommonValidator commonValidator;
 
-    private LocalDateTime createdPollDeadlineMargin() {
-        return LocalDateTime.now().plusMinutes(pollDeadlineMarginMinutes);
-    }
+    private static final int pollDeadlineInMinutes = 2;
 
     public void validateCreatePollDto(PollCreateDto pollCreateDto, User author, Group group) {
-        if (!isDeadlineCorrect(pollCreateDto.getPolDeadline())) {
-            throw new BadRequestException(String.format
-                    ("Created poll can't have deadline in the past or earlier than %d minutes.", pollDeadlineMarginMinutes));
+        if (isDeadlineIncorrect(pollCreateDto.getPolDeadline(),pollDeadlineInMinutes)) {
+            throw new BadRequestException("Created poll can't have deadline in the past or earlier than few minutes");
         }
 
         if(!isUserMemberOrLeader( author,group)){
@@ -56,11 +52,11 @@ public class GroupValidator {
         }
     }
 
-    private boolean isUserMemberOrLeader(User user, Group group) {
+    public boolean isUserMemberOrLeader(User user, Group group) {
         return user.getUserGroups().contains(group) || user.getManagedGroups().contains(group);
     }
 
-    private boolean isDeadlineCorrect(LocalDateTime deadline) {
-        return deadline.isBefore(createdPollDeadlineMargin());
+    private boolean isDeadlineIncorrect(LocalDateTime deadline, int minutes) {
+        return deadline.isBefore(commonValidator.createdPollDeadlineMargin(minutes));
     }
 }

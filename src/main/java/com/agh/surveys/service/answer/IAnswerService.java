@@ -1,7 +1,10 @@
 package com.agh.surveys.service.answer;
 
 import com.agh.surveys.model.answer.Answer;
+import com.agh.surveys.model.answer.dto.AnswerResponse;
+import com.agh.surveys.model.answer.dto.AnswersRequestDto;
 import com.agh.surveys.model.answer.type.AnswerDetails;
+import com.agh.surveys.model.question.Question;
 
 import java.util.List;
 
@@ -15,4 +18,5 @@ public interface IAnswerService {
 
     void deleteAnswer(Integer answerId);
 
+    List<AnswerResponse> answerQuestion(Integer pollId, AnswersRequestDto answersRequestDto);
 }

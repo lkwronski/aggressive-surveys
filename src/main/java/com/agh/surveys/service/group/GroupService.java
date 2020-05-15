@@ -54,6 +54,7 @@ public class GroupService implements IGroupService {
         pollService.savePoll(poll);
         questions.addAll(questionService.addAllQuestionDetails(poll, pollCreateDto.getQuestionDetails()));
         poll.setPollGroup(group);
+        groupRepository.save(group);
 
         return poll;
     }
@@ -123,6 +124,11 @@ public class GroupService implements IGroupService {
 
         group.getGroupMembers().remove(user);
 
+        groupRepository.save(group);
+    }
+
+    @Override
+    public void saveGroup(Group group){
         groupRepository.save(group);
     }
 }

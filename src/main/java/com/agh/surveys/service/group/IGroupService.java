@@ -19,4 +19,5 @@ public interface IGroupService {
     void removeGroupMember(Integer groupId, String userNick);
     Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId);
 
+    void saveGroup(Group group);
 }

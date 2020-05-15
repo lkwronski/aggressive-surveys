@@ -22,7 +22,7 @@ public class PollService implements IPollService{
     @Override
     public Poll getPoll(Integer id) {
         return pollRepository.findById(id)
-                .orElseThrow(() -> new PollNotFoundException());
+                .orElseThrow(PollNotFoundException::new);
     }
 
     @Override

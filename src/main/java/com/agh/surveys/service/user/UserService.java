@@ -5,12 +5,16 @@ import com.agh.surveys.exception.NotFoundException;
 import com.agh.surveys.exception.user.UserExistsInDatabaseException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
+import com.agh.surveys.model.message.Message;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.repository.UserRepository;
 import com.agh.surveys.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
@@ -45,5 +49,14 @@ public class UserService implements IUserService {
     public User getUserByNick(String nick) {
         return userRepository.findByUserNick(nick)
                 .orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public List<Message> getUnansweredMessagesBeforeDeadline(String nick) {
+        User user = getUserByNick(nick);
+        return user.getAllGroups().stream()
+                .flatMap(group -> group.getGroupMessages().stream())
+                .filter(message -> !user.getAnsweredMessages().contains(message) && !message.isAfterDeadline())
+                .collect(Collectors.toList());
     }
 }

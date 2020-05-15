@@ -1,10 +1,10 @@
 package com.agh.surveys.controller;
 
 import com.agh.surveys.model.group.dto.GroupRespDto;
+import com.agh.surveys.model.message.dto.MessageResponseDto;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.service.user.UserService;
-import com.agh.surveys.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +50,23 @@ public class UsersController {
                 .getManagedGroups()
                 .stream()
                 .map(GroupRespDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{nick}/unAnsweredMessages")
+    public List<MessageResponseDto> getUserUnAnsweredMessagesBeforeDeadline(@PathVariable(value ="nick") String nick){
+        return userService.getUnansweredMessagesBeforeDeadline(nick)
+                .stream()
+                .map(MessageResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{nick}/answeredMessages")
+    public List<MessageResponseDto> getUserAnsweredMessages(@PathVariable(value ="nick") String nick){
+        return userService.getUserByNick(nick)
+                .getAnsweredMessages()
+                .stream()
+                .map(MessageResponseDto::new)
                 .collect(Collectors.toList());
     }
 }
