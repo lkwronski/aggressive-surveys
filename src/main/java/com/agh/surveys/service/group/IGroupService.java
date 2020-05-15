@@ -12,9 +12,7 @@ import java.util.List;
 public interface IGroupService {
 
 
-    Integer addGroup(GroupCreateDto groupCreateDto);
-
-    void removeGroup(Group group);
+    GroupRespDto addGroup(GroupCreateDto groupCreateDto);
 
     GroupRespDto getGroupDto(Integer id);
 
@@ -28,7 +26,10 @@ public interface IGroupService {
 
     Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId);
 
+    void saveGroup(Group group);
+
     List<Poll> getFilledPolls(Integer groupId, String userNick);
 
     List<Poll> getUnfilledPolls(Integer groupId, String userNick);
+
 }

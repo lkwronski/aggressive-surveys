@@ -14,4 +14,17 @@ public class QuestionText extends QuestionDetails {
 
     public QuestionText() {
     }
+
+    @Override
+    public QuestionType getQuestionType() {
+        return QuestionType.TEXT;
+    }
+
+    @Override
+    public String toString(){
+        return "id: " +
+                super.getId() +
+                "\nquestionText: " +
+                super.getQuestionText();
+    }
 }

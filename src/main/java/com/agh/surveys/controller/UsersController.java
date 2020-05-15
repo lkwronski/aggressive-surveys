@@ -1,6 +1,7 @@
 package com.agh.surveys.controller;
 
 import com.agh.surveys.model.group.dto.GroupRespDto;
+import com.agh.surveys.model.message.dto.MessageResponseDto;
 import com.agh.surveys.model.poll.dto.PollResponseDto;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
@@ -53,8 +54,26 @@ public class UsersController {
                 .collect(Collectors.toList());
     }
 
+
+    @GetMapping("/{nick}/unAnsweredMessages")
+    public List<MessageResponseDto> getUserUnAnsweredMessagesBeforeDeadline(@PathVariable(value ="nick") String nick){
+        return userService.getUnansweredMessagesBeforeDeadline(nick)
+                .stream()
+                .map(MessageResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{nick}/answeredMessages")
+    public List<MessageResponseDto> getUserAnsweredMessages(@PathVariable(value ="nick") String nick) {
+        return userService.getUserByNick(nick)
+                .getAnsweredMessages()
+                .stream()
+                .map(MessageResponseDto::new)
+                .collect(Collectors.toList());
+    }
     @GetMapping("/{nick}/filled_polls")
     public List<PollResponseDto> getUnfilledPolls(@PathVariable(value = "nick") String nick) {
         return userService.getUnfilledPolls(nick).stream().map(PollResponseDto::new).collect(Collectors.toList());
+
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("questions")
-@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
+@CrossOrigin(origins = {"http://localhost:8100", "http://localhost:8080"})
 class QuestionController {
 
     @Autowired

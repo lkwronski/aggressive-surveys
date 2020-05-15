@@ -22,4 +22,9 @@ public class QuestionCheckBox extends QuestionDetails {
 
     public QuestionCheckBox() {
     }
+
+    @Override
+    public QuestionType getQuestionType() {
+        return QuestionType.CHECKBOX;
+    }
 }

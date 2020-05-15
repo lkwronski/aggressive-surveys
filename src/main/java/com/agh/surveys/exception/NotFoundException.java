@@ -4,9 +4,9 @@ package com.agh.surveys.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class BusinnessException extends RuntimeException {
-    public BusinnessException(String s) {
+@ResponseStatus(code = HttpStatus.NOT_FOUND)
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String s) {
         super(s);
     }
 }

@@ -10,12 +10,11 @@ import com.agh.surveys.service.poll.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class QuestionService implements  IQuestionService{
+public class QuestionService implements IQuestionService {
 
     @Autowired
     QuestionRepository questionRepository;
@@ -29,8 +28,8 @@ public class QuestionService implements  IQuestionService{
     }
 
     @Override
-    public Question addQuestion(Integer poolId, QuestionDetails questionDetails) {
-        Poll poll = pollService.getPoll(poolId);
+    public Question addQuestion(Integer pollId, QuestionDetails questionDetails) {
+        Poll poll = pollService.getPoll(pollId);
         Question question = questionRepository.save(new Question(poll, questionDetails));
         poll.getQuestions().add(question);
         pollService.savePoll(poll);
@@ -49,6 +48,6 @@ public class QuestionService implements  IQuestionService{
 
     @Override
     public void deleteQuestion(Integer questionId) {
-       questionRepository.deleteById(questionId);
+        questionRepository.deleteById(questionId);
     }
 }

@@ -22,4 +22,9 @@ public class QuestionTime extends QuestionDetails {
 
     public QuestionTime() {
     }
+
+    @Override
+    public QuestionType getQuestionType() {
+        return QuestionType.TIME;
+    }
 }
