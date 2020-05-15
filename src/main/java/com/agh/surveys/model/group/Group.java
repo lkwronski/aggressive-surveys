@@ -46,6 +46,4 @@ public class Group {
         this.groupPolls = Collections.emptyList();
     }
 
-
-
 }

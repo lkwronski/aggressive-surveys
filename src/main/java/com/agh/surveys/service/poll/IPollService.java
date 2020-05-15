@@ -1,7 +1,9 @@
 package com.agh.surveys.service.poll;
 
 import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.user.User;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface IPollService {
@@ -13,4 +15,8 @@ public interface IPollService {
     Poll getPoll(Integer id);
 
     Poll savePoll(Poll poll);
+
+    List<User> getRespondedUser(Integer pollId);
+
+    List<User> getNotRespondedUser(Integer pollId);
 }

@@ -54,6 +54,20 @@ public class GroupController {
          groupService.removeGroupMember(groupId, userNick);
     }
 
+    @GetMapping("/{groupId}/members/{memberNick}/filled_polls")
+    public List<PollResponseDto> getFilledPolls( @PathVariable(value ="groupId")Integer groupId,
+                                   @PathVariable(value="memberNick") String userNick ){
+
+        return groupService.getFilledPolls(groupId, userNick).stream().map(PollResponseDto::new).collect(Collectors.toList());
+    }
+
+    @GetMapping("/{groupId}/members/{memberNick}/unfilled_polls")
+    public List<PollResponseDto> getUnfilledPolls( @PathVariable(value ="groupId")Integer groupId,
+                                                 @PathVariable(value="memberNick") String userNick ){
+
+        return groupService.getUnfilledPolls(groupId, userNick).stream().map(PollResponseDto::new).collect(Collectors.toList());
+    }
+
     @GetMapping("/{groupId}/polls")
     public List<PollResponseDto> getGroupPolls(@PathVariable(value="groupId") Integer groupId){
         return groupService.getGroup(groupId).getGroupPolls().stream().map(PollResponseDto::new).collect(Collectors.toList());
@@ -64,6 +78,5 @@ public class GroupController {
                                    @RequestBody PollCreateDto pollCreateDto){
         return new PollResponseDto(groupService.addPolltoGroup(pollCreateDto,groupId));
     }
-
 
 }
