@@ -13,6 +13,7 @@ export class GroupPage implements OnInit {
   group: any;
   id: number;
   polls: any;
+  messages: any;
 
   constructor(private route: ActivatedRoute, 
     private groupSerivce: GroupService, private router: Router) { }
@@ -23,6 +24,8 @@ export class GroupPage implements OnInit {
       this.group = data);
     this.groupSerivce.getPolls(this.id).subscribe(data =>
       this.polls = data)
+    this.groupSerivce.getMessages(this.id).subscribe(data =>
+      this.messages = data)
   }
 
   manageGroup(){
@@ -30,14 +33,26 @@ export class GroupPage implements OnInit {
     this.router.navigate(['/manage-group', this.id])
   }
 
+  checkStats(){
+    console.log("Redirect to stats")
+  }
+
   createPoll(){
     console.log("Redirect to create poll")
     this.router.navigate(['/group', this.id, 'create-poll'])
   }
 
+  createMessage(){
+    console.log("Redirect to create message")
+  }
+
   onSelect(poll){
     console.log(poll)
     this.router.navigate(['/group', this.id, 'answer-poll', poll.pollId])
+  }
+
+  onSelectMessage(message){
+    console.log(message)
   }
 
 }

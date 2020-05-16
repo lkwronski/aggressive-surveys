@@ -5,6 +5,8 @@ import { auth, User } from 'firebase/app';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service';
 import { UserService } from '../services/user.service';
+import { AlertController } from '@ionic/angular';  
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-main',
@@ -19,10 +21,15 @@ export class MainPage implements OnInit {
   username: string;
   managedGroups: any;
   memberGroups: any;
+  unansweredMessages: any;
 
 
   constructor(private aut: AngularFireAuth,
-    private router: Router , public services: ServicesService, public user: UserService ) {
+    private router: Router ,
+    public services: ServicesService, 
+    public user: UserService,
+    public alertCtrl: AlertController,
+    public messageService: MessageService) {
     }
 
   ngOnInit() {
@@ -74,6 +81,8 @@ export class MainPage implements OnInit {
         console.log(this.username)
         this.getManagedGroups();
         this.getMemberGroups();
+        this.user.getUnansweredMessages(this.username).subscribe(data =>
+          this.unansweredMessages = data)
       }
     });
   }
@@ -98,4 +107,35 @@ export class MainPage implements OnInit {
     console.log(group)
     this.router.navigate(['/group', group.groupId])
   }
+
+  onMessage(message){
+    console.log(message);
+    this.showAlert(message);
+  }
+
+  async showAlert(message) {  
+    const alert = await this.alertCtrl.create({  
+      header: 'Message',  
+      subHeader: message.authorNick,
+      message: message.context,  
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: (blah) => {
+            console.log('Cancelled');
+          }
+        }, {
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.messageService.acknowledgeMessage(message.messageId, this.username).subscribe(data =>
+              console.log(data))
+          }
+        }
+      ]
+    });  
+    await alert.present();  
+    const result = await alert.onDidDismiss();  
+    console.log(result);  
+  }  
 }
