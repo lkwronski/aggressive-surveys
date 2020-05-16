@@ -4,13 +4,18 @@ import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
 import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.poll.ScheduledPoll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
-import com.agh.surveys.model.poll.dto.PollResponseDto;
+import com.agh.surveys.model.poll.dto.ScheduledPollCreateDto;
 
 import java.util.List;
 
 public interface IGroupService {
 
+
+    ScheduledPoll addScheduledPollToGroup(ScheduledPollCreateDto pollCreateDto, Integer groupId);
+
+    Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId);
 
     GroupRespDto addGroup(GroupCreateDto groupCreateDto);
 
@@ -23,8 +28,6 @@ public interface IGroupService {
     void addGroupMember(Integer groupId, String userNick);
 
     void removeGroupMember(Integer groupId, String userNick);
-
-    Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId);
 
     void saveGroup(Group group);
 

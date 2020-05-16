@@ -2,7 +2,6 @@ package com.agh.surveys.model.poll;
 
 
 import com.agh.surveys.model.group.Group;
-import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.question.ScheduledQuestion;
 import com.agh.surveys.model.user.User;
 import lombok.Data;
@@ -16,12 +15,12 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@Entity(name = "poll_entity")
+@Entity(name = "scheduled_poll_entity")
 public class ScheduledPoll {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer pollId;
 
     @Column(name = "name")
     private String pollName;
@@ -37,7 +36,7 @@ public class ScheduledPoll {
 
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "id" )
+    @JoinColumn(name = "id")
     private Group pollGroup;
 
     @ManyToOne
@@ -50,8 +49,8 @@ public class ScheduledPoll {
     public ScheduledPoll(String pollName, LocalDateTime pollCreationTime, Duration deadline, Duration scheduleInterval, User author, List<ScheduledQuestion> questions) {
         this.pollName = pollName;
         this.pollCreationTime = pollCreationTime;
-        this.scheduledDeadline=deadline;
-        this.scheduleInterval=scheduleInterval;
+        this.scheduledDeadline = deadline;
+        this.scheduleInterval = scheduleInterval;
         this.author = author;
         this.questions = questions;
     }

@@ -4,6 +4,7 @@ package com.agh.surveys.service.question;
 import com.agh.surveys.exception.question.QuestionNotFoundException;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.ScheduledQuestion;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.repository.QuestionRepository;
 import com.agh.surveys.service.poll.PollService;

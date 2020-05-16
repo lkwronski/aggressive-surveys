@@ -1,6 +1,6 @@
 package com.agh.surveys.model.question;
 
-import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.poll.ScheduledPoll;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,12 +20,12 @@ public class ScheduledQuestion {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "id")
-    private Poll questionPoll;
+    private ScheduledPoll questionPoll;
 
     @OneToOne(cascade = CascadeType.ALL)
     private QuestionDetails questionDetails;
 
-    public ScheduledQuestion(Poll questionPoll, QuestionDetails questionDetails) {
+    public ScheduledQuestion(ScheduledPoll questionPoll, QuestionDetails questionDetails) {
         this.questionPoll = questionPoll;
         this.questionDetails = questionDetails;
     }
