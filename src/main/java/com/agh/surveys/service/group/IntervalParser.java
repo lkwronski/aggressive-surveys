@@ -12,11 +12,11 @@ import java.util.Arrays;
 public class IntervalParser {
 
     private static String intervalPattern = "[0-9]+d[0-9][0-9]?h";
-    private static String dayMark="d";
-    private static String hourMark="h";
+    private static String dayMark = "d";
+    private static String hourMark = "h";
 
-    public Duration fromString(String input){
-        if (!input.matches(intervalPattern)){
+    public Duration fromString(String input) {
+        if (!input.matches(intervalPattern)) {
             throw new BadRequestException("Interval must be a {daysNumber}d{hoursNumber}h - for example 3d6h.\n " +
                     "If hours or days must be zero then write 0d6h or 3d0h ");
         }
@@ -25,15 +25,23 @@ public class IntervalParser {
         return Duration.ofDays(daysAndHours[0]).plusHours(daysAndHours[1]);
     }
 
-    private int[] parse(String[] input){
-        int hours= 0;
-        int days = 0;
-        try{
+    private int[] parse(String[] input) {
+        int hours;
+        int days;
+        try {
             days = Integer.parseInt(input[0]);
             hours = Integer.parseInt(input[1].split(hourMark)[0]); // split is used to remove 'h' from second string
-        }catch(Exception ex){
-            throw new BadRequestException("Cannot parse string - unknown reason! String after split: " + Arrays.deepToString(input) );
+        } catch (Exception ex) {
+            throw new BadRequestException("Cannot parse string - unknown reason! String after split: " + Arrays.deepToString(input));
         }
-        return new int[]{days,hours};
+        return new int[]{days, hours};
+    }
+
+    public String fromDurationToString(Duration scheduleInterval) {
+        long durationInHours = scheduleInterval.toHours();
+        long days = durationInHours / 24;
+        long hours = durationInHours % 24;
+
+        return String.format("%dd%dh", days, hours);
     }
 }

@@ -32,7 +32,6 @@ public class GroupValidator {
     }
 
     public void validateCreatePollDto(ScheduledPollCreateDto pollCreateDto, User author, Group group) {
-       // pollCreateDto.getDeadlineInterval()
 
         if(!isUserMemberOrLeader( author,group)){
             throw new BadRequestException("Poll author must be member of a group");

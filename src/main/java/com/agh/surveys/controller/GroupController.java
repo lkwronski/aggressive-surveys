@@ -11,6 +11,7 @@ import com.agh.surveys.model.poll.dto.ScheduledPollCreateDto;
 import com.agh.surveys.model.poll.dto.ScheduledPollResponseDto;
 import com.agh.surveys.service.group.GroupService;
 import com.agh.surveys.service.message.MessageService;
+import com.agh.surveys.service.poll.ScheduledPollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,9 @@ public class GroupController {
 
     @Autowired
     MessageService messageService;
+
+    @Autowired
+    ScheduledPollService scheduledPollService;
 
     @PostMapping
     public GroupRespDto addGroup(@RequestBody GroupCreateDto groupRespDto) {
@@ -93,6 +97,13 @@ public class GroupController {
 
         return new ScheduledPollResponseDto(groupService.addScheduledPollToGroup(pollCreateDto, groupId),
                 pollCreateDto.getScheduledInterval(), pollCreateDto.getDeadlineInterval());
+    }
+
+    @GetMapping("/{groupId}/scheduledPolls")
+    public List<ScheduledPollResponseDto> getGroupScheduledPolls(@PathVariable(value = "groupId") Integer groupId) {
+        return scheduledPollService.getAllScheduledPollsForGroup(groupId).stream()
+                .map(x-> scheduledPollService.scheduledPollToDto(x))
+                .collect(Collectors.toList());
     }
 
 

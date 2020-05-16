@@ -173,7 +173,7 @@ public class GroupService implements IGroupService {
 
     @Override
     public void addGroupMember(Integer groupId, String userNick) {
-        Group group = groupRepository.getOne(groupId);
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("No group with such id"));
         User user = userService.getUserByNick(userNick);
         groupValidator.validateBeforeAddingUser(group, user);
 

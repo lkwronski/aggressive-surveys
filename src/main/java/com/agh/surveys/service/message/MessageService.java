@@ -1,5 +1,6 @@
 package com.agh.surveys.service.message;
 
+import com.agh.surveys.exception.NotFoundException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.message.Message;
 import com.agh.surveys.model.message.dto.MessageCreateDto;
@@ -34,7 +35,7 @@ public class MessageService implements IMessageService {
     @Override
     public MessageResponseDto getMessageById(Integer messageId) {
         messageValidator.checkExistence(messageId);
-        return new MessageResponseDto(messageRepository.getOne(messageId));
+        return new MessageResponseDto(messageRepository.findById(messageId).orElseThrow(()->new NotFoundException("No message with such id")));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class MessageService implements IMessageService {
     public void acknowledgeMessage(Integer messageId, String userNick) {
         messageValidator.checkExistence(messageId);
 
-        Message message = messageRepository.getOne(messageId);
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new NotFoundException("No message with such id"));
         messageValidator.validateAcknowledgment(message, userNick);
 
         User user = userService.getUserByNick(userNick);
