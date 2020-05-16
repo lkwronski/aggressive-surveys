@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Creating a message</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-input [(ngModel)]="messageText" placeholder="Enter message" required=true></ion-input>
+  </ion-item>
+  <br>
+  <ion-button (click)="this.validateAndSend()">Send a Message</ion-button>
+</ion-content>
