@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>group-stats</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-label> Messages </ion-label><br>
+  <ion-list (click)="onSelect(message)" *ngFor="let message of messages">
+    <ion-item>{{message.context}} <br>
+              Deadline: {{message.deadline}} <br>
+              Confirmed: {{message.usersAnswered}} <br>
+              Not confirmed: {{message.usersNotAnswered}}</ion-item>
+  </ion-list>
+
+  <ion-label> Polls </ion-label><br>
+  
+
+
+</ion-content>
