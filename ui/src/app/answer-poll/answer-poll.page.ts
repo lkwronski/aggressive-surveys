@@ -21,7 +21,7 @@ export class AnswerPollPage implements OnInit {
   pollId: number;
   groupId: any;
   questions: any;
-
+  data: any;
 
   constructor(private aut: AngularFireAuth,
     private route: ActivatedRoute,
@@ -35,7 +35,7 @@ export class AnswerPollPage implements OnInit {
     this.pollId = parseInt(this.route.snapshot.paramMap.get('pollId'));
     this.logued();
     this.pollService.findPoll(this.pollId).subscribe(data =>
-      this.questions = data.questions)
+      this.data = data)
   }
 
 

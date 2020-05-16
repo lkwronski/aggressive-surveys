@@ -54,4 +54,17 @@ export class GroupService {
   getPolls(id: any){
     return this.http.get(this.GROUP_API + "/" + id + "/polls")
   }  
+
+  addMessage(id: any, username: any, context: any, deadline: any)
+  {
+    return this.http.post(this.GROUP_API + "/" + id + "/messages", 
+      {"authorNick": username,
+       "context": context,
+       "deadline": deadline
+      })
+  }
+
+  getMessages(id: any){
+    return this.http.get(this.GROUP_API + "/" + id + "/messages")
+  }
 }
