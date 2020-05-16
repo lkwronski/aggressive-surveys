@@ -20,7 +20,7 @@ public class GroupValidator {
     private static final int pollDeadlineInMinutes = 2;
 
     public void validateCreatePollDto(PollCreateDto pollCreateDto, User author, Group group) {
-        if (isDeadlineIncorrect(pollCreateDto.getPolDeadline(),pollDeadlineInMinutes)) {
+        if (isAfterDeadline(pollCreateDto.getPolDeadline(),pollDeadlineInMinutes)) {
             throw new BadRequestException("Created poll can't have deadline in the past or earlier than few minutes");
         }
 
@@ -56,7 +56,7 @@ public class GroupValidator {
         return user.getUserGroups().contains(group) || user.getManagedGroups().contains(group);
     }
 
-    private boolean isDeadlineIncorrect(LocalDateTime deadline, int minutes) {
+    private boolean isAfterDeadline(LocalDateTime deadline, int minutes) {
         return deadline.isBefore(commonValidator.createdPollDeadlineMargin(minutes));
     }
 }
