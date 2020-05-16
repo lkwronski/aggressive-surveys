@@ -133,7 +133,7 @@ export class MainPage implements OnInit {
           }
         }
       ]
-    });  
+    });
     await alert.present();  
     const result = await alert.onDidDismiss();  
     console.log(result);  

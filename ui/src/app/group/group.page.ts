@@ -44,6 +44,7 @@ export class GroupPage implements OnInit {
 
   createMessage(){
     console.log("Redirect to create message")
+    this.router.navigate(['/group', this.id, 'create-message'])
   }
 
   onSelect(poll){
