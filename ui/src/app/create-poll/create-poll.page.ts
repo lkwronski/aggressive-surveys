@@ -19,6 +19,7 @@ export class CreatePollPage implements OnInit {
   id: any;
   questionList: any[];
   title: string;
+  deadline: string;
 
   TEXT = "TEXT"
   CHECKBOX = "CHECKBOX"
@@ -32,6 +33,7 @@ export class CreatePollPage implements OnInit {
     this.logued();
     this.title = "";
     this.questionList = []
+    this.deadline = "2020-05-30T20:00:00.000";
     
   }
 
@@ -134,7 +136,7 @@ export class CreatePollPage implements OnInit {
       this.convertOption(question)
     }
     console.log(this.questionList)
-    this.groupService.addPoll(this.groupId, this.username, this.title, this.questionList).subscribe(data =>
+    this.groupService.addPoll(this.groupId, this.username, this.title, this.questionList, this.deadline).subscribe(data =>
       console.log(data))
   }
 

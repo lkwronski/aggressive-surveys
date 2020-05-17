@@ -14,7 +14,9 @@
   </ion-list>
 
   <ion-label> Polls </ion-label><br>
-  
+  <ion-list *ngFor="let poll of polls">
+    <ion-item (click)="onPollSelect(poll.pollId)" > {{poll.pollName}}</ion-item>
+  </ion-list>
 
 
 </ion-content>

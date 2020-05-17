@@ -75,28 +75,33 @@ export class AnswerPollPage implements OnInit {
   }
 
   sendAnswers(){
-    console.log(this.questions);
+    console.log(this.data.questions);
     let answers: AnswerBody[] = this.getAnswers();
     console.log(answers)
-    for(let ans of answers){
-      this.answerService.postAnswer(this.username, ans.questionId, ans.answerDetails).subscribe()
+    let pollAnswer = {
+      "answerAuthor": this.username,
+      "answers": answers
     }
+    console.log(pollAnswer);
+    this.pollService.postPollAnswer(this.pollId, pollAnswer).subscribe(data =>
+      console.log(data));
   }
 
   getAnswers(): AnswerBody[]{
     let answers: AnswerBody[] = []
-    for(var question of this.questions){
-      var answer: AnswerBody = {
-        "answerDetails": {
-          "@type": question.questionDetails.questionType,
+    console.log(this.data.questions)
+    for(var question of this.data.questions){
+      var answer: any = {
+        "details": {
+          "answerType": question.questionDetails.questionType,
         },
         "questionId": question.questionId
       }
       if(question.questionDetails.questionType === 'TEXT'){
-        answer.answerDetails.answerText = question.answer
+        answer.details.answerText = question.answer
       }
       if(question.questionDetails.questionType === 'CHECKBOX'){
-        answer.answerDetails.selectedOptions = [question.answer]
+        answer.details.selectedOptions = [question.answer]
       }
       answers.push(answer)
     }

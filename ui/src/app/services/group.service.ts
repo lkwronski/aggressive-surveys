@@ -16,10 +16,10 @@ export class GroupService {
   API: string = 'http://localhost:8080';
   GROUP_API: string = this.API + '/groups' 
 
-  addPoll(groupId: any, nickname: string, pollTitle: string, questionDetails: any){
+  addPoll(groupId: any, nickname: string, pollTitle: string, questionDetails: any, deadline: any){
     var body: any = {
       "authorNick": nickname,
-      "polDeadline": null,
+      "polDeadline": deadline,
       "pollName": pollTitle,
       "questionDetails": questionDetails
     };
