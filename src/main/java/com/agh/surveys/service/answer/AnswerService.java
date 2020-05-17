@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnswerService implements IAnswerService {
@@ -41,6 +42,13 @@ public class AnswerService implements IAnswerService {
     @Override
     public List<Answer> getQuestionAnswers(Integer questionId) {
         return questionService.getQuestion(questionId).getAnswers();
+    }
+
+
+    @Override
+    public List<Answer> getAnswerForUserInQuestion(Integer questionID, String userNick){
+        Question question = questionService.getQuestion(questionID);
+        return question.getAnswers().stream().filter( answer -> answer.getAnswerAuthor().getUserNick().equals(userNick)).collect(Collectors.toList());
     }
 
     @Override

@@ -19,4 +19,7 @@ public interface IAnswerService {
     void deleteAnswer(Integer answerId);
 
     List<AnswerResponse> answerQuestion(Integer pollId, AnswersRequestDto answersRequestDto);
+
+    List<Answer> getAnswerForUserInQuestion(Integer questionID, String userNick);
+
 }

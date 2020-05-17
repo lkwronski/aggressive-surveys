@@ -4,6 +4,7 @@ import com.agh.surveys.model.answer.dto.AnswerResponse;
 import com.agh.surveys.model.answer.dto.AnswersRequestDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollResponseDto;
+import com.agh.surveys.model.poll.dto.PollStatisticsDto;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.question.dto.QuestionResponse;
 import com.agh.surveys.model.question.type.QuestionDetails;
@@ -69,6 +70,11 @@ public class PollController {
     @PostMapping("/{pollId}/answers")
     List<AnswerResponse> addAnswersToPoll(@PathVariable Integer pollId, @RequestBody AnswersRequestDto answersRequestDto) {
         return answerService.answerQuestion(pollId, answersRequestDto);
+    }
+
+    @PostMapping("/{pollId}/statistics")
+    PollStatisticsDto getStatistics(@PathVariable Integer pollId ){
+        return pollService.getStatistics(pollId);
     }
 
 }
