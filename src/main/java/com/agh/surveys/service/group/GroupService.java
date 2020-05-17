@@ -1,7 +1,7 @@
 package com.agh.surveys.service.group;
 
 
-import com.agh.surveys.component.group.GroupComponent;
+import com.agh.surveys.component.group.PollComponent;
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.exception.user.UserNotFoundException;
 import com.agh.surveys.model.group.Group;
@@ -9,12 +9,9 @@ import com.agh.surveys.model.group.dto.GroupCreateDto;
 import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
-import com.agh.surveys.model.poll.dto.PollResponseDto;
 import com.agh.surveys.model.question.Question;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
-import com.agh.surveys.repository.PollRepository;
-import com.agh.surveys.repository.QuestionRepository;
 import com.agh.surveys.repository.UserRepository;
 import com.agh.surveys.service.poll.PollService;
 import com.agh.surveys.service.question.QuestionService;
@@ -39,7 +36,7 @@ public class GroupService implements IGroupService {
     UserRepository userRepository;
 
     @Autowired
-    GroupComponent groupComponent;
+    PollComponent pollComponent;
 
     @Autowired
     UserService userService;
@@ -55,7 +52,7 @@ public class GroupService implements IGroupService {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
         List<Poll> groupPolls = group.getGroupPolls();
-        return groupPolls.stream().filter(poll -> groupComponent.userResponseToPoll(user,poll)).collect(Collectors.toList());
+        return groupPolls.stream().filter(poll -> pollComponent.isUserResponseToPoll(user,poll)).collect(Collectors.toList());
     }
 
     @Override
@@ -63,7 +60,7 @@ public class GroupService implements IGroupService {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
         List<Poll> groupPolls = group.getGroupPolls();
-        return groupPolls.stream().filter(poll -> groupComponent.userNotResponseToPoll(user,poll)).collect(Collectors.toList());
+        return groupPolls.stream().filter(poll -> pollComponent.isUserNotResponseToPoll(user,poll)).collect(Collectors.toList());
     }
 
     @Override

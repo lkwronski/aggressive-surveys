@@ -1,6 +1,6 @@
 package com.agh.surveys.service.user;
 
-import com.agh.surveys.component.group.GroupComponent;
+import com.agh.surveys.component.group.PollComponent;
 import com.agh.surveys.exception.BusinnessException;
 import com.agh.surveys.exception.user.UserExistsInDatabaseException;
 import com.agh.surveys.exception.user.UserNotFoundException;
@@ -10,13 +10,13 @@ import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.repository.GroupRepository;
 import com.agh.surveys.repository.UserRepository;
+import com.agh.surveys.service.group.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class UserService implements IUserService {
@@ -28,7 +28,10 @@ public class UserService implements IUserService {
     GroupRepository groupRepository;
 
     @Autowired
-    GroupComponent groupComponent;
+    GroupService groupService;
+
+    @Autowired
+    PollComponent pollComponent;
 
     @Override
     public String addUserFromDto(UserDto userDto) {
@@ -64,10 +67,18 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public List<Poll> getUnfilledPolls(String nick) {
         User user = getUserByNick(nick);
-        List<Group> groups = groupRepository.findAll().stream().filter(group -> group.getGroupMembers().contains(user)).collect(Collectors.toList());
-        return groups.stream().flatMap(group -> group.getGroupPolls().stream().filter(poll -> groupComponent.userNotResponseToPoll(user, poll))).collect(Collectors.toList());
+        List<Group> groups = groupRepository.findAll().stream().filter(group -> {
+            Group a = groupService.getGroup(group.getId());
+            int d = 1;
+            return group.getGroupMembers().contains(user);
+        }).collect(Collectors.toList());
+        return groups.stream().flatMap(group -> group.getGroupPolls().stream().filter(poll -> pollComponent.isUserNotResponseToPoll(user, poll))).collect(Collectors.toList());
+    }
 
+    public List<User> getAll(){
+        return userRepository.findAll();
     }
 }

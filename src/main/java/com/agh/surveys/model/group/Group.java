@@ -4,14 +4,17 @@ package com.agh.surveys.model.group;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.user.User;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
 //I removed Member model as it was same thing as user, then I added user-group many-to-many mapping
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity(name = "group_entity")
 public class Group {
@@ -28,7 +31,7 @@ public class Group {
     @JoinColumn(name = "userNick")
     private User groupLeader;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_group",
             joinColumns = @JoinColumn(name = "id"),

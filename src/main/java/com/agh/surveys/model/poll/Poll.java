@@ -3,15 +3,14 @@ package com.agh.surveys.model.poll;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.question.Question;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity(name = "poll_entity")
 public class Poll {

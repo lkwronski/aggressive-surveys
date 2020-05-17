@@ -45,7 +45,7 @@ public class PollController {
         return questionService.getByPollId(pollId).stream().map(QuestionResponse::new).collect(Collectors.toList());
     }
 
-    @GetMapping("/{pollId}/responded_user")
+    @GetMapping("/{pollId}/responded_users")
     List<UserDto> getRespondedUser(@PathVariable Integer pollId) {
         return pollService.getRespondedUser(pollId).stream().map(UserDto::new).collect(Collectors.toList());
     }
