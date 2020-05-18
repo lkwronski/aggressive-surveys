@@ -26,4 +26,14 @@ export class PollService {
   addQuestion(id: any, questionDetails: any){
     return this.http.post(this.POLL_API + "/" + id + "/questions", questionDetails)
   }
+
+  getPollStats(id: any){
+    //tmp, API should be get 
+    return this.http.post(this.POLL_API + "/" + id + "/statistics", {})
+  }
+
+  postPollAnswer(id: any, answer: any){
+    
+    return this.http.post(this.POLL_API + "/" + id + "/answers", answer);
+  }
 }

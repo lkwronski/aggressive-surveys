@@ -33,7 +33,7 @@
   </ion-list>
 
   <h1 class="goodfont">Your member of</h1>
-  <ion-list *ngFor="let group of this.memberGroups">
+  <ion-list (click)="onSelect(group)" *ngFor="let group of this.memberGroups">
     <ion-item>{{ group.groupName }}</ion-item>
   </ion-list>
 

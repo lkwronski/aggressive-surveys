@@ -35,6 +35,7 @@ export class GroupPage implements OnInit {
 
   checkStats(){
     console.log("Redirect to stats")
+    this.router.navigate(['/group-stats', this.id])
   }
 
   createPoll(){
