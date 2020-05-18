@@ -16,6 +16,7 @@ export class PollStatsPage implements OnInit {
   groupId: number;
   pollData: any;
   questionsData: any;
+  answeredNames = [];
 
   answersData: any;
 
@@ -28,10 +29,23 @@ export class PollStatsPage implements OnInit {
   ngOnInit() {
     this.groupId = parseInt(this.route.snapshot.paramMap.get('groupId'));
     this.pollId = parseInt(this.route.snapshot.paramMap.get('pollId'));
-    this.pollService.getPollStats(this.pollId).subscribe(data =>
-      this.pollData = data);
+    this.pollService.getPollStats(this.pollId).subscribe(data => {
+      this.pollData = data;
+      this.answeredNames = this.getAnsweredNames(data)
+    });
     this.pollService.getPollQuestions(this.pollId).subscribe(data =>
       this.questionsData = data);
+  }
+
+  getAnsweredNames(data){
+    let namesTable: any[] = [];
+    for(let item of data.respondedUser){
+        console.log(item.user.userNick)
+        if(namesTable.includes(item.user.userNick) === false){
+          namesTable.push(item.user.userNick)
+        }
+    }
+    return namesTable;
   }
 
   testButton(){
@@ -74,7 +88,7 @@ export class PollStatsPage implements OnInit {
   }
 
   goBack(){
-    this.location.back()
+    this.router.navigate(['group-stats', this.groupId])
   }
 
 

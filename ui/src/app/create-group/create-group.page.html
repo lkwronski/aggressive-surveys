@@ -7,6 +7,6 @@
 <ion-content padding>
   <ion-label>Enter group name:</ion-label>
   <ion-input [(ngModel)]="this.groupName"></ion-input>
+  <ion-button (click)="this.addGroup()">Create Group</ion-button>
+  <ion-button (click)="this.goToMainPage()">Go back to main page</ion-button>
 </ion-content>
-
-<ion-button (click)="this.addGroup()">Create Group</ion-button>

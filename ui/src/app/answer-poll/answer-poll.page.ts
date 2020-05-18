@@ -108,4 +108,8 @@ export class AnswerPollPage implements OnInit {
     return answers
   }
 
+  goToGroupPage(){
+    this.router.navigate(["group", this.groupId])
+  }
+
 }
