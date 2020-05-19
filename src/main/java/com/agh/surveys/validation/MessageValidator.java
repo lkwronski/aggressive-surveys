@@ -32,9 +32,6 @@ public class MessageValidator {
         if (message.getMessageAuthor().getUserNick().equals(userNick)) {
             throw new BadRequestException("Author cannot acknowledge his own message");
         }
-        if(isDeadlineIncorrect(LocalDateTime.now(),ackDeadline)){
-            throw new BadRequestException("Cannot acknowledge after message deadline");
-        }
 
         if (message.getUsersWhoAnswered().stream()
                 .map(User::getUserNick)
@@ -44,7 +41,7 @@ public class MessageValidator {
     }
 
     public void validateCreatingMessage(MessageCreateDto messageCreateDto, Group group) {
-        if (isDeadlineIncorrect(messageCreateDto.getDeadline(),messageDeadlineMinutes)) {
+        if (isAfterDeadline(messageCreateDto.getDeadline(),messageDeadlineMinutes)) {
             throw new BadRequestException(
                     "Created message can't have deadline in the past or earlier than few minutes");
         }
@@ -63,7 +60,7 @@ public class MessageValidator {
         }
     }
 
-    private boolean isDeadlineIncorrect(LocalDateTime deadline, int minutes) {
+    private boolean isAfterDeadline(LocalDateTime deadline, int minutes) {
         return deadline.isBefore(commonValidator.createdPollDeadlineMargin(minutes));
     }
 

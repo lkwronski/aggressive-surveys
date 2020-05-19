@@ -26,6 +26,10 @@ export class UserService {
     return this.http.get(request)
   }
 
+  getUnansweredMessages(nick: string){
+    return this.http.get(this.USER_API + '/' + nick + '/unAnsweredMessages');
+  }
+
   addUser(name: string, surname: string, username: string, email: string){
     var body: any = {
       "userEmail": email,

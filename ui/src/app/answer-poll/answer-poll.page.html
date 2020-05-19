@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>answer-poll</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>HELLO</h1>
+  <ion-list *ngFor="let item of this.data.questions">
+    <ion-item>
+      <ion-label>{{ item.questionDetails.questionText }}</ion-label>
+    </ion-item>
+
+    <div *ngIf= "item.questionDetails.questionType == 'TEXT'">
+      <ion-item>
+        <ion-textarea [(ngModel)]="item.answer" placeholder="Enter anwser here..."></ion-textarea>
+      </ion-item>
+    </div>
+
+    <div *ngIf= "item.questionDetails.questionType == 'CHECKBOX'">
+      <ion-list>
+        <ion-radio-group [(ngModel)]="item.answer">
+          <ion-item *ngFor= "let entry of item.questionDetails.options">
+            <ion-label>{{entry}}</ion-label>
+            <ion-radio [value]="entry" ></ion-radio>
+          </ion-item>
+      </ion-radio-group>
+      </ion-list>
+    </div>
+  </ion-list>
+
+  <ion-button (click)="sendAnswers()">Send</ion-button>
+</ion-content>

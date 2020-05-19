@@ -33,8 +33,13 @@
   </ion-list>
 
   <h1 class="goodfont">Your member of</h1>
-  <ion-list *ngFor="let group of this.memberGroups">
+  <ion-list (click)="onSelect(group)" *ngFor="let group of this.memberGroups">
     <ion-item>{{ group.groupName }}</ion-item>
+  </ion-list>
+
+  <h1 class="goodfont">Unanswered messages</h1>
+  <ion-list (click)="onMessage(message)"*ngFor="let message of this.unansweredMessages">
+    <ion-item>{{ message.context }}</ion-item>
   </ion-list>
 
   <ion-button (click)="this.createGroup()">Create group</ion-button>
