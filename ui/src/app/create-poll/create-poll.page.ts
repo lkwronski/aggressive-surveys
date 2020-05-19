@@ -140,4 +140,8 @@ export class CreatePollPage implements OnInit {
       console.log(data))
   }
 
+  goToGroupPage(){
+    this.router.navigate(["/group", this.groupId])
+  }
+
 }

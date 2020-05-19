@@ -6,8 +6,8 @@
 
 <ion-content padding>
   People who answered: 
-  <ion-list *ngFor="let item of this.pollData.respondedUser">
-  <ion-item>{{item.user.userNick}}</ion-item>
+  <ion-list *ngFor="let nickname of this.answeredNames">
+  <ion-item>{{nickname}}</ion-item>
   </ion-list>
   People who didn't answer:
   <ion-list *ngFor="let item of this.pollData.notRespondedUser">
@@ -30,4 +30,6 @@
   <ion-button (click)="showDetails()">showDetails</ion-button>  
   <br>
   <ion-button (click)="testButton()">Test</ion-button>  
+  <br>
+  <ion-button (click)="goBack()">Go back</ion-button>  
 </ion-content>

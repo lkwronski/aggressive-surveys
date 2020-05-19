@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../services/group.service'
 import { ActivatedRoute }  from '@angular/router'
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-group',
@@ -16,7 +17,9 @@ export class GroupPage implements OnInit {
   messages: any;
 
   constructor(private route: ActivatedRoute, 
-    private groupSerivce: GroupService, private router: Router) { }
+    private groupSerivce: GroupService, 
+    private router: Router,
+    private location: Location) { }
 
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -55,6 +58,10 @@ export class GroupPage implements OnInit {
 
   onSelectMessage(message){
     console.log(message)
+  }
+
+  goToMainPage(){
+    this.router.navigateByUrl('');
   }
 
 }

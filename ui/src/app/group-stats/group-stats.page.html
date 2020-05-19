@@ -6,7 +6,7 @@
 
 <ion-content padding>
   <ion-label> Messages </ion-label><br>
-  <ion-list (click)="onSelect(message)" *ngFor="let message of messages">
+  <ion-list *ngFor="let message of messages">
     <ion-item>{{message.context}} <br>
               Deadline: {{message.deadline}} <br>
               Confirmed: {{message.usersAnswered}} <br>
@@ -17,6 +17,8 @@
   <ion-list *ngFor="let poll of polls">
     <ion-item (click)="onPollSelect(poll.pollId)" > {{poll.pollName}}</ion-item>
   </ion-list>
+  <br>
+  <ion-button (click)="goToGroupPage()">Go to Group Page</ion-button>
 
 
 </ion-content>

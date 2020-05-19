@@ -69,4 +69,8 @@ export class CreateGroupPage implements OnInit {
       }
     });
   }
+
+  goToMainPage(){
+    this.router.navigateByUrl('');
+  }
 }

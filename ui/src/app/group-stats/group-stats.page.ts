@@ -34,4 +34,8 @@ export class GroupStatsPage implements OnInit {
     this.router.navigate(['/group-stats', this.id, 'poll-stats', pollId])
   }
 
+  goToGroupPage(){
+    this.router.navigate(['/group', this.id])
+  }  
+
 }
