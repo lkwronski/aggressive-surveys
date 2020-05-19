@@ -4,13 +4,11 @@ package com.agh.surveys.model.group;
 import com.agh.surveys.model.message.Message;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.user.User;
-import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

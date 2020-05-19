@@ -1,6 +1,6 @@
 package com.agh.surveys.service.poll;
 
-import com.agh.surveys.component.group.GroupComponent;
+import com.agh.surveys.component.group.PollComponent;
 import com.agh.surveys.exception.poll.PollNotFoundException;
 import com.agh.surveys.model.answer.Answer;
 import com.agh.surveys.model.poll.Poll;
@@ -28,7 +28,7 @@ public class PollService implements IPollService {
     AnswerService answerService;
 
     @Autowired
-    GroupComponent groupComponent;
+    PollComponent groupComponent;
 
     @Override
     public List<Poll> findAll() {
@@ -55,7 +55,7 @@ public class PollService implements IPollService {
     public List<User> getRespondedUser(Integer pollId) {
         Poll poll = getPoll(pollId);
         List<User> groupUsers = poll.getPollGroup().getGroupMembers();
-        List<User> respondedUsers = groupUsers.stream().filter(user -> groupComponent.userResponseToPoll(user, poll)).collect(Collectors.toList());
+        List<User> respondedUsers = groupUsers.stream().filter(user -> groupComponent.isUserResponseToPoll(user, poll)).collect(Collectors.toList());
         return respondedUsers;
     }
 
@@ -63,7 +63,7 @@ public class PollService implements IPollService {
     public List<User> getNotRespondedUser(Integer pollId) {
         Poll poll = getPoll(pollId);
         List<User> groupUsers = poll.getPollGroup().getGroupMembers();
-        List<User> respondedUsers = groupUsers.stream().filter(user -> groupComponent.userNotResponseToPoll(user, poll)).collect(Collectors.toList());
+        List<User> respondedUsers = groupUsers.stream().filter(user -> groupComponent.isUserNotResponseToPoll(user, poll)).collect(Collectors.toList());
         return respondedUsers;
     }
 

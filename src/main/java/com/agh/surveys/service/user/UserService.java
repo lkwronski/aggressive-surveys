@@ -1,5 +1,6 @@
 package com.agh.surveys.service.user;
 
+import com.agh.surveys.component.group.PollComponent;
 import com.agh.surveys.exception.NotFoundException;
 import com.agh.surveys.exception.user.UserExistsInDatabaseException;
 import com.agh.surveys.exception.user.UserNotFoundException;
@@ -7,7 +8,6 @@ import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.message.Message;
 
-import com.agh.surveys.component.group.GroupComponent;
 
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.user.User;
@@ -18,6 +18,7 @@ import com.agh.surveys.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,7 @@ public class UserService implements IUserService {
     GroupRepository groupRepository;
 
     @Autowired
-    GroupComponent groupComponent;
+    PollComponent groupComponent;
 
     @Override
     public String addUserFromDto(UserDto userDto) {
@@ -71,11 +72,16 @@ public class UserService implements IUserService {
                 .filter(message -> !user.getAnsweredMessages().contains(message) && !message.isAfterDeadline())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
     public List<Poll> getUnfilledPolls(String nick) {
         User user = getUserByNick(nick);
         List<Group> groups = groupRepository.findAll().stream().filter(group -> group.getGroupMembers().contains(user)).collect(Collectors.toList());
-        return groups.stream().flatMap(group -> group.getGroupPolls().stream().filter(poll -> groupComponent.userNotResponseToPoll(user, poll))).collect(Collectors.toList());
+        return groups.stream().flatMap(group -> group.getGroupPolls().stream().filter(poll -> groupComponent.isUserNotResponseToPoll(user, poll))).collect(Collectors.toList());
+    }
 
-
+    public List<User> getAll(){
+        return userRepository.findAll();
     }
 }
