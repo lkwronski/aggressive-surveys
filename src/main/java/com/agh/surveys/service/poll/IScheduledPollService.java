@@ -12,5 +12,13 @@ public interface IScheduledPollService {
 
     List<ScheduledPoll> getAllScheduledPollsForGroup(Integer groupId);
 
+    void removeScheduledPollById(Integer pollId);
+
+    ScheduledPoll getScheduledPollById(Integer pollId);
+
+    ScheduledPollResponseDto scheduledPollToDto(ScheduledPoll poll);
+
     ScheduledPollResponseDto getScheduledPollByIdAsDto(Integer id);
+
+    List<ScheduledPoll> getPollsToCreate();
 }

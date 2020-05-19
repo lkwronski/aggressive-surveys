@@ -94,7 +94,7 @@ public class GroupService implements IGroupService {
 
         ScheduledPoll poll = new ScheduledPoll();
         poll.setAuthor(author);
-        poll.setPollCreationTime(pollCreateDto.getPollCreationTime());
+        poll.setPollScheduleTime(pollCreateDto.getPollCreationTime());
         poll.setPollGroup(group);
         poll.setPollName(pollCreateDto.getPollName());
         poll.setScheduledDeadline(deadlineInterval);

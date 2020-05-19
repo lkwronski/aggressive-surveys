@@ -26,7 +26,7 @@ public class ScheduledPoll {
     private String pollName;
 
     @Column(name = "creation_time")
-    private LocalDateTime pollCreationTime;
+    private LocalDateTime pollScheduleTime;
 
     @Column(name = "interval")
     private Duration scheduleInterval;
@@ -46,9 +46,9 @@ public class ScheduledPoll {
     @OneToMany(mappedBy = "questionPoll", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ScheduledQuestion> questions;
 
-    public ScheduledPoll(String pollName, LocalDateTime pollCreationTime, Duration deadline, Duration scheduleInterval, User author, List<ScheduledQuestion> questions) {
+    public ScheduledPoll(String pollName, LocalDateTime pollScheduleTime, Duration deadline, Duration scheduleInterval, User author, List<ScheduledQuestion> questions) {
         this.pollName = pollName;
-        this.pollCreationTime = pollCreationTime;
+        this.pollScheduleTime = pollScheduleTime;
         this.scheduledDeadline = deadline;
         this.scheduleInterval = scheduleInterval;
         this.author = author;

@@ -15,7 +15,7 @@ public class ScheduledPollResponseDto {
 
     private Integer pollId;
     private String pollName;
-    private LocalDateTime pollCreationTime;
+    private LocalDateTime pollScheduleTime;
     private String scheduleInterval;
     private String deadlineInterval;
     private Integer pollGroupId;
@@ -25,7 +25,7 @@ public class ScheduledPollResponseDto {
     public ScheduledPollResponseDto(ScheduledPoll poll, String scheduleInterval, String deadlineInterval) {
         this.pollId = poll.getPollId();
         this.pollName = poll.getPollName();
-        this.pollCreationTime = poll.getPollCreationTime();
+        this.pollScheduleTime = poll.getPollScheduleTime();
         this.scheduleInterval = scheduleInterval;
         this.deadlineInterval = deadlineInterval;
         this.pollGroupId = poll.getPollGroup().getId();
