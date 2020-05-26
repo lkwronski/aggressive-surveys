@@ -66,10 +66,9 @@ public class GroupSpec {
         GroupCreateDto groupCreateDtoEmptyGroup = new GroupCreateDto("empty group", "test2", Collections.emptyList());
         ResponseEntity<String> resultEmptyGroup = GroupUtils.creatGroup(randomServerPort, groupCreateDtoEmptyGroup, this.restTemplate);
 
-        //todo verify if it works!
         //Verify request succeed
         Assert.assertEquals(200, resultUserTest1.getStatusCodeValue());
-        Assert.assertEquals(200, resultUserTest1.getStatusCodeValue());
+        Assert.assertEquals(200, resultUserTest2.getStatusCodeValue());
         Assert.assertEquals(400, resultGroupEmptyName.getStatusCodeValue());
         Assert.assertEquals(404, resultGroupWithoutLeader.getStatusCodeValue());
         Assert.assertEquals(200, resultGroupWithLeaderOutside.getStatusCodeValue());
