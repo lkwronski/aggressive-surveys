@@ -1,7 +1,10 @@
 package com.agh.surveys.group;
 
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
@@ -40,6 +43,37 @@ public class GroupSpec {
         //Verify request succeed
         Assert.assertEquals(200, resultUser.getStatusCodeValue());
         Assert.assertEquals(200, resultGroup.getStatusCodeValue());
+    }
+
+    @Test
+    public void testCreateGroup() throws URISyntaxException {
+        UserDto test1 =  new UserDto("test1", "test", "test", "test1@email.com");
+        ResponseEntity<String> resultUserTest1 = UserUtils.createUser(randomServerPort, test1, this.restTemplate);
+        UserDto test2 =  new UserDto("test2", "test", "test", "test2@email.com");
+        ResponseEntity<String> resultUserTest2 = UserUtils.createUser(randomServerPort, test2, this.restTemplate);
+        List<String> members = new LinkedList<>();
+        members.add(test1.getUserNick());
+        //create group with empty name
+        GroupCreateDto groupCreateDto = new GroupCreateDto("", "test", members);
+        ResponseEntity<String> resultGroupEmptyName = GroupUtils.creatGroup(randomServerPort, groupCreateDto, this.restTemplate);
+        //create group without leader
+        GroupCreateDto groupCreateDtoWithoutLeader = new GroupCreateDto("withoutLeader", "", members);
+        ResponseEntity<String> resultGroupWithoutLeader = GroupUtils.creatGroup(randomServerPort, groupCreateDtoWithoutLeader, this.restTemplate);
+        //create group with leader outside the group
+        GroupCreateDto groupCreateDtoWithLeaderOutside = new GroupCreateDto("with leader outside", "test2", members);
+        ResponseEntity<String> resultGroupWithLeaderOutside = GroupUtils.creatGroup(randomServerPort, groupCreateDtoWithLeaderOutside, this.restTemplate);
+        //create empty group
+        GroupCreateDto groupCreateDtoEmptyGroup = new GroupCreateDto("empty group", "test2", Collections.emptyList());
+        ResponseEntity<String> resultEmptyGroup = GroupUtils.creatGroup(randomServerPort, groupCreateDtoEmptyGroup, this.restTemplate);
+
+        //todo verify if it works!
+        //Verify request succeed
+        Assert.assertEquals(200, resultUserTest1.getStatusCodeValue());
+        Assert.assertEquals(200, resultUserTest1.getStatusCodeValue());
+        Assert.assertEquals(400, resultGroupEmptyName.getStatusCodeValue());
+        Assert.assertEquals(404, resultGroupWithoutLeader.getStatusCodeValue());
+        Assert.assertEquals(200, resultGroupWithLeaderOutside.getStatusCodeValue());
+        Assert.assertEquals(200, resultEmptyGroup.getStatusCodeValue());
     }
 
 }

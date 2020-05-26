@@ -89,5 +89,9 @@ public class PollSpec {
 
     }
 
+    @Test
+    public void testAddPoll() throws URISyntaxException{
+        //todo test options with creating poll
+    }
 
 }
