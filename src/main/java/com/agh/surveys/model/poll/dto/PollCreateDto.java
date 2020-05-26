@@ -1,5 +1,6 @@
 package com.agh.surveys.model.poll.dto;
 
+import com.agh.surveys.model.question.dto.QuestionCreateDto;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import lombok.Data;
 
@@ -13,9 +14,9 @@ public class PollCreateDto {
     private String pollName;
     private LocalDateTime polDeadline;
     private String authorNick;
-    private List<QuestionDetails> questionDetails;
+    private List<QuestionCreateDto> questionDetails;
 
-    public PollCreateDto(String pollName, LocalDateTime polDeadline, String authorNick, List<QuestionDetails> questionDetails) {
+    public PollCreateDto(String pollName, LocalDateTime polDeadline, String authorNick, List<QuestionCreateDto> questionDetails) {
         this.pollName = pollName;
         this.polDeadline = polDeadline;
         this.authorNick = authorNick;

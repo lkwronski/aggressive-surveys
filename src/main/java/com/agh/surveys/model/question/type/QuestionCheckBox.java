@@ -1,12 +1,15 @@
 package com.agh.surveys.model.question.type;
 
+import com.agh.surveys.model.question.dto.QuestionCheckBoxDto;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 public class QuestionCheckBox extends QuestionDetails {
@@ -21,6 +24,11 @@ public class QuestionCheckBox extends QuestionDetails {
     }
 
     public QuestionCheckBox() {
+    }
+
+    public QuestionCheckBox(QuestionCheckBoxDto questionCreateDto) {
+        super(questionCreateDto.getQuestionText());
+        this.options = questionCreateDto.getOptions();
     }
 
     @Override

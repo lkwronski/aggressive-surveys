@@ -6,6 +6,7 @@ import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollResponseDto;
 import com.agh.surveys.model.poll.dto.PollStatisticsDto;
 import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.dto.QuestionCreateDto;
 import com.agh.surveys.model.question.dto.QuestionResponse;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.service.answer.AnswerService;
@@ -63,7 +64,7 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/questions")
-    QuestionResponse addQuestion(@PathVariable Integer pollId, @RequestBody QuestionDetails questionDetails) {
+    QuestionResponse addQuestion(@PathVariable Integer pollId, @RequestBody QuestionCreateDto questionDetails) {
         return new QuestionResponse(questionService.addQuestion(pollId, questionDetails));
     }
 

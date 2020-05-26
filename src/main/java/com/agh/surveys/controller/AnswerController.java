@@ -1,5 +1,6 @@
 package com.agh.surveys.controller;
 
+import com.agh.surveys.model.answer.dto.AnswerCreateDto;
 import com.agh.surveys.model.answer.dto.AnswerResponse;
 import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.service.answer.AnswerService;
@@ -22,7 +23,7 @@ public class AnswerController {
     }
 
     @PostMapping("user/{userId}/questions/{questionId}/answers")
-    AnswerResponse addAnswer(@PathVariable Integer questionId, @PathVariable String userId, @RequestBody AnswerDetails answerDetails) {
+    AnswerResponse addAnswer(@PathVariable Integer questionId, @PathVariable String userId, @RequestBody AnswerCreateDto answerDetails) {
         return new AnswerResponse(answerService.addAnswer(questionId, userId, answerDetails));
     }
 
