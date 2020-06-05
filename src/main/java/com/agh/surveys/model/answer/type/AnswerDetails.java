@@ -27,9 +27,6 @@ import javax.persistence.*;
     public AnswerDetails(){
     }
 
-    //I think that we should use only one enum from [Answer/Question]Type
-    // as question and types are strictly connected, moreover
-    // those enums have identical values/
     public abstract QuestionType getQuestionType();
 
     public AnswerDetails(String answerText){

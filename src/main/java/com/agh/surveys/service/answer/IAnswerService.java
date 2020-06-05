@@ -1,6 +1,7 @@
 package com.agh.surveys.service.answer;
 
 import com.agh.surveys.model.answer.Answer;
+import com.agh.surveys.model.answer.dto.AnswerCreateDto;
 import com.agh.surveys.model.answer.dto.AnswerResponse;
 import com.agh.surveys.model.answer.dto.AnswersRequestDto;
 import com.agh.surveys.model.answer.type.AnswerDetails;
@@ -12,7 +13,7 @@ public interface IAnswerService {
 
     List<Answer> getQuestionAnswers(Integer questionId);
 
-    Answer addAnswer(Integer questionID, String userID, AnswerDetails answerDetails);
+    Answer addAnswer(Integer questionID, String userID, AnswerCreateDto answerDetails);
 
     Answer getAnswer(Integer AnswerId);
 
