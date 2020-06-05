@@ -72,6 +72,7 @@ export class PollStatsPage implements OnInit {
       for(let user of pollData.respondedUser){
         for(let answer of user.answers){
           if(answer.questionId == id){
+            answer.answerDetails.userNick = user.user.userNick 
             questionAnswers.push(answer.answerDetails)
           }
         }
