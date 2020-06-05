@@ -87,6 +87,14 @@ export class AnswerPollPage implements OnInit {
       console.log(data));
   }
 
+  showEntry(entry){
+    console.log(entry);
+  }
+
+  showData(){
+    console.log(this.data)
+  }
+
   getAnswers(): AnswerBody[]{
     let answers: AnswerBody[] = []
     console.log(this.data.questions)
@@ -103,6 +111,20 @@ export class AnswerPollPage implements OnInit {
       if(question.questionDetails.questionType === 'CHECKBOX'){
         answer.details.selectedOptions = [question.answer]
       }
+      if(question.questionDetails.questionType === 'TIME'){
+        var answerTimeSlots: any = []
+        for(var timeSlot of question.questionDetails.timeSlots){
+          let slotAns = {
+            "slotTimeId": timeSlot.timeSlotId,
+            "slotDay": timeSlot.slotDay,
+            "startHour": timeSlot.startHourAns,
+            "endHour": timeSlot.endHourAns
+          }
+          answerTimeSlots.push(slotAns)
+        }
+        answer.details.timeSlots = answerTimeSlots
+      }
+
       answers.push(answer)
     }
     return answers

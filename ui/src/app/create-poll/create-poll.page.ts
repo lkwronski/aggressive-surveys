@@ -23,6 +23,7 @@ export class CreatePollPage implements OnInit {
 
   TEXT = "TEXT"
   CHECKBOX = "CHECKBOX"
+  TIME = "TIME"
 
   constructor(private route: ActivatedRoute,
     private router: Router, private services: ServicesService,
@@ -33,7 +34,7 @@ export class CreatePollPage implements OnInit {
     this.logued();
     this.title = "";
     this.questionList = []
-    this.deadline = "2020-05-30T20:00:00.000";
+    this.deadline = "2020-06-30T20:00:00.000";
     
   }
 
@@ -89,11 +90,30 @@ export class CreatePollPage implements OnInit {
     this.questionList.push(q)
   }
 
+  addTimeQuestion(){
+    let q: any = {
+      "questionText": "",
+      "timeSlots": [],
+      "questionType": this.TIME
+    }
+    this.questionList.push(q)
+  }
+
   addAnswer(q: any, o: string){
     let option: any = {
       "answerText": o
     }
     q.options.push(option);
+  }
+
+  addTimeSlot(q: any){
+    let timeSlot: any = {
+      "slotDay": "2020-01-01",
+      "startHour": "10:00:00",
+      "endHour": "20:00:00",
+    }
+
+    q.timeSlots.push(timeSlot);
   }
 
   convertOption(q: any){
@@ -133,7 +153,9 @@ export class CreatePollPage implements OnInit {
   send(){
     //console.log(this.groupService)
     for(let question of this.questionList){
-      this.convertOption(question)
+      if(question.questionType === this.CHECKBOX){
+        this.convertOption(question)
+      }
     }
     console.log(this.questionList)
     this.groupService.addPoll(this.groupId, this.username, this.title, this.questionList, this.deadline).subscribe(data =>
