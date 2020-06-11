@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>message-stats</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    People who answered: 
+    <ion-list *ngFor="let nickname of this.usersAnswered">
+    <ion-item>{{nickname}}</ion-item>
+    </ion-list>
+    <br>
+    People who didn't answer:
+    <ion-list *ngFor="let item of this.usersNotAnwsered">
+      <ion-item>{{item.user.userNick}}</ion-item>
+      </ion-list>
+    <br>
+    <ion-button (click)="goToGroupPage()">Go To Group Page</ion-button>  
+  </ion-content>
+  

@@ -22,4 +22,8 @@ export class MessageService {
   acknowledgeMessage(id: number, nickname: any){
     return this.http.post(this.MESSAGE_API + id + "/acknowledgments/" + nickname, {});
   }
+
+  getMessageStats(id: any){
+    return this.http.post(this.MESSAGE_API + "/" + id + "/acknowledgments", {})
+  }
 }
