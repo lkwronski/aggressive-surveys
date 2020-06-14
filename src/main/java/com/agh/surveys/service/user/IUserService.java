@@ -10,15 +10,12 @@ import java.util.List;
 
 public interface IUserService {
 
-    String addOrEditUserFromDto(UserDto userDto);
-
+    String addUserFromDto(UserDto userDto);
     void removeUserByNick(String nick);
-
     User getUserByNick(String nick);
 
     List<Message> getUnansweredMessagesBeforeDeadline(String nick);
 
     List<Poll> getUnfilledPolls(String nick);
 
-    String addUserFromDto(UserDto userDto);
 }
