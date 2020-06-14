@@ -2,8 +2,10 @@ package com.agh.surveys.model.answer.type;
 
 import com.agh.surveys.model.answer.dto.AnswerTimeSlotDto;
 import com.agh.surveys.model.question.type.TimeSlot;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,6 +30,8 @@ public class AnswerTimeSlot {
     private LocalTime endHour;
 
     @ManyToOne
+    @JsonIgnore
+    @ToString.Exclude
     @JoinColumn(name = "timeSlotId")
     private TimeSlot timeSlot;
 

@@ -20,10 +20,16 @@
     <ion-item>{{item.questionText}}</ion-item>
     <ion-list *ngFor="let answer of item.questionAnswers">
       <ng-template [ngIf]="item.questionType==='TEXT'">
-        <ion-item> - {{answer.answerText}}</ion-item>
+        <ion-item> {{answer.userNick}}: {{answer.answerText}}</ion-item>
       </ng-template>
       <ng-template [ngIf]="item.questionType==='CHECKBOX'">
-        <ion-item> - {{answer.selectedOptions}}</ion-item>
+        <ion-item> {{answer.userNick}}: {{answer.selectedOptions}}</ion-item>
+      </ng-template>
+      <ng-template [ngIf]="item.questionType==='TIME'">
+        <ion-item> {{answer.userNick}}:</ion-item>
+        <ion-list *ngFor="let timeSlot of answer.timeSlots">
+          <ion-label>   {{timeSlot.slotDay}}: {{timeSlot.startHour}}-{{timeSlot.endHour}}</ion-label>
+        </ion-list>
       </ng-template>
     </ion-list>
   </ion-list>

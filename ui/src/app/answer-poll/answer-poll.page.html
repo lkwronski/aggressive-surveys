@@ -27,8 +27,28 @@
       </ion-radio-group>
       </ion-list>
     </div>
-  </ion-list>
 
+    <div *ngIf= "item.questionDetails.questionType == 'TIME'">
+      <ion-list *ngFor= "let entry of item.questionDetails.timeSlots">
+            Day: {{entry.slotDay}} <br>
+            Time: {{entry.startHour}}-{{entry.endHour}}
+            <br>
+            Start hour:
+            <ion-item>
+              <ion-datetime displayFormat="HH:mm" [(ngModel)]="entry.startHourAns"></ion-datetime>
+            </ion-item>
+            End hour:
+            <ion-item>
+              <ion-datetime displayFormat="HH:mm" [(ngModel)]="entry.endHourAns"></ion-datetime>
+            </ion-item>
+          
+      </ion-list>
+    </div>
+
+
+  </ion-list>
+  <ion-button (click)="showData()">Show data</ion-button>
+  <br>
   <ion-button (click)="sendAnswers()">Send</ion-button>
   <br>
   <ion-button (click)="goToGroupPage()">Go To Group Page</ion-button>
