@@ -7,6 +7,6 @@ import lombok.Data;
 public class AnswerRequestDto {
 
     private Integer questionId;
-    private AnswerDetails details;
+    private AnswerCreateDto details;
 
 }

@@ -1,14 +1,14 @@
 package com.agh.surveys.validation;
 
 import com.agh.surveys.exception.BadRequestException;
+import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserDto;
 import com.agh.surveys.repository.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class UserValidator {
@@ -19,9 +19,8 @@ public class UserValidator {
     @Autowired
     CommonValidator commonValidator;
 
-    private boolean isEmailUsedBySomeoneElse(String email, String nick) {
-        Optional<User> user = userRepository.findByUserEmail(email);
-        return user.isPresent() && !user.get().getUserNick().equals(nick);
+    private boolean isEmailUsed(String email) {
+        return userRepository.findByUserEmail(email).isPresent();
     }
 
     private boolean isEmailInvalid(String email) {
@@ -33,14 +32,7 @@ public class UserValidator {
     }
 
     public void validateNewUserDto(UserDto userDto) {
-        validateUserDto(userDto);
 
-        if (isUserNickUsed(userDto.getUserNick())) {
-            throw new BadRequestException("Nick already in use");
-        }
-    }
-
-    public void validateUserDto(UserDto userDto) {
         String email = userDto.getUserEmail();
         String nick = userDto.getUserNick();
         String firstName = userDto.getUserFirstName();
@@ -50,16 +42,20 @@ public class UserValidator {
             throw new BadRequestException("Nick,mail and names cannot be blank");
         }
 
-        if (isEmailUsedBySomeoneElse(email, nick)) {
+        if (isEmailUsed(email)) {
             throw new BadRequestException("Email already in use");
         }
 
         if (isEmailInvalid(email)) {
             throw new BadRequestException("Not valid email");
         }
+
+        if (isUserNickUsed(nick)) {
+            throw new BadRequestException("Nick already in use");
+        }
     }
 
-    public void validateBeforeDeletion(User user) {
+    public void validateBeforeDeletion(User user){
         if (!user.getManagedGroups().isEmpty()) {
             throw new BadRequestException("This User is a leader of a group and cannot be deleted!");
         }

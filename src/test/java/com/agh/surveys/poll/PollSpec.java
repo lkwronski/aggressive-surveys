@@ -13,6 +13,8 @@ import com.agh.surveys.model.group.dto.GroupCreateDto;
 import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
 import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.dto.QuestionCreateDto;
+import com.agh.surveys.model.question.dto.QuestionTextDto;
 import com.agh.surveys.model.question.type.QuestionDetails;
 import com.agh.surveys.model.question.type.QuestionText;
 import com.agh.surveys.model.user.User;
@@ -51,9 +53,9 @@ public class PollSpec {
         GroupCreateDto groupCreateDto = new GroupCreateDto("test", "test", Collections.emptyList());
         ResponseEntity<String> resultGroup = GroupUtils.creatGroup(randomServerPort, groupCreateDto, this.restTemplate);
 
-        List<QuestionDetails> questions = new ArrayList<>();
-        questions.add(new QuestionText("test"));
-        questions.add(new QuestionText("test2"));
+        List<QuestionCreateDto> questions = new ArrayList<>();
+        questions.add(new QuestionTextDto("test"));
+        questions.add(new QuestionTextDto("test2"));
         PollCreateDto pollCreate = new PollCreateDto("test", LocalDateTime.now(), "test", questions);
         ResponseEntity<String> resultPoll = PollUtils.creatPoll(randomServerPort, pollCreate, 1, this.restTemplate); // trzeba wyciagnac id z grupy
 

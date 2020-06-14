@@ -25,11 +25,6 @@ public class UsersController {
         return userService.addUserFromDto(userDto);
     }
 
-    @PutMapping
-    public String addOrEditUser(@RequestBody UserDto userDto) {
-        return userService.addOrEditUserFromDto(userDto);
-    }
-
     @GetMapping("/{nick}")
     public UserDto getUser(@PathVariable(value = "nick") String nick) {
         User user = userService.getUserByNick(nick);

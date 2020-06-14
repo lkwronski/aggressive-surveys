@@ -1,6 +1,7 @@
 package com.agh.surveys.validation;
 
 import com.agh.surveys.exception.BadRequestException;
+import com.agh.surveys.model.answer.dto.AnswerCreateDto;
 import com.agh.surveys.model.answer.type.AnswerDetails;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.question.Question;
@@ -14,8 +15,8 @@ public class AnswerValidator {
     @Autowired
     GroupValidator groupValidator;
 
-    public void validateAnswer(AnswerDetails answerDetails, Question question){
-        if(answerDetails.getQuestionType() != question.getQuestionDetails().getQuestionType()){
+    public void validateAnswer(AnswerCreateDto answerCreateDto, Question question){
+        if(answerCreateDto.getQuestionType() != question.getQuestionDetails().getQuestionType()){
             throw new BadRequestException("Question and answer type should be the same");
         }
     }
