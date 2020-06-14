@@ -39,8 +39,18 @@ public class UserService implements IUserService {
     PollComponent groupComponent;
 
     @Override
+    public String addOrEditUserFromDto(UserDto userDto) {
+        userValidator.validateUserDto(userDto);
+
+        User user = userRepository.findByUserNick(userDto.getUserNick())
+                .orElse(new User(userDto));
+        return userRepository.save(user).getUserNick();
+    }
+
+    @Override
     public String addUserFromDto(UserDto userDto) {
         userValidator.validateNewUserDto(userDto);
+
         User user = new User(userDto);
         return userRepository.save(user).getUserNick();
     }
@@ -81,7 +91,7 @@ public class UserService implements IUserService {
         return groups.stream().flatMap(group -> group.getGroupPolls().stream().filter(poll -> groupComponent.isUserNotResponseToPoll(user, poll))).collect(Collectors.toList());
     }
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 }
