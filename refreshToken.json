@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "aggressive-surveys-a6536",
+  "private_key_id": "4d534fa961ee51ccff092942108109c2b414c038",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDUww7jsQhGlUjl\n+ebYMUp2TZ2O9EDIzCxPWMzHmwn9xNbpJnji45Ptzu1swZr5MmDOPakgtHIm+wQD\nRlCEmniVGZ/LBC1nl2aOCbqedWQ+0AF/LqGK0k9HripmNGV1gxAMwScxwHrZ/nY5\nn2tmqLfG3+xFMJ6Hzo1vHDQHtvOwz62HZtOXsKmk4GlhsHjbGq+wBBc3IUgDxYR6\nKjkBGxO/IKXwdIY16iWai579HLiuFqTi/45+1R+jVwPDA3OS7MdttMdmDvDz439b\nJMdJR5lnLvVb/5QsUemE3ZM8Q+q8GnCsa3aw28lbklOcreIg5gQbinyI3kToCAUL\n0jne6zVnAgMBAAECggEACOU+CKAKcAmdGm613eWzZaeQYX2AInvwk8GPxtmKPQsq\nvNLoLI8q3qz9FLGf1Awj0CcYQTgn4WBYD2RrJBy898LpJcaalDzYMVdiE9xloO1A\nKHwNaW2qUMH6w7GaIBG5Y/37sHVTO1GeExRBnBX6MsZd0eMIk38piDwU/j8CLSsD\n4+vQTxKONEFdduGrKkvsaIqf/WtoyxjAT4Dj9GYFZ+IZPQv0Wa/F5ZUuV0NuZ6kN\na1pg41I62u/e5MK20RbsdWdfBbdD5Z3a8gzyHAyNwAHrrPb8UlioLeq5WfOMG+MQ\nlRYe0RlFZZjgQaZBi8P2d/RnADZvhUkNLwgsx7GRKQKBgQDq2B/6wYP6cDvqYAfG\nw03PPo8xkHp7XzH1AG4hsFRdASiKz3EVYSvlASSwu6wxFyux9hPkBEwh51+yz90b\nnUQ0/HHO0pcg5VQliERHvVVav8Lk/Mk+yKOyxAvgS77LGib9LjtaaMsVVeUnMWum\nU1IDqd9POmhO5cqdN7S6SCW3TwKBgQDn7a5betxzTyLnbD+GRY75iC01P2cbsHNz\nKAUHcGkd9mY/GT2prqjel9i4VSyZKKgL//BSTcWhLZEpXuVUkVxgd8AxFdcbC0ee\nb3/fLy1DcJcrrwZgy/EWCHez2csFsvcjQ5UzwhuPspR2SqhkeBBVNFhX+qX0YTrH\ndTmyqpsaaQKBgQCSLGP7WGglgaZJg+xTM01DKdVHLH6QO/iEXvgtz+sy2H27qNLi\nU9FWgRetSaMsCxgPdPN8gZBBqhpO2kLt5T2HHXpZGYsn1pZBpkeZv6dZDPLqRM2e\nXpRFuPELcxoWoPiTrisTYxbE+OnhM0mmBUaPMTTlw50ZPr6WjQ3YxP900QKBgQC4\nYw82bXQsPGMsh7PtRQnJOsluRuzrZ5oxmER/SJBZoNZjHecXKuPYq/JBgn3Fejw3\n5g+i72/Kl1aMBITgefxuOWZT3+A3AP28aTrJLlGXB0E4GptAg4M1GCBKnUE6U7EF\nmSpajtyonrpHXU2JKqcZhlciAwTDSDWZ84mekOJk2QKBgQDb/Aby/dXOZatdCKdo\nH/j5QzvYCwXEug6pMPLORdNOTsEN/+tk+Nz/Zet9vWy5DLzT6GM5BLDUwQOwxyHy\ncdzEQ2PeBL/DrMKtRqDETOC4y4f4/cPqbOrJ1FrfBPU7gJTN3yLZoFCD5HoPPhoG\nKlSLdAFf92fHaRNIP8BJ5LYUog==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fuwaj@aggressive-surveys-a6536.iam.gserviceaccount.com",
+  "client_id": "112757459776623661879",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fuwaj%40aggressive-surveys-a6536.iam.gserviceaccount.com"
+}

@@ -1,9 +1,11 @@
 package com.agh.surveys.model.question.type;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 public class QuestionText extends QuestionDetails {

@@ -1,8 +1,9 @@
 package com.agh.surveys.service.group;
 
 
+import com.agh.surveys.component.group.FirebaseComponent;
+import com.agh.surveys.component.group.PollComponent;
 import com.agh.surveys.exception.NotFoundException;
-import com.agh.surveys.component.group.GroupComponent;
 import com.agh.surveys.exception.group.GroupNotFoundException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
@@ -42,7 +43,7 @@ public class GroupService implements IGroupService {
     UserRepository userRepository;
 
     @Autowired
-    GroupComponent groupComponent;
+    PollComponent pollComponent;
 
     @Autowired
     UserService userService;
@@ -55,6 +56,9 @@ public class GroupService implements IGroupService {
 
     @Autowired
     IntervalParser intervalParser;
+
+    @Autowired
+    FirebaseComponent firebaseComponent;
 
     @Autowired
     GroupValidator groupValidator;
@@ -70,7 +74,8 @@ public class GroupService implements IGroupService {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
         List<Poll> groupPolls = group.getGroupPolls();
-        return groupPolls.stream().filter(poll -> groupComponent.userResponseToPoll(user, poll)).collect(Collectors.toList());
+
+        return groupPolls.stream().filter(poll -> pollComponent.isUserResponseToPoll(user,poll)).collect(Collectors.toList());
     }
 
     @Override
@@ -78,7 +83,8 @@ public class GroupService implements IGroupService {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
         List<Poll> groupPolls = group.getGroupPolls();
-        return groupPolls.stream().filter(poll -> groupComponent.userNotResponseToPoll(user, poll)).collect(Collectors.toList());
+
+        return groupPolls.stream().filter(poll -> pollComponent.isUserNotResponseToPoll(user,poll)).collect(Collectors.toList());
     }
 
 
@@ -121,6 +127,8 @@ public class GroupService implements IGroupService {
         questions.addAll(questionService.addAllQuestionDetails(poll, pollCreateDto.getQuestionDetails()));
         poll.setPollGroup(group);
         groupRepository.save(group);
+
+        group.getGroupMembers().forEach(user -> firebaseComponent.sendNotificationNewPoll(user));
 
         return poll;
     }
