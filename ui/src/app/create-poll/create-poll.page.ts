@@ -4,7 +4,12 @@ import { ServicesService } from '../services/services.service'
 import { PollService } from '../services/poll.service'
 import { AngularFireAuth } from '@angular/fire/auth';
 import { GroupService } from '../services/group.service';
-import { ActivatedRoute }  from '@angular/router'
+import { ActivatedRoute }  from '@angular/router';
+import {HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { catchError } from 'rxjs/operators';
+import { AlertController } from '@ionic/angular';  
+
 
 @Component({
   selector: 'app-create-poll',
@@ -27,7 +32,9 @@ export class CreatePollPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router, private services: ServicesService,
-    private pollService: PollService, private aut: AngularFireAuth, public groupService: GroupService) { }
+    private pollService: PollService, private aut: AngularFireAuth, 
+    public groupService: GroupService,
+    public alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.groupId = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -158,9 +165,49 @@ export class CreatePollPage implements OnInit {
       }
     }
     console.log(this.questionList)
-    this.groupService.addPoll(this.groupId, this.username, this.title, this.questionList, this.deadline).subscribe(data =>
-      console.log(data))
+    this.groupService.addPoll(this.groupId, this.username, this.title, this.questionList, this.deadline)
+    .subscribe((response) => {console.log(response);
+                              this.showSuccessAlert()},
+              (error) => {this.showErrorAlert();
+                          })
   }
+
+  async showErrorAlert() {  
+    const alert = await this.alertCtrl.create({  
+      header: 'Message',  
+      message: 'Something went wrong trying to create a message please try once again',  
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+    alert.present();  
+    let result = await alert.onDidDismiss();
+    console.log(result);
+  }  
+
+  async showSuccessAlert() {  
+    const alert = await this.alertCtrl.create({  
+      header: 'Message',  
+      message: 'Successfully created a poll',  
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+    alert.present();  
+    let result = await alert.onDidDismiss();
+    console.log(result);
+    this.goToGroupPage();
+  }  
+
+
 
   goToGroupPage(){
     this.router.navigate(["/group", this.groupId])
