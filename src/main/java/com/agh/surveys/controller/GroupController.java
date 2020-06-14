@@ -5,12 +5,13 @@ import com.agh.surveys.model.group.dto.GroupCreateDto;
 import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.message.dto.MessageCreateDto;
 import com.agh.surveys.model.message.dto.MessageResponseDto;
-import com.agh.surveys.model.poll.Poll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
 import com.agh.surveys.model.poll.dto.PollResponseDto;
+import com.agh.surveys.model.poll.dto.ScheduledPollCreateDto;
+import com.agh.surveys.model.poll.dto.ScheduledPollResponseDto;
 import com.agh.surveys.service.group.GroupService;
-import com.agh.surveys.service.message.IMessageService;
 import com.agh.surveys.service.message.MessageService;
+import com.agh.surveys.service.poll.ScheduledPollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,9 @@ public class GroupController {
 
     @Autowired
     MessageService messageService;
+
+    @Autowired
+    ScheduledPollService scheduledPollService;
 
     @PostMapping
     public GroupRespDto addGroup(@RequestBody GroupCreateDto groupRespDto) {
@@ -62,15 +66,15 @@ public class GroupController {
     }
 
     @GetMapping("/{groupId}/members/{memberNick}/filled_polls")
-    public List<PollResponseDto> getFilledPolls( @PathVariable(value ="groupId")Integer groupId,
-                                   @PathVariable(value="memberNick") String userNick ){
+    public List<PollResponseDto> getFilledPolls(@PathVariable(value = "groupId") Integer groupId,
+                                                @PathVariable(value = "memberNick") String userNick) {
 
         return groupService.getFilledPolls(groupId, userNick).stream().map(PollResponseDto::new).collect(Collectors.toList());
     }
 
     @GetMapping("/{groupId}/members/{memberNick}/unfilled_polls")
-    public List<PollResponseDto> getUnfilledPolls( @PathVariable(value ="groupId")Integer groupId,
-                                                 @PathVariable(value="memberNick") String userNick ){
+    public List<PollResponseDto> getUnfilledPolls(@PathVariable(value = "groupId") Integer groupId,
+                                                  @PathVariable(value = "memberNick") String userNick) {
 
         return groupService.getUnfilledPolls(groupId, userNick).stream().map(PollResponseDto::new).collect(Collectors.toList());
     }
@@ -83,7 +87,23 @@ public class GroupController {
     @PostMapping("/{groupId}/polls")
     public PollResponseDto addPoll(@PathVariable(value = "groupId") Integer groupId,
                                    @RequestBody PollCreateDto pollCreateDto) {
+
         return new PollResponseDto(groupService.addPolltoGroup(pollCreateDto, groupId));
+    }
+
+    @PostMapping("/{groupId}/scheduledPolls")
+    public ScheduledPollResponseDto addScheduledPoll(@PathVariable(value = "groupId") Integer groupId,
+                                                     @RequestBody ScheduledPollCreateDto pollCreateDto) {
+
+        return new ScheduledPollResponseDto(groupService.addScheduledPollToGroup(pollCreateDto, groupId),
+                pollCreateDto.getScheduledInterval(), pollCreateDto.getDeadlineInterval());
+    }
+
+    @GetMapping("/{groupId}/scheduledPolls")
+    public List<ScheduledPollResponseDto> getGroupScheduledPolls(@PathVariable(value = "groupId") Integer groupId) {
+        return scheduledPollService.getAllScheduledPollsForGroup(groupId).stream()
+                .map(x-> scheduledPollService.scheduledPollToDto(x))
+                .collect(Collectors.toList());
     }
 
 
