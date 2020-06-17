@@ -19,6 +19,7 @@ export class CreateMessagePage implements OnInit {
   username: string;
   id: any;
   messageText: any;
+  deadline: string;
 
   constructor(private route: ActivatedRoute,
     private router: Router, private services: ServicesService,
@@ -30,6 +31,7 @@ export class CreateMessagePage implements OnInit {
   ngOnInit() {
     this.groupId = parseInt(this.route.snapshot.paramMap.get('id'));
     this.logued();
+    this.deadline = "2020-06-30T20:00:00.000";
   }
 
   logued() {
@@ -106,7 +108,8 @@ export class CreateMessagePage implements OnInit {
   }
 
   send(){
-    this.groupService.addMessage(this.groupId, this.username, this.messageText, "2020-06-30T18:57:52.973")
+    this.deadline = this.deadline.substring(0,19);
+    this.groupService.addMessage(this.groupId, this.username, this.messageText, this.deadline)
     .subscribe(data => {console.log(data);
                         this.showSuccessAlert()},
                         (error) => {
