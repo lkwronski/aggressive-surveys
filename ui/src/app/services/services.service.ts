@@ -48,7 +48,6 @@ export class ServicesService {
         name: value.name,
         surname: value.surname,
         mail: value.mail,
-        img: value.img,
         uid: value.uid,
         date: Date.now(),
         username: value.username,

@@ -7,6 +7,8 @@ import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ServicesService } from '../services/services.service';
 import { UserService } from '../services/user.service';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,10 +21,10 @@ export class EditProfilePage implements OnInit {
   uid: string;
   name: any;
   surname: string;
-  img: any;
+
   mail: string;
   uploadPercent: Observable<number>;
-  urlImage: Observable<string>;
+
   item: any;
   username: string;
   
@@ -34,9 +36,10 @@ export class EditProfilePage implements OnInit {
     private afs: AngularFireStorage,
     private loadingController: LoadingController,
     private userConfig: UserService,
-    private aut: AngularFireAuth) {
+    private aut: AngularFireAuth,
+    private fcm: FCM) {
   }
-
+  usr: string;
   ngOnInit() {
     this.logueado();
   }
@@ -65,7 +68,7 @@ export class EditProfilePage implements OnInit {
         this.id = data[0].payload.doc.id;
         this.name = data[0].payload.doc.data().name;
         this.surname = data[0].payload.doc.data().surname;
-        this.img = data[0].payload.doc.data().img;
+
         this.username =  data[0].payload.doc.data().username;
         console.log('profil full');
       } else {
@@ -82,23 +85,19 @@ export class EditProfilePage implements OnInit {
 
     const id = Math.random().toString(36).substring(2);
     const file = e.target.files[0];
-    const filePath = `image/pic_${id}`;
-    const ref = this.afs.ref(filePath);
-    const task = this.afs.upload(filePath, file);
-    this.uploadPercent = task.percentageChanges();
+
     this.presentLoading();
-    task.snapshotChanges().pipe(finalize(() => this.urlImage = ref.getDownloadURL())).subscribe();
   }
 
 
   save(name, surname, username) {
     console.log(this.cp);
-    const image = this.inputimageProd.nativeElement.value;
+
     const data = {
       name: name,
       surname: surname,
       mail: this.mail,
-      img: image || this.img,
+
       uid: this.uid,
       username: username || 'null'
     };
@@ -108,17 +107,22 @@ export class EditProfilePage implements OnInit {
       this.services.createUser(data).then(
         res => {
           console.log('Upload' + res);
-          this.rout.navigateByUrl(`/profile`);
+          this.rout.navigateByUrl(`/main`);
         });
 
     } else {
+      this.userConfig.editUser(name, surname,username, this.mail).subscribe( res => console.log(res) );
       this.services.updateUser(data, this.id).then(
         res => {
           console.log('Upload' + res);
-          this.rout.navigateByUrl(`/profile`);
+          this.rout.navigateByUrl(`/main`);
         });
       
     }
+    
+
+    this.usr = username.toString();
+    this.fcm.subscribeToTopic(this.usr);
 
   }
 

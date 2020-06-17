@@ -39,7 +39,19 @@ export class UserService {
     };
     console.log(body);
     return this.http.post<any>(this.USER_API, body);
+}
 
-  }
-  
+editUser(name: string, surname: string, username: string, email: string){
+  var body: any = {
+    "userEmail": email,
+    "userFirstName": name,
+    "userLastName": surname,
+    "userNick": username,
+  };
+  console.log(body);
+  return this.http.put<any>(this.USER_API, body);
+
+
+}
+
 }
