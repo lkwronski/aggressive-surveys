@@ -8,7 +8,7 @@ export class MessageService {
 
   constructor(private http: HttpClient) { }
 
-  API: string = 'http://localhost:8080';
+  API: string = 'http://backend:8080';
   MESSAGE_API: string = this.API + '/messages/' 
 
   getMessageById(id: number){

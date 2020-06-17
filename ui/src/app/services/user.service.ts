@@ -8,7 +8,7 @@ export class UserService {
 
   constructor(public http: HttpClient) { }
 
-  API: string = 'http://localhost:8080';
+  API: string = 'http://backend:8080';
   USER_API: string = this.API + '/users' 
 
   getGroups(nick: string){
