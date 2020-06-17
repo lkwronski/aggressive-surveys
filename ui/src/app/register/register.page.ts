@@ -34,7 +34,7 @@ export class RegisterPage {
         await this.afr.auth.createUserWithEmailAndPassword(email, password).then(data => {
           console.log(data);
           setTimeout( () => {
-            this.rout.navigate(['']);
+            this.rout.navigate(['/edit-profile']);
           }, 1000);
         });
 
@@ -63,7 +63,7 @@ export class RegisterPage {
 
   async errorpassIguales() {
     const alert = await this.alertController.create({
-      message: 'The password dont macth',
+      message: 'The password dont match',
       buttons: ['OK']
     });
 

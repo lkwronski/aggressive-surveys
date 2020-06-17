@@ -28,7 +28,7 @@ export class LoginPage {
       const res = await this.afs.auth.signInWithEmailAndPassword(username, password);
       console.log(res);
       setTimeout(() => {
-        this.rout.navigateByUrl('');
+        this.rout.navigateByUrl('main');
       }, 1000);
     } catch (error) {
       console.log(error);
@@ -54,7 +54,7 @@ export class LoginPage {
     try {
       const res = await this.afs.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
       console.log(res);
-      this.rout.navigateByUrl('main');
+      this.rout.navigateByUrl('/main');
     } catch (error) {
       if (error.code === 'auth/wrong-password') {
         this.error('Incorrect Password');
