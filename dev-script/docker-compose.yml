@@ -27,3 +27,15 @@ services:
       - postgres
     links:
       - postgres
+  ui:
+    image:  ui:v3
+    container_name: ui-surveys
+    network_mode: bridge
+    expose:
+      - 8100
+    ports:
+      - 8100:8100
+    depends_on:
+      - backend
+    links:
+      - backend

@@ -1,11 +1,15 @@
 FROM node:13.1.0
 
+USER root
+
 COPY ui/ /www/app
 
+RUN chmod -R 777 /home/node
 RUN npm install -g  ionic
 
 WORKDIR /www/app
 RUN npm install
+RUN npm i @angular/cli
 
 EXPOSE 8100
 
