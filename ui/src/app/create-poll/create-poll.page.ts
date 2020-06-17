@@ -164,7 +164,9 @@ export class CreatePollPage implements OnInit {
         this.convertOption(question)
       }
     }
-    console.log(this.questionList)
+    console.log(this.deadline)
+    this.deadline = this.deadline.substring(0,19);
+    console.log(this.deadline)
     this.groupService.addPoll(this.groupId, this.username, this.title, this.questionList, this.deadline)
     .subscribe((response) => {console.log(response);
                               this.showSuccessAlert()},

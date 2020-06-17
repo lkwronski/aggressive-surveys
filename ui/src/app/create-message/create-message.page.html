@@ -8,6 +8,10 @@
   <ion-item>
     <ion-input [(ngModel)]="messageText" placeholder="Enter message" required=true></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-card-subtitle>Enter deadline</ion-card-subtitle>
+    <ion-datetime displayFormat="YYYY-MM-DD H:mm" [(ngModel)]="deadline"></ion-datetime>
+  </ion-item>
   <br>
   <ion-button (click)="this.validateAndSend()">Send a Message</ion-button>
   <br>
