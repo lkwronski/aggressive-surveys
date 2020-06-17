@@ -1,7 +1,6 @@
 package com.agh.surveys.service.group;
 
 
-
 import com.agh.surveys.component.group.FirebaseComponent;
 import com.agh.surveys.component.group.PollComponent;
 import com.agh.surveys.exception.NotFoundException;
@@ -10,18 +9,24 @@ import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
 import com.agh.surveys.model.group.dto.GroupRespDto;
 import com.agh.surveys.model.poll.Poll;
+import com.agh.surveys.model.poll.ScheduledPoll;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
+import com.agh.surveys.model.poll.dto.ScheduledPollCreateDto;
 import com.agh.surveys.model.question.Question;
+import com.agh.surveys.model.question.ScheduledQuestion;
 import com.agh.surveys.model.user.User;
 import com.agh.surveys.repository.GroupRepository;
 import com.agh.surveys.repository.UserRepository;
 import com.agh.surveys.service.poll.PollService;
+import com.agh.surveys.service.poll.ScheduledPollService;
 import com.agh.surveys.service.question.QuestionService;
+import com.agh.surveys.service.question.ScheduledQuestionService;
 import com.agh.surveys.service.user.UserService;
 import com.agh.surveys.validation.GroupValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -50,16 +55,26 @@ public class GroupService implements IGroupService {
     QuestionService questionService;
 
     @Autowired
+    IntervalParser intervalParser;
+
+    @Autowired
     FirebaseComponent firebaseComponent;
 
     @Autowired
     GroupValidator groupValidator;
+
+    @Autowired
+    ScheduledPollService scheduledPollService;
+
+    @Autowired
+    ScheduledQuestionService scheduledQuestionService;
 
     @Override
     public List<Poll> getFilledPolls(Integer groupId, String userNick) {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
         List<Poll> groupPolls = group.getGroupPolls();
+
         return groupPolls.stream().filter(poll -> pollComponent.isUserResponseToPoll(user,poll)).collect(Collectors.toList());
     }
 
@@ -68,9 +83,35 @@ public class GroupService implements IGroupService {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
         List<Poll> groupPolls = group.getGroupPolls();
+
         return groupPolls.stream().filter(poll -> pollComponent.isUserNotResponseToPoll(user,poll)).collect(Collectors.toList());
     }
 
+
+    @Override
+    public ScheduledPoll addScheduledPollToGroup(ScheduledPollCreateDto pollCreateDto, Integer groupId) {
+        Group group = getGroup(groupId);
+        User author = userService.getUserByNick(pollCreateDto.getAuthorNick());
+
+        groupValidator.validateCreatePollDto(pollCreateDto, author, group);
+        List<ScheduledQuestion> questions = new LinkedList<>();
+        Duration deadlineInterval = intervalParser.fromString(pollCreateDto.getDeadlineInterval());
+        Duration scheduleInterval = intervalParser.fromString(pollCreateDto.getScheduledInterval());
+
+        ScheduledPoll poll = new ScheduledPoll();
+        poll.setAuthor(author);
+        poll.setPollScheduleTime(pollCreateDto.getPollCreationTime());
+        poll.setPollGroup(group);
+        poll.setPollName(pollCreateDto.getPollName());
+        poll.setScheduledDeadline(deadlineInterval);
+        poll.setScheduleInterval(scheduleInterval);
+        poll.setQuestions(questions);
+
+        scheduledPollService.savePoll(poll);
+        questions.addAll(scheduledQuestionService.addAllQuestionDetailsToScheduled(poll, pollCreateDto.getQuestionDetails()));
+        groupRepository.save(group);
+        return poll;
+    }
 
     @Override
     public Poll addPolltoGroup(PollCreateDto pollCreateDto, Integer groupId) {
@@ -140,9 +181,9 @@ public class GroupService implements IGroupService {
 
     @Override
     public void addGroupMember(Integer groupId, String userNick) {
-        Group group = groupRepository.getOne(groupId);
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("No group with such id"));
         User user = userService.getUserByNick(userNick);
-        groupValidator.validateBeforeAddingUser(group,user);
+        groupValidator.validateBeforeAddingUser(group, user);
 
         group.getGroupMembers().add(user);
         groupRepository.save(group);
@@ -153,7 +194,7 @@ public class GroupService implements IGroupService {
         Group group = getGroup(groupId);
         User user = userService.getUserByNick(userNick);
 
-        groupValidator.validateBeforeRemovingUser(group,user);
+        groupValidator.validateBeforeRemovingUser(group, user);
 
         group.getGroupMembers().remove(user);
 
@@ -161,7 +202,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public void saveGroup(Group group){
+    public void saveGroup(Group group) {
         groupRepository.save(group);
     }
 }

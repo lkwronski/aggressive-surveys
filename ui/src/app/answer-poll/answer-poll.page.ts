@@ -7,6 +7,7 @@ import { GroupService } from '../services/group.service'
 import { PollService } from '../services/poll.service'
 import { AnswerService } from '../services/answer.service';
 import { AnswerBody } from './answerBody';
+import { AlertController } from '@ionic/angular';  
 
 @Component({
   selector: 'app-answer-poll',
@@ -28,7 +29,8 @@ export class AnswerPollPage implements OnInit {
     private router: Router,
     private services: ServicesService,
     private pollService: PollService,
-    private answerService: AnswerService) { }
+    private answerService: AnswerService,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.groupId = parseInt(this.route.snapshot.paramMap.get('groupId'));
@@ -84,7 +86,55 @@ export class AnswerPollPage implements OnInit {
     }
     console.log(pollAnswer);
     this.pollService.postPollAnswer(this.pollId, pollAnswer).subscribe(data =>
-      console.log(data));
+      {console.log(data);
+        this.showSuccessAlert();
+      },
+      error => {
+        this.showErrorAlert();
+      });
+  }
+
+  async showErrorAlert() {  
+    const alert = await this.alertCtrl.create({  
+      header: 'Message',  
+      message: 'Something went wrong trying to send an answer please try once again',  
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+    alert.present();  
+    let result = await alert.onDidDismiss();
+    console.log(result);
+  }  
+
+  async showSuccessAlert() {  
+    const alert = await this.alertCtrl.create({  
+      header: 'Message',  
+      message: 'Successfully answered a poll',  
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+    alert.present();  
+    let result = await alert.onDidDismiss();
+    console.log(result);
+    this.goToGroupPage();
+  }  
+
+  showEntry(entry){
+    console.log(entry);
+  }
+
+  showData(){
+    console.log(this.data)
   }
 
   getAnswers(): AnswerBody[]{
@@ -103,6 +153,20 @@ export class AnswerPollPage implements OnInit {
       if(question.questionDetails.questionType === 'CHECKBOX'){
         answer.details.selectedOptions = [question.answer]
       }
+      if(question.questionDetails.questionType === 'TIME'){
+        var answerTimeSlots: any = []
+        for(var timeSlot of question.questionDetails.timeSlots){
+          let slotAns = {
+            "slotTimeId": timeSlot.timeSlotId,
+            "slotDay": timeSlot.slotDay,
+            "startHour": timeSlot.startHourAns,
+            "endHour": timeSlot.endHourAns
+          }
+          answerTimeSlots.push(slotAns)
+        }
+        answer.details.timeSlots = answerTimeSlots
+      }
+
       answers.push(answer)
     }
     return answers

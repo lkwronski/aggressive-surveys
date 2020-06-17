@@ -5,6 +5,7 @@ import { MessageService } from '../services/message.service'
 import { AngularFireAuth } from '@angular/fire/auth';
 import { GroupService } from '../services/group.service';
 import { ActivatedRoute }  from '@angular/router'
+import { AlertController } from '@ionic/angular';  
 
 @Component({
   selector: 'app-create-message',
@@ -21,7 +22,10 @@ export class CreateMessagePage implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router, private services: ServicesService,
-    private messageService: MessageService, private aut: AngularFireAuth, public groupService: GroupService) { }
+    private messageService: MessageService, 
+    private aut: AngularFireAuth, 
+    public groupService: GroupService,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.groupId = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -62,13 +66,52 @@ export class CreateMessagePage implements OnInit {
     });
   }
 
+  async showErrorAlert() {  
+    const alert = await this.alertCtrl.create({  
+      header: 'Message',  
+      message: 'Something went wrong trying to send a message please try once again',  
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+    alert.present();  
+    let result = await alert.onDidDismiss();
+    console.log(result);
+  }  
+
+  async showSuccessAlert() {  
+    const alert = await this.alertCtrl.create({  
+      header: 'Message',  
+      message: 'Successfully created a message',  
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+    alert.present();  
+    let result = await alert.onDidDismiss();
+    console.log(result);
+    this.goToGroupPage();
+  }  
+
   validateAndSend(){
     this.send();
   }
 
   send(){
-    this.groupService.addMessage(this.groupId, this.username, this.messageText, "2020-05-30T18:57:52.973").subscribe(data =>
-      console.log(data))
+    this.groupService.addMessage(this.groupId, this.username, this.messageText, "2020-06-30T18:57:52.973")
+    .subscribe(data => {console.log(data);
+                        this.showSuccessAlert()},
+                        (error) => {
+                          this.showErrorAlert();
+                        })
   }
 
   goToGroupPage(){

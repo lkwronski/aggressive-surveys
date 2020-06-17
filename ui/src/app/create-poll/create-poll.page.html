@@ -10,13 +10,7 @@
   </ion-item>
 
   <ion-list *ngFor="let item of this.questionList">
-    <ion-item>
-      <ion-label>Question type</ion-label>
-      <ion-select [(ngModel)]="item.questionType" value="TEXT">
-        <ion-select-option value="TEXT">Text question</ion-select-option>
-        <ion-select-option value="CHECKBOX">Checkbox</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ion-label>Question type: {{item.questionType}}</ion-label>
     <ion-item>
       <ion-textarea [(ngModel)]="item.questionText" placeholder="Enter question here..." required=true></ion-textarea>
       <ion-button (click)="removeQuestion(item)">Remove question</ion-button>
@@ -31,11 +25,31 @@
       </ion-list>
       <ion-button (click)="addAnswer(item, '')">Add an answer</ion-button>
     </div>
-  
+
+    <div *ngIf= "item.questionType == 'TIME'">
+      <ion-list *ngFor="let entry of item.timeSlots">
+          Date:
+          <ion-item>
+            <ion-datetime displayFormat="YYYY MM DD" placeholder="YYYY MM DD" [(ngModel)]="entry.slotDay"></ion-datetime>
+          </ion-item>
+          StartHour:
+          <ion-item>
+            <ion-datetime displayFormat="HH:mm" [(ngModel)]="entry.startHour"></ion-datetime>
+          </ion-item>
+          EndHour:
+          <ion-item>
+            <ion-datetime displayFormat="HH:mm" [(ngModel)]="entry.endHour"></ion-datetime>
+          </ion-item>
+          <ion-button (click)="removeAnswer(item.timeSlots, entry)">Remove slot</ion-button>
+      </ion-list>
+      <ion-button (click)="addTimeSlot(item)">Add slot</ion-button>
+    </div>
+
   </ion-list>
 
   <ion-button (click)="addTextQuestion()">Add text question</ion-button>
   <ion-button (click)="addCheckboxQuestion()">Add checkbox question</ion-button>
+  <ion-button (click)="addTimeQuestion()">Add Time Question</ion-button>
   <br>
   <ion-button (click)="this.validateAndSend()">Send a poll</ion-button>
   <br>

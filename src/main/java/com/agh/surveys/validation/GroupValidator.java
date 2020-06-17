@@ -4,6 +4,7 @@ import com.agh.surveys.exception.BadRequestException;
 import com.agh.surveys.model.group.Group;
 import com.agh.surveys.model.group.dto.GroupCreateDto;
 import com.agh.surveys.model.poll.dto.PollCreateDto;
+import com.agh.surveys.model.poll.dto.ScheduledPollCreateDto;
 import com.agh.surveys.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,14 @@ public class GroupValidator {
         if (isAfterDeadline(pollCreateDto.getPolDeadline(),pollDeadlineInMinutes)) {
             throw new BadRequestException("Created poll can't have deadline in the past or earlier than few minutes");
         }
+
+        if(!isUserMemberOrLeader( author,group)){
+            throw new BadRequestException("Poll author must be member of a group");
+        }
+
+    }
+
+    public void validateCreatePollDto(ScheduledPollCreateDto pollCreateDto, User author, Group group) {
 
         if(!isUserMemberOrLeader( author,group)){
             throw new BadRequestException("Poll author must be member of a group");
