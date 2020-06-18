@@ -42,8 +42,8 @@ public class UserService implements IUserService {
     public String addOrEditUserFromDto(UserDto userDto) {
         userValidator.validateUserDto(userDto);
 
-        User user = userRepository.findByUserNick(userDto.getUserNick())
-                .orElse(new User(userDto));
+        User user = new User(userDto);
+
         return userRepository.save(user).getUserNick();
     }
 

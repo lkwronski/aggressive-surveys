@@ -50,12 +50,12 @@ public class UserValidator {
             throw new BadRequestException("Nick,mail and names cannot be blank");
         }
 
-        if (isEmailUsedBySomeoneElse(email, nick)) {
-            throw new BadRequestException("Email already in use");
-        }
-
         if (isEmailInvalid(email)) {
             throw new BadRequestException("Not valid email");
+        }
+
+        if (isEmailUsedBySomeoneElse(email,nick)) {
+            throw new BadRequestException("Email already in use");
         }
     }
 
