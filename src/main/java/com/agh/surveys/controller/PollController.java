@@ -51,6 +51,11 @@ public class PollController {
         return questionService.getByPollId(pollId).stream().map(QuestionResponse::new).collect(Collectors.toList());
     }
 
+    @GetMapping("/{pollId}/notification")
+    void sendPollNotification(@PathVariable Integer pollId){
+        pollService.sendPollNotification(pollId);
+    }
+
     @GetMapping("/{pollId}/responded_user")
     List<UserDto> getRespondedUser(@PathVariable Integer pollId) {
         return pollService.getRespondedUser(pollId).stream().map(UserDto::new).collect(Collectors.toList());

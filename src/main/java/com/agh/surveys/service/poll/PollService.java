@@ -1,5 +1,6 @@
 package com.agh.surveys.service.poll;
 
+import com.agh.surveys.component.group.FirebaseComponent;
 import com.agh.surveys.component.group.PollComponent;
 import com.agh.surveys.exception.poll.PollNotFoundException;
 import com.agh.surveys.model.answer.Answer;
@@ -10,11 +11,9 @@ import com.agh.surveys.model.user.User;
 import com.agh.surveys.model.user.dto.UserStatisticsDto;
 import com.agh.surveys.repository.PollRepository;
 import com.agh.surveys.service.answer.AnswerService;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,10 @@ public class PollService implements IPollService {
     AnswerService answerService;
 
     @Autowired
-    PollComponent groupComponent;
+    PollComponent pollComponent;
+
+    @Autowired
+    FirebaseComponent firebaseComponent;
 
     @Override
     public List<Poll> findAll() {
@@ -55,7 +57,7 @@ public class PollService implements IPollService {
     public List<User> getRespondedUser(Integer pollId) {
         Poll poll = getPoll(pollId);
         List<User> groupUsers = poll.getPollGroup().getGroupMembers();
-        List<User> respondedUsers = groupUsers.stream().filter(user -> groupComponent.isUserResponseToPoll(user, poll)).collect(Collectors.toList());
+        List<User> respondedUsers = groupUsers.stream().filter(user -> pollComponent.isUserResponseToPoll(user, poll)).collect(Collectors.toList());
         return respondedUsers;
     }
 
@@ -63,7 +65,7 @@ public class PollService implements IPollService {
     public List<User> getNotRespondedUser(Integer pollId) {
         Poll poll = getPoll(pollId);
         List<User> groupUsers = poll.getPollGroup().getGroupMembers();
-        List<User> respondedUsers = groupUsers.stream().filter(user -> groupComponent.isUserNotResponseToPoll(user, poll)).collect(Collectors.toList());
+        List<User> respondedUsers = groupUsers.stream().filter(user -> pollComponent.isUserNotResponseToPoll(user, poll)).collect(Collectors.toList());
         return respondedUsers;
     }
 
@@ -89,5 +91,13 @@ public class PollService implements IPollService {
 
         pollStatisticsDto.setRespondedUser(respondedUser);
         return pollStatisticsDto;
+    }
+
+    @Override
+    public void sendPollNotification(Integer pollId) {
+        Poll poll = getPoll(pollId);
+        List<User> notResponseUserToPoll = poll.getPollGroup().getGroupMembers().stream().filter( user ->
+            pollComponent.isUserNotResponseToPoll(user,poll)).collect(Collectors.toList());
+        notResponseUserToPoll.forEach(user -> firebaseComponent.sendNotificationReminder(user));
     }
 }

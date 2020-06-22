@@ -22,4 +22,6 @@ public interface IPollService {
     List<User> getNotRespondedUser(Integer pollId);
 
     PollStatisticsDto getStatistics(Integer pollId);
+
+    void sendPollNotification(Integer pollId);
 }
