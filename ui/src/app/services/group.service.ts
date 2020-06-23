@@ -13,7 +13,7 @@ export class GroupService {
 
   constructor(public http: HttpClient ) { }
 
-  API: string = 'http://localhost:8080';
+  API: string = 'http://18.224.140.96:8080';
   GROUP_API: string = this.API + '/groups' 
 
   addPoll(groupId: any, nickname: string, pollTitle: string, questionDetails: any, deadline: any){

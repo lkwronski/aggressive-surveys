@@ -47,13 +47,12 @@ export class AppComponent {
 
     this.fcm.onNotification().subscribe(data => {
       console.log(data);
-      if (data.wasTapped) {
+      
         console.log('Received in background');
-        this.rout.navigate([data.landing_page, data.price]);
-      } else {
-        console.log('Received in foreground');
-        this.rout.navigate([data.landing_page, data.price]);
-      }
+        this.rout.navigateByUrl('/second');
+      
+      
+      
     });
 
     

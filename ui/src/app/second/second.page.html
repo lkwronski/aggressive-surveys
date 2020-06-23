@@ -1,18 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Second</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div text-center>
+  <img style="margin:auto;" src="assets/icon/survey-time.png" alt="">
+  
+
+</div>
+
 
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Congratulation!</ion-card-title>
+      <ion-card-title>You have a survey to fill!</ion-card-title>
     </ion-card-header>
-
-    <ion-card-content>
-      You get price from our sponsor:
-      <h2>{{price}}</h2>
-    </ion-card-content>
   </ion-card>
+  <br>
+  <ion-button (click)="goBack()">Go back</ion-button>
 </ion-content>

@@ -42,6 +42,7 @@ export class EditProfilePage implements OnInit {
   usr: string;
   ngOnInit() {
     this.logueado();
+    
   }
 
 
@@ -111,7 +112,7 @@ export class EditProfilePage implements OnInit {
         });
 
     } else {
-      this.userConfig.editUser(name, surname,username, this.mail).subscribe( res => console.log(res) );
+      this.userConfig.addUser(name, surname,username, this.mail).subscribe( res => console.log(res) );
       this.services.updateUser(data, this.id).then(
         res => {
           console.log('Upload' + res);

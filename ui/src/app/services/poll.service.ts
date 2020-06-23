@@ -8,7 +8,7 @@ export class PollService {
 
   constructor(public http: HttpClient ) { }
 
-  API: string = 'http://localhost:8080';
+  API: string = 'http://18.224.140.96:8080';
   POLL_API: string = this.API + '/polls' 
 
   getAllPolls(){

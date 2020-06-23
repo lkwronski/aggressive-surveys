@@ -8,7 +8,7 @@ export class QuestionService {
 
   constructor(public http: HttpClient ) { }
 
-  API: string = 'http://localhost:8080';
+  API: string = 'http://18.224.140.96:8080';
   QUESTION_API: string = this.API + '/questions/' 
 
   getQuestion(id: any){

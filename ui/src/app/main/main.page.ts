@@ -31,8 +31,11 @@ export class MainPage implements OnInit {
     public alertCtrl: AlertController,
     public messageService: MessageService) {
     }
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
 
-  ngOnInit() {
+    ionViewWillEnter() {
     this.logued();
     console.log(this.managedGroups)
   }
@@ -111,6 +114,10 @@ export class MainPage implements OnInit {
   onMessage(message){
     console.log(message);
     this.showAlert(message);
+  }
+
+  goedit() {
+    this.router.navigateByUrl(`/edit-profile`);
   }
 
   async showAlert(message) {  

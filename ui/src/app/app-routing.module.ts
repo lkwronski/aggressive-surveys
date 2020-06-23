@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'group/:id/create-message', loadChildren: './create-message/create-message.module#CreateMessagePageModule' },
   { path: 'group-stats/:id', loadChildren: './group-stats/group-stats.module#GroupStatsPageModule' },
   { path: 'group-stats/:groupId/poll-stats/:pollId', loadChildren: './poll-stats/poll-stats.module#PollStatsPageModule' },
-  
+  { path: 'skip', loadChildren: './skip/skip.module#SkipPageModule' },
+  { path: 'second', loadChildren: './second/second.module#SecondPageModule' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

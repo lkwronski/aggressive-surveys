@@ -25,8 +25,11 @@ export class PollStatsPage implements OnInit {
     private router: Router,
     private location: Location,
     private pollService: PollService) { }
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
 
-  ngOnInit() {
+    ionViewWillEnter() {
     this.groupId = parseInt(this.route.snapshot.paramMap.get('groupId'));
     this.pollId = parseInt(this.route.snapshot.paramMap.get('pollId'));
     this.pollService.getPollStats(this.pollId).subscribe(data => {

@@ -20,8 +20,11 @@ export class GroupPage implements OnInit {
     private groupSerivce: GroupService, 
     private router: Router,
     private location: Location) { }
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
 
-  ngOnInit() {
+    ionViewWillEnter() {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
     this.groupSerivce.getGroup(this.id).subscribe(data => 
       this.group = data);

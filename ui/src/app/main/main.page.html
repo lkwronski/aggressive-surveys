@@ -5,9 +5,11 @@
       <ion-title>
           Survey Time!
       </ion-title>
-  <ion-buttons slot="start" >
-      <ion-button [routerLink]="['/profile']" >
-        <ion-icon color="primary" slot="icon-only" name="contact"></ion-icon>
+
+    <ion-buttons slot="end" >
+      <ion-button (click)="goedit()">
+          <ion-icon color="primary" name="more"  slot="icon-only"></ion-icon>
+
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -21,6 +23,7 @@
       <ion-card-content *ngFor="let item of item">
 
         <h1 class="goodfont">Welcome back {{item.payload.doc.data().name}} {{item.payload.doc.data().surname}}!</h1>
+        <h2 class="goodfont">Your nick {{item.payload.doc.data().username}}</h2>
       </ion-card-content>
   
     <br>
