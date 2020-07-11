@@ -31,6 +31,9 @@ services:
     image:  ui:v3
     container_name: ui-surveys
     network_mode: bridge
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     expose:
       - 8100
     ports:
