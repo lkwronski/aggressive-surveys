@@ -10,6 +10,7 @@ RUN npm install -g  ionic
 WORKDIR /www/app
 RUN npm install
 RUN npm i @angular/cli
+RUN npm i @ionic-native/fcm
 
 EXPOSE 8100
 
